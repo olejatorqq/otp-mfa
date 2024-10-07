@@ -2,20 +2,20 @@
 #define OTP_WINDOW_H
 
 #include <QMainWindow>
+#include <QWidget>
+#include <QLabel>
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class otp_window; }
-QT_END_NAMESPACE
 
-class otp_window : public QMainWindow
-{
+class otp_window : public QWidget {
     Q_OBJECT
-
 public:
     otp_window(QWidget *parent = nullptr);
-    ~otp_window();
+
+public slots:
+    void updateOTP();
 
 private:
-    Ui::otp_window *ui;
+    QLabel *otpLabel;
 };
+
 #endif // OTP_WINDOW_H

@@ -6,6 +6,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/otp-mfa.dir/main.cpp.o.d"
   "CMakeFiles/otp-mfa.dir/otp-mfa_autogen/mocs_compilation.cpp.o"
   "CMakeFiles/otp-mfa.dir/otp-mfa_autogen/mocs_compilation.cpp.o.d"
+  "CMakeFiles/otp-mfa.dir/otp_generator.cpp.o"
+  "CMakeFiles/otp-mfa.dir/otp_generator.cpp.o.d"
   "CMakeFiles/otp-mfa.dir/otp_window.cpp.o"
   "CMakeFiles/otp-mfa.dir/otp_window.cpp.o.d"
   "otp-mfa"
