@@ -2,14 +2,16 @@
 #define OTP_GENERATOR_H
 
 #include <QString>
-#include <QByteArray>
+#include <openssl/hmac.h>
 
-class otp_generator
-{
+class OtpGenerator {
 public:
-    static QString generateHOTP(const QByteArray &key, quint64 counter, int digits = 6);
-    static QString generateTOTP(const QByteArray &key, int timeStep = 30, int digits = 6);
-    otp_generator();
+    QString generateTOTP(const QString &secret, int timeStep = 30);
+    QString generateHOTP(const QString &secret, quint64 counter);
+
+private:
+    QString base32Decode(const QString &input);
+    QByteArray hmacSha1(const QByteArray &key, const QByteArray &message);
 };
 
 #endif // OTP_GENERATOR_H

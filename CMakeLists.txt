@@ -27,6 +27,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(otp-mfa
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        account_manager.h account_manager.cpp
+        add_account.ui
+        add_account_dialog.h add_account_dialog.cpp
     )
 else()
     if(ANDROID)

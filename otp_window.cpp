@@ -1,23 +1,38 @@
 #include "otp_window.h"
-#include "otp_generator.h"
-#include <QVBoxLayout>
-#include <QTimer>
+#include "ui_otp_window.h"
 
-otp_window::otp_window(QWidget *parent) : QWidget(parent) {
-    otpLabel = new QLabel("OTP will appear here", this);
-    QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->addWidget(otpLabel);
-    setLayout(layout);
+OtpWindow::OtpWindow(QWidget *parent)
+    : QWidget(parent), ui(new Ui::OtpWindow), accountManager("accounts.json") {
+    ui->setupUi(this);
 
-    QTimer *timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &otp_window::updateOTP);
-    timer->start(30000);  // 30 секунд
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &OtpWindow::updateOtp);
+    timer->start(1000); // Обновление каждую секунду
 
-    updateOTP();  // Первоначальное обновление OTP
+    accounts = accountManager.loadAccounts();
+    updateOtp(); // Первоначальный вызов для отображения OTP при запуске
 }
 
-void otp_window::updateOTP() {
-    QByteArray secretKey = "your-secret-key";  // Замените на реальный секретный ключ
-    QString totp = otp_generator::generateTOTP(secretKey);
-    otpLabel->setText("TOTP: " + totp);
+OtpWindow::~OtpWindow() {
+    delete ui;
+}
+
+void OtpWindow::updateOtp() {
+    if (!accounts.isEmpty()) {
+        const Account &account = accounts.first(); // Используем первую учётную запись для примера
+        QString otp = (account.algorithm == "TOTP") ?
+                          otpGenerator.generateTOTP(account.secret) :
+                          otpGenerator.generateHOTP(account.secret, 1); // Placeholder: использовать счётчик для HOTP
+        ui->otpLabel->setText(otp);
+    }
+}
+
+void OtpWindow::on_addAccountButton_clicked() {
+    AddAccountDialog dialog(this);
+    if (dialog.exec() == QDialog::Accepted) {
+        Account newAccount = dialog.getAccount();
+        accountManager.saveAccount(newAccount);
+        accounts = accountManager.loadAccounts();
+        updateOtp();
+    }
 }

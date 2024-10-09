@@ -1,12 +1,9 @@
-#include "otp_window.h"
 #include <QApplication>
+#include "otp_window.h"
 
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-    otp_window w;
-    w.setWindowTitle("OTP Generator");
-    w.resize(300, 100);
-    w.show();
-    return a.exec();
+int main(int argc, char *argv[]) {
+    QApplication app(argc, argv);
+    OtpWindow window;
+    window.show();
+    return app.exec();
 }

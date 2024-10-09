@@ -1,0 +1,9 @@
+/home/oorlovsk/otp-mfa/build/CMakeFiles/otp-mfa.dir
+/home/oorlovsk/otp-mfa/build/CMakeFiles/edit_cache.dir
+/home/oorlovsk/otp-mfa/build/CMakeFiles/rebuild_cache.dir
+/home/oorlovsk/otp-mfa/build/CMakeFiles/list_install_components.dir
+/home/oorlovsk/otp-mfa/build/CMakeFiles/install.dir
+/home/oorlovsk/otp-mfa/build/CMakeFiles/install/local.dir
+/home/oorlovsk/otp-mfa/build/CMakeFiles/install/strip.dir
+/home/oorlovsk/otp-mfa/build/CMakeFiles/otp-mfa_autogen_timestamp_deps.dir
+/home/oorlovsk/otp-mfa/build/CMakeFiles/otp-mfa_autogen.dir

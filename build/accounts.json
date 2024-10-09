@@ -1,0 +1,12 @@
+[
+    {
+        "algorithm": "TOTP",
+        "name": "asd",
+        "secret": "123"
+    },
+    {
+        "algorithm": "HOTP",
+        "name": "dfg",
+        "secret": "123"
+    }
+]
