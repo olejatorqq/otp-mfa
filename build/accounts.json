@@ -1,12 +1,8 @@
 [
     {
         "algorithm": "TOTP",
-        "name": "asd",
-        "secret": "123"
-    },
-    {
-        "algorithm": "HOTP",
-        "name": "dfg",
+        "counter": 0,
+        "name": "test_name",
         "secret": "123"
     }
 ]

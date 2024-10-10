@@ -1,33 +1,31 @@
 #ifndef OTP_WINDOW_H
 #define OTP_WINDOW_H
 
-#include <QWidget>
-#include <QTimer>
-#include "otp_generator.h"
+#include <QMainWindow>
+#include <QListWidgetItem>
 #include "account_manager.h"
-#include "add_account_dialog.h"
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class OtpWindow; }
-QT_END_NAMESPACE
+namespace Ui {
+class OTPWindow;
+}
 
-class OtpWindow : public QWidget {
+class OTPWindow : public QMainWindow
+{
     Q_OBJECT
 
 public:
-    OtpWindow(QWidget *parent = nullptr);
-    ~OtpWindow();
+    explicit OTPWindow(QWidget *parent = nullptr);
+    ~OTPWindow();
 
 private slots:
-    void updateOtp();
-    void on_addAccountButton_clicked();
+    void onAddAccountClicked();
 
 private:
-    Ui::OtpWindow *ui;
-    OtpGenerator otpGenerator;
+    Ui::OTPWindow *ui;
     AccountManager accountManager;
-    QTimer *timer;
     QList<Account> accounts;
+
+    void displayAccounts();
 };
 
 #endif // OTP_WINDOW_H

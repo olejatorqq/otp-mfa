@@ -199,31 +199,6 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
   /usr/include/linux/errno.h \
   /usr/include/linux/limits.h \
   /usr/include/locale.h \
-  /usr/include/openssl/asn1.h \
-  /usr/include/openssl/asn1err.h \
-  /usr/include/openssl/bio.h \
-  /usr/include/openssl/bioerr.h \
-  /usr/include/openssl/bn.h \
-  /usr/include/openssl/bnerr.h \
-  /usr/include/openssl/core.h \
-  /usr/include/openssl/core_dispatch.h \
-  /usr/include/openssl/crypto.h \
-  /usr/include/openssl/cryptoerr.h \
-  /usr/include/openssl/cryptoerr_legacy.h \
-  /usr/include/openssl/e_os2.h \
-  /usr/include/openssl/evp.h \
-  /usr/include/openssl/evperr.h \
-  /usr/include/openssl/hmac.h \
-  /usr/include/openssl/macros.h \
-  /usr/include/openssl/obj_mac.h \
-  /usr/include/openssl/objects.h \
-  /usr/include/openssl/objectserr.h \
-  /usr/include/openssl/opensslv.h \
-  /usr/include/openssl/params.h \
-  /usr/include/openssl/safestack.h \
-  /usr/include/openssl/stack.h \
-  /usr/include/openssl/symhacks.h \
-  /usr/include/openssl/types.h \
   /usr/include/pthread.h \
   /usr/include/sched.h \
   /usr/include/stdc-predef.h \
@@ -325,12 +300,9 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
   /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
-  /usr/include/x86_64-linux-gnu/openssl/configuration.h \
-  /usr/include/x86_64-linux-gnu/openssl/opensslconf.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtCore/QJsonObject \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/QList \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/QString \
-  /usr/include/x86_64-linux-gnu/qt6/QtCore/QTimer \
+  /usr/include/x86_64-linux-gnu/qt6/QtCore/qabstractitemmodel.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qalgorithms.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qanystringview.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qarraydata.h \
@@ -339,15 +311,11 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qatomic.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qatomic_cxx11.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qbasicatomic.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtCore/qbasictimer.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qbindingstorage.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qbytearray.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qbytearrayalgorithms.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qbytearraylist.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qbytearrayview.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtCore/qcalendar.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtCore/qcborcommon.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtCore/qcborvalue.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qchar.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qcompare.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qcompare_impl.h \
@@ -358,7 +326,6 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qcontainertools_impl.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qcontiguouscache.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qdatastream.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtCore/qdatetime.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qdebug.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qflags.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qforeach.h \
@@ -368,10 +335,9 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qhash.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qhashfunctions.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qiodevicebase.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtCore/qitemselectionmodel.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qiterable.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qiterator.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtCore/qjsonobject.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtCore/qjsonvalue.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qline.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qlist.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qlocale.h \
@@ -417,12 +383,9 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qtcore-config.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qtcoreexports.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qtextstream.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtCore/qtimer.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qtmetamacros.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qtypeinfo.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtCore/qurl.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qutf8stringview.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtCore/quuid.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qvariant.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qvarlengtharray.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qversiontagging.h \
@@ -449,11 +412,28 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
   /usr/include/x86_64-linux-gnu/qt6/QtGui/qtguiexports.h \
   /usr/include/x86_64-linux-gnu/qt6/QtGui/qtguiglobal.h \
   /usr/include/x86_64-linux-gnu/qt6/QtGui/qtransform.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtGui/qvalidator.h \
   /usr/include/x86_64-linux-gnu/qt6/QtGui/qwindowdefs.h \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QDialog \
-  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QWidget \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QListWidgetItem \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QMainWindow \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qabstractitemdelegate.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qabstractitemview.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qabstractscrollarea.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qabstractslider.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qabstractspinbox.h \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qdialog.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qframe.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qlistview.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qlistwidget.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qmainwindow.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qrubberband.h \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qsizepolicy.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qslider.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qstyle.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qstyleoption.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qtabbar.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qtabwidget.h \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qtwidgets-config.h \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qtwidgetsexports.h \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qtwidgetsglobal.h \
@@ -654,6 +634,8 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 
 /usr/share/cmake-3.28/Modules/Platform/UnixPaths.cmake:
 
+/usr/share/cmake-3.28/Modules/Platform/Linux.cmake:
+
 /usr/share/cmake-3.28/Modules/Platform/Linux-Initialize.cmake:
 
 /usr/share/cmake-3.28/Modules/Platform/Linux-GNU.cmake:
@@ -682,8 +664,6 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 
 /usr/share/cmake-3.28/Modules/FeatureSummary.cmake:
 
-/usr/share/cmake-3.28/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake:
-
 /usr/share/cmake-3.28/Modules/Compiler/XL-CXX-DetermineCompiler.cmake:
 
 /usr/share/cmake-3.28/Modules/Compiler/TI-DetermineCompiler.cmake:
@@ -711,8 +691,6 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 /usr/share/cmake-3.28/Modules/Compiler/GNU.cmake:
 
 /usr/share/cmake-3.28/Modules/Compiler/GNU-CXX.cmake:
-
-/usr/share/cmake-3.28/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake:
 
 /usr/share/cmake-3.28/Modules/Compiler/GHS-DetermineCompiler.cmake:
 
@@ -762,31 +740,17 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 
 /usr/share/cmake-3.28/Modules/CMakeCompilerIdDetection.cmake:
 
-/usr/share/cmake-3.28/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake:
+/usr/include/x86_64-linux-gnu/bits/syscall.h:
 
-/usr/share/cmake-3.28/Modules/CMakeCXXInformation.cmake:
+/usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
 
-/usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp:
+/usr/include/x86_64-linux-gnu/bits/timex.h:
 
-/usr/share/cmake-3.28/Modules/CMakeCXXCompiler.cmake.in:
+/usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h:
 
-/usr/lib/x86_64-linux-gnu/cmake/Qt6WidgetsTools/Qt6WidgetsToolsVersionlessTargets.cmake:
+/usr/include/time.h:
 
-/usr/lib/x86_64-linux-gnu/cmake/Qt6WidgetsTools/Qt6WidgetsToolsTargets.cmake:
-
-/usr/lib/x86_64-linux-gnu/cmake/Qt6WidgetsTools/Qt6WidgetsToolsTargets-none.cmake:
-
-/usr/lib/x86_64-linux-gnu/cmake/Qt6WidgetsTools/Qt6WidgetsToolsDependencies.cmake:
-
-/usr/lib/x86_64-linux-gnu/cmake/Qt6WidgetsTools/Qt6WidgetsToolsConfigVersionImpl.cmake:
-
-/usr/lib/x86_64-linux-gnu/cmake/Qt6WidgetsTools/Qt6WidgetsToolsConfig.cmake:
-
-/usr/lib/x86_64-linux-gnu/cmake/Qt6Widgets/Qt6WidgetsMacros.cmake:
-
-/usr/lib/x86_64-linux-gnu/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:
-
-/usr/lib/x86_64-linux-gnu/cmake/Qt6Widgets/Qt6WidgetsConfigVersionImpl.cmake:
+/usr/include/x86_64-linux-gnu/bits/sched.h:
 
 /usr/include/x86_64-linux-gnu/bits/local_lim.h:
 
@@ -818,6 +782,14 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 
 /usr/include/c++/13/tr1/riemann_zeta.tcc:
 
+/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
+
+/usr/include/x86_64-linux-gnu/bits/select.h:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/gthr-default.h:
+
 /usr/include/x86_64-linux-gnu/qt6/QtCore/qbytearrayalgorithms.h:
 
 /usr/include/string.h:
@@ -832,43 +804,13 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 
 /usr/include/pthread.h:
 
-/usr/include/openssl/types.h:
-
-/usr/include/openssl/symhacks.h:
-
-/usr/include/c++/13/bits/allocated_ptr.h:
-
-/usr/include/openssl/params.h:
-
-/usr/include/openssl/objectserr.h:
-
-/usr/share/cmake-3.28/Modules/Platform/Linux.cmake:
-
-/usr/include/openssl/e_os2.h:
-
-/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:
-
-/usr/include/openssl/cryptoerr_legacy.h:
-
-/usr/include/openssl/core.h:
-
-/usr/include/openssl/bn.h:
-
-/usr/lib/x86_64-linux-gnu/cmake/Qt6Gui/Qt6GuiAdditionalTargetInfo.cmake:
-
-/usr/include/openssl/bio.h:
-
-/usr/include/x86_64-linux-gnu/qt6/QtCore/qhashfunctions.h:
-
-/usr/include/openssl/asn1err.h:
-
 /usr/include/x86_64-linux-gnu/bits/posix2_lim.h:
-
-/usr/include/openssl/evp.h:
 
 /usr/include/stdint.h:
 
 /usr/include/linux/limits.h:
+
+/usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
 
 /usr/include/c++/13/vector:
 
@@ -892,8 +834,6 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 
 /usr/include/c++/13/bits/range_access.h:
 
-/usr/include/openssl/evperr.h:
-
 /usr/include/c++/13/initializer_list:
 
 /usr/include/c++/13/tr1/bessel_function.tcc:
@@ -911,6 +851,8 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 /usr/share/cmake-3.28/Modules/CMakeParseLibraryArchitecture.cmake:
 
 /usr/include/c++/13/map:
+
+/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qabstractspinbox.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
 
@@ -936,10 +878,6 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 
 /usr/include/x86_64-linux-gnu/qt6/QtCore/qnumeric.h:
 
-/usr/include/openssl/asn1.h:
-
-/usr/include/x86_64-linux-gnu/qt6/QtCore/qregularexpression.h:
-
 /usr/include/c++/13/ext/alloc_traits.h:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt6CoreTools/Qt6CoreToolsDependencies.cmake:
@@ -949,6 +887,10 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 /usr/include/c++/13/tr1/hypergeometric.tcc:
 
 /usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/posix_opt.h:
+
+/usr/include/c++/13/climits:
 
 /usr/include/c++/13/iterator:
 
@@ -960,6 +902,8 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 
 /usr/include/c++/13/ext/string_conversions.h:
 
+/usr/lib/x86_64-linux-gnu/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:
+
 /usr/include/c++/13/pstl/glue_algorithm_defs.h:
 
 /usr/include/c++/13/ext/concurrence.h:
@@ -968,6 +912,12 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 
 /usr/include/c++/13/new:
 
+/usr/include/x86_64-linux-gnu/bits/setjmp.h:
+
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
+
+/usr/include/c++/13/bits/utility.h:
+
 /usr/include/locale.h:
 
 /usr/include/x86_64-linux-gnu/bits/errno.h:
@@ -975,8 +925,6 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 /usr/include/c++/13/bits/stl_pair.h:
 
 /usr/include/x86_64-linux-gnu/qt6/QtGui/qbitmap.h:
-
-/usr/include/openssl/cryptoerr.h:
 
 /usr/share/cmake-3.28/Modules/CMakeGenericSystem.cmake:
 
@@ -988,29 +936,11 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 
 /usr/include/x86_64-linux-gnu/sys/select.h:
 
-/usr/include/x86_64-linux-gnu/qt6/QtCore/quuid.h:
-
-/usr/include/c++/13/memory:
-
 /usr/include/c++/13/pstl/glue_numeric_defs.h:
 
 /usr/include/c++/13/concepts:
 
-/usr/include/openssl/macros.h:
-
-/usr/share/cmake-3.28/Modules/Compiler/HP-CXX-DetermineCompiler.cmake:
-
-/usr/include/x86_64-linux-gnu/qt6/QtCore/qforeach.h:
-
 /usr/include/c++/13/compare:
-
-/usr/lib/x86_64-linux-gnu/cmake/Qt6WidgetsTools/Qt6WidgetsToolsAdditionalTargetInfo.cmake:
-
-/usr/include/c++/13/cmath:
-
-/usr/include/c++/13/climits:
-
-/usr/include/x86_64-linux-gnu/bits/posix_opt.h:
 
 /usr/include/c++/13/bits/locale_classes.tcc:
 
@@ -1030,17 +960,17 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 
 /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
 
+/usr/share/cmake-3.28/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake:
+
+/usr/include/x86_64-linux-gnu/qt6/QtWidgets/QMainWindow:
+
 /usr/include/c++/13/streambuf:
 
 /usr/include/c++/13/pstl/glue_memory_defs.h:
 
 /usr/include/c++/13/bits/memory_resource.h:
 
-/usr/include/openssl/hmac.h:
-
 /usr/include/c++/13/bits/exception.h:
-
-/usr/include/time.h:
 
 /usr/include/c++/13/typeinfo:
 
@@ -1052,13 +982,9 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/ctype_inline.h:
 
-/usr/include/x86_64-linux-gnu/qt6/QtCore/qcborcommon.h:
-
 /usr/include/c++/13/bits/c++0x_warning.h:
 
 /usr/include/x86_64-linux-gnu/sys/cdefs.h:
-
-/usr/include/openssl/core_dispatch.h:
 
 /usr/include/alloca.h:
 
@@ -1080,6 +1006,10 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 
 /usr/include/c++/13/atomic:
 
+/usr/include/c++/13/ext/type_traits.h:
+
+/usr/include/x86_64-linux-gnu/bits/time64.h:
+
 /usr/share/cmake-3.28/Modules/Compiler/Clang-DetermineCompilerInternal.cmake:
 
 /usr/include/c++/13/bits/basic_ios.h:
@@ -1092,6 +1022,8 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 
 /usr/include/c++/13/bits/iterator_concepts.h:
 
+/usr/include/c++/13/bits/stl_tree.h:
+
 /usr/include/x86_64-linux-gnu/qt6/QtCore/qscopedpointer.h:
 
 /usr/include/c++/13/bits/basic_ios.tcc:
@@ -1101,6 +1033,8 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 /usr/include/c++/13/clocale:
 
 /usr/include/x86_64-linux-gnu/sys/syscall.h:
+
+/usr/include/c++/13/bits/allocated_ptr.h:
 
 /usr/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake:
 
@@ -1124,7 +1058,11 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 
 /usr/include/c++/13/backward/auto_ptr.h:
 
+/usr/include/x86_64-linux-gnu/qt6/QtGui/qvalidator.h:
+
 /usr/include/assert.h:
+
+/usr/include/x86_64-linux-gnu/bits/types.h:
 
 /usr/include/c++/13/bits/cpp_type_traits.h:
 
@@ -1139,10 +1077,6 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 /usr/include/c++/13/string:
 
 /usr/include/features.h:
-
-/usr/lib/x86_64-linux-gnu/cmake/Qt6Widgets/Qt6WidgetsVersionlessTargets.cmake:
-
-/usr/include/c++/13/bits/atomic_wait.h:
 
 /usr/share/cmake-3.28/Modules/CMakeDetermineCompileFeatures.cmake:
 
@@ -1170,27 +1104,15 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/otp-mfa/CMakeLists.txt \
 
 CMakeFiles/3.28.3/CMakeSystem.cmake:
 
-/usr/include/x86_64-linux-gnu/qt6/QtCore/QJsonObject:
-
 /usr/include/c++/13/bits/stl_multimap.h:
 
 /home/oorlovsk/otp-mfa/main.cpp:
-
-/usr/share/cmake-3.28/Modules/Compiler/Tasking-DetermineCompiler.cmake:
-
-/usr/include/x86_64-linux-gnu/qt6/QtCore/qcontainerinfo.h:
-
-/usr/lib/x86_64-linux-gnu/cmake/Qt6Widgets/Qt6WidgetsTargets.cmake:
-
-/usr/include/asm-generic/errno-base.h:
 
 /usr/include/c++/13/bits/stl_iterator_base_funcs.h:
 
 /usr/include/c++/13/bits/ranges_util.h:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/ctype_base.h:
-
-/usr/include/x86_64-linux-gnu/qt6/QtCore/QTimer:
 
 /usr/share/cmake-3.28/Modules/Compiler/Embarcadero-DetermineCompiler.cmake:
 
@@ -1201,6 +1123,8 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 /usr/lib/x86_64-linux-gnu/cmake/Qt6Gui/Qt6GuiTargets-none.cmake:
 
 /usr/include/c++/13/bits/cxxabi_forced.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
 
 /usr/include/c++/13/bits/exception_ptr.h:
 
@@ -1218,6 +1142,8 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt6/QtPublicDependencyHelpers.cmake:
 
+/usr/lib/x86_64-linux-gnu/cmake/Qt6Widgets/Qt6WidgetsMacros.cmake:
+
 /usr/include/x86_64-linux-gnu/asm/errno.h:
 
 /usr/include/x86_64-linux-gnu/qt6/QtCore/qlocale.h:
@@ -1226,13 +1152,15 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 
 /usr/include/c++/13/backward/binders.h:
 
-/usr/include/openssl/obj_mac.h:
-
 /usr/lib/x86_64-linux-gnu/cmake/Qt6/QtPublicFindPackageHelpers.cmake:
 
 /usr/share/cmake-3.28/Modules/Compiler/Watcom-DetermineCompiler.cmake:
 
+/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qabstractitemview.h:
+
 /usr/include/c++/13/bits/stream_iterator.h:
+
+/usr/include/x86_64-linux-gnu/bits/uio_lim.h:
 
 /usr/include/c++/13/tr1/special_function_util.h:
 
@@ -1252,6 +1180,8 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 
 /usr/include/c++/13/bits/alloc_traits.h:
 
+/usr/include/x86_64-linux-gnu/qt6/QtWidgets/QListWidgetItem:
+
 /usr/include/c++/13/bits/locale_facets.h:
 
 /usr/include/c++/13/bit:
@@ -1260,7 +1190,13 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 
 /usr/include/c++/13/debug/assertions.h:
 
+/usr/include/c++/13/debug/debug.h:
+
+/usr/include/c++/13/bits/stl_list.h:
+
 /usr/include/x86_64-linux-gnu/qt6/QtCore/qglobalstatic.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdint-least.h:
 
 /usr/include/c++/13/bits/stringfwd.h:
 
@@ -1280,51 +1216,51 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 
 /usr/include/c++/13/bits/move.h:
 
-/usr/include/x86_64-linux-gnu/qt6/QtCore/qurl.h:
-
 /usr/include/c++/13/bits/parse_numbers.h:
 
 /usr/include/linux/errno.h:
 
 /usr/include/c++/13/bits/std_abs.h:
 
-/usr/lib/x86_64-linux-gnu/cmake/Qt6Widgets/Qt6WidgetsConfigVersion.cmake:
-
-/usr/include/c++/13/bits/ranges_uninitialized.h:
-
 /usr/include/c++/13/bits/ptr_traits.h:
 
 /usr/include/x86_64-linux-gnu/qt6/QtCore/qobject.h:
 
+/usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
+
+/usr/include/c++/13/bits/string_view.tcc:
+
+/usr/share/cmake-3.28/Modules/CMakeSystem.cmake.in:
+
+/usr/include/x86_64-linux-gnu/qt6/QtCore/qgenericatomic.h:
+
 /usr/include/c++/13/bits/ostream_insert.h:
+
+/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qabstractitemdelegate.h:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt6/QtPublicWalkLibsHelpers.cmake:
 
 /usr/include/c++/13/bits/ranges_algobase.h:
 
-/usr/include/openssl/bioerr.h:
+/usr/include/c++/13/tr1/beta_function.tcc:
 
 /usr/include/c++/13/bits/stl_function.h:
 
-/usr/include/c++/13/bits/utility.h:
+/usr/include/c++/13/bits/basic_string.tcc:
 
-/usr/include/x86_64-linux-gnu/bits/setjmp.h:
-
-/usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
+/usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
 
 /usr/share/cmake-3.28/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake:
+
+/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qframe.h:
 
 /usr/include/c++/13/bits/refwrap.h:
 
 /usr/include/c++/13/bits/locale_facets.tcc:
 
-/usr/include/c++/13/bits/string_view.tcc:
+/usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
 
-/usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
-
-/usr/share/cmake-3.28/Modules/CMakeSystem.cmake.in:
-
-/usr/include/x86_64-linux-gnu/qt6/QtCore/qgenericatomic.h:
+/usr/include/x86_64-linux-gnu/qt6/QtGui/qpaintdevice.h:
 
 /usr/include/c++/13/bits/shared_ptr.h:
 
@@ -1366,6 +1302,8 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 
 /usr/include/c++/13/bits/std_mutex.h:
 
+/usr/share/cmake-3.28/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake:
+
 /usr/include/c++/13/bits/stl_construct.h:
 
 /usr/include/x86_64-linux-gnu/qt6/QtCore/qchar.h:
@@ -1375,6 +1313,8 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 /usr/lib/x86_64-linux-gnu/cmake/Qt6DBusTools/Qt6DBusToolsAdditionalTargetInfo.cmake:
 
 /usr/include/c++/13/bits/functexcept.h:
+
+/usr/include/x86_64-linux-gnu/qt6/QtCore/qabstractitemmodel.h:
 
 /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qdialog.h:
 
@@ -1394,23 +1334,11 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 
 /usr/include/c++/13/bits/new_allocator.h:
 
-/usr/include/x86_64-linux-gnu/openssl/opensslconf.h:
-
 /usr/include/x86_64-linux-gnu/qt6/QtGui/qtguiexports.h:
 
 /usr/include/x86_64-linux-gnu/bits/getopt_posix.h:
 
 /usr/include/c++/13/bits/stl_map.h:
-
-/usr/include/c++/13/debug/debug.h:
-
-/usr/include/c++/13/bits/stl_list.h:
-
-/usr/include/openssl/bnerr.h:
-
-/usr/include/c++/13/tr1/beta_function.tcc:
-
-/usr/include/x86_64-linux-gnu/qt6/QtCore/qcalendar.h:
 
 /usr/include/c++/13/bits/stl_numeric.h:
 
@@ -1456,59 +1384,11 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 
 /usr/include/c++/13/cctype:
 
-/usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
-
-/usr/include/x86_64-linux-gnu/bits/sched.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdint-least.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
-
-/usr/include/x86_64-linux-gnu/bits/select.h:
-
-/usr/include/x86_64-linux-gnu/c++/13/bits/gthr-default.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
-
-/usr/include/x86_64-linux-gnu/bits/timex.h:
-
-/usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
-
-/usr/include/x86_64-linux-gnu/qt6/QtGui/qpaintdevice.h:
-
-/usr/lib/x86_64-linux-gnu/cmake/Qt6Widgets/Qt6WidgetsTargets-none.cmake:
-
-/home/oorlovsk/otp-mfa/add_account.ui:
-
-/usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
-
-/usr/include/x86_64-linux-gnu/bits/syscall.h:
-
-/usr/include/c++/13/ext/type_traits.h:
-
-/usr/include/x86_64-linux-gnu/bits/time64.h:
-
-/usr/include/x86_64-linux-gnu/bits/types.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h:
-
-/usr/include/c++/13/bits/basic_string.tcc:
-
-/usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
-
 /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h:
-
-/usr/lib/x86_64-linux-gnu/cmake/Qt6WidgetsTools/Qt6WidgetsToolsConfigVersion.cmake:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h:
 
 /usr/include/c++/13/bits/nested_exception.h:
 
@@ -1530,6 +1410,8 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 
 /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
 
+/usr/lib/x86_64-linux-gnu/cmake/Qt6WidgetsTools/Qt6WidgetsToolsConfigVersionImpl.cmake:
+
 /usr/include/c++/13/tuple:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
@@ -1544,9 +1426,15 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 
 /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qtwidgetsglobal.h:
 
+/usr/share/cmake-3.28/Modules/CMakeCXXInformation.cmake:
+
 /usr/include/c++/13/tr1/poly_hermite.tcc:
 
 /usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
+
+/usr/include/c++/13/bits/atomic_wait.h:
+
+/usr/lib/x86_64-linux-gnu/cmake/Qt6Widgets/Qt6WidgetsVersionlessTargets.cmake:
 
 /usr/include/x86_64-linux-gnu/bits/typesizes.h:
 
@@ -1558,11 +1446,9 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 
 /usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
 
-/usr/include/openssl/crypto.h:
+/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qabstractscrollarea.h:
 
 /usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
-
-/usr/include/x86_64-linux-gnu/qt6/QtCore/qdatetime.h:
 
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
 
@@ -1582,13 +1468,11 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt6DBusTools/Qt6DBusToolsConfig.cmake:
 
+/usr/lib/x86_64-linux-gnu/cmake/Qt6Gui/Qt6GuiAdditionalTargetInfo.cmake:
+
 /usr/include/x86_64-linux-gnu/bits/wchar.h:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h:
-
-/usr/include/c++/13/bits/stl_tree.h:
-
-/usr/include/x86_64-linux-gnu/qt6/QtWidgets/QWidget:
 
 /usr/include/c++/13/bits/ostream.tcc:
 
@@ -1644,8 +1528,6 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 
 /usr/include/x86_64-linux-gnu/qt6/QtCore/qbasicatomic.h:
 
-/usr/lib/x86_64-linux-gnu/cmake/Qt6CoreTools/Qt6CoreToolsTargets.cmake:
-
 /usr/share/cmake-3.28/Modules/FindOpenGL.cmake:
 
 /usr/include/x86_64-linux-gnu/qt6/QtCore/qbytearray.h:
@@ -1653,12 +1535,6 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 /usr/include/x86_64-linux-gnu/qt6/QtCore/qiodevicebase.h:
 
 /usr/include/x86_64-linux-gnu/qt6/QtCore/qbytearrayview.h:
-
-/usr/include/x86_64-linux-gnu/qt6/QtCore/qcborvalue.h:
-
-/usr/include/c++/13/iosfwd:
-
-/usr/include/x86_64-linux-gnu/qt6/QtCore/qsysinfo.h:
 
 /usr/include/c++/13/bits/locale_classes.h:
 
@@ -1674,21 +1550,23 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 
 /usr/include/x86_64-linux-gnu/qt6/QtCore/qdatastream.h:
 
+/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qabstractslider.h:
+
 /usr/include/x86_64-linux-gnu/qt6/QtCore/qdebug.h:
 
 /usr/include/x86_64-linux-gnu/qt6/QtCore/qflags.h:
 
-/usr/include/x86_64-linux-gnu/qt6/QtCore/qglobal.h:
+/usr/share/cmake-3.28/Modules/Compiler/HP-CXX-DetermineCompiler.cmake:
 
-/usr/include/openssl/safestack.h:
+/usr/include/x86_64-linux-gnu/qt6/QtCore/qforeach.h:
+
+/usr/include/x86_64-linux-gnu/qt6/QtCore/qglobal.h:
 
 /usr/include/x86_64-linux-gnu/qt6/QtCore/qhash.h:
 
-/usr/include/x86_64-linux-gnu/bits/uio_lim.h:
+/usr/include/x86_64-linux-gnu/qt6/QtCore/qhashfunctions.h:
 
-/usr/include/x86_64-linux-gnu/qt6/QtCore/qjsonobject.h:
-
-/usr/include/x86_64-linux-gnu/qt6/QtCore/qjsonvalue.h:
+/usr/include/x86_64-linux-gnu/qt6/QtCore/qitemselectionmodel.h:
 
 /usr/include/x86_64-linux-gnu/qt6/QtCore/qlist.h:
 
@@ -1723,6 +1601,8 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 /usr/include/x86_64-linux-gnu/qt6/QtGui/qcursor.h:
 
 /usr/include/x86_64-linux-gnu/qt6/QtGui/qrgb.h:
+
+/usr/include/x86_64-linux-gnu/qt6/QtCore/qregularexpression.h:
 
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
 
@@ -1766,11 +1646,13 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 
 /usr/include/x86_64-linux-gnu/qt6/QtCore/qstringview.h:
 
+/usr/include/c++/13/iosfwd:
+
+/usr/include/x86_64-linux-gnu/qt6/QtCore/qsysinfo.h:
+
 /usr/include/x86_64-linux-gnu/qt6/QtCore/qtaggedpointer.h:
 
 /usr/include/x86_64-linux-gnu/qt6/QtCore/qtcoreexports.h:
-
-/usr/include/x86_64-linux-gnu/qt6/QtCore/qtimer.h:
 
 /usr/include/x86_64-linux-gnu/qt6/QtCore/qtmetamacros.h:
 
@@ -1786,9 +1668,11 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 
 /usr/include/x86_64-linux-gnu/qt6/QtGui/qimage.h:
 
+otp-mfa_autogen/moc_predefs.h:
+
 /usr/include/c++/13/bits/concept_check.h:
 
-otp-mfa_autogen/moc_predefs.h:
+/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qrubberband.h:
 
 /usr/include/x86_64-linux-gnu/qt6/QtGui/qfontmetrics.h:
 
@@ -1802,6 +1686,8 @@ otp-mfa_autogen/moc_predefs.h:
 
 /usr/include/x86_64-linux-gnu/qt6/QtGui/qtguiglobal.h:
 
+/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qstyle.h:
+
 /usr/include/x86_64-linux-gnu/qt6/QtGui/qtransform.h:
 
 /usr/include/c++/13/tr1/modified_bessel_func.tcc:
@@ -1810,7 +1696,29 @@ otp-mfa_autogen/moc_predefs.h:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt6/Qt6ConfigVersion.cmake:
 
+/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qlistview.h:
+
+/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qlistwidget.h:
+
+/usr/share/cmake-3.28/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake:
+
+/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qmainwindow.h:
+
+/usr/lib/x86_64-linux-gnu/cmake/Qt6WidgetsTools/Qt6WidgetsToolsTargets-none.cmake:
+
 /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qsizepolicy.h:
+
+/usr/share/cmake-3.28/Modules/Compiler/Tasking-DetermineCompiler.cmake:
+
+/usr/include/x86_64-linux-gnu/qt6/QtCore/qcontainerinfo.h:
+
+/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qslider.h:
+
+/usr/include/c++/13/memory:
+
+/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qstyleoption.h:
+
+/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qtabwidget.h:
 
 /usr/include/c++/13/bits/exception_defines.h:
 
@@ -1836,17 +1744,13 @@ otp-mfa_autogen/moc_predefs.h:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt6/Qt6Dependencies.cmake:
 
-/usr/include/x86_64-linux-gnu/c++/13/bits/c++allocator.h:
-
 /usr/include/c++/13/ext/aligned_buffer.h:
 
-/usr/include/openssl/objects.h:
+/usr/include/x86_64-linux-gnu/c++/13/bits/c++allocator.h:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt6/Qt6Targets.cmake:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt6/QtFeature.cmake:
-
-/usr/include/x86_64-linux-gnu/openssl/configuration.h:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt6/QtFeatureCommon.cmake:
 
@@ -1864,8 +1768,6 @@ otp-mfa_autogen/moc_predefs.h:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt6/QtPublicCMakeVersionHelpers.cmake:
 
-/usr/include/openssl/opensslv.h:
-
 /usr/include/c++/13/bits/predefined_ops.h:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt6/QtPublicFinalizerHelpers.cmake:
@@ -1880,15 +1782,19 @@ otp-mfa_autogen/moc_predefs.h:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreConfig.cmake:
 
+/usr/include/c++/13/cmath:
+
+/usr/lib/x86_64-linux-gnu/cmake/Qt6WidgetsTools/Qt6WidgetsToolsAdditionalTargetInfo.cmake:
+
 /usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreConfigExtras.cmake:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreConfigVersionImpl.cmake:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreDependencies.cmake:
 
-/usr/lib/x86_64-linux-gnu/cmake/Qt6CoreTools/Qt6CoreToolsAdditionalTargetInfo.cmake:
+/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:
 
-/usr/include/openssl/stack.h:
+/usr/lib/x86_64-linux-gnu/cmake/Qt6CoreTools/Qt6CoreToolsAdditionalTargetInfo.cmake:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt6CoreTools/Qt6CoreToolsConfigVersion.cmake:
 
@@ -1897,6 +1803,8 @@ otp-mfa_autogen/moc_predefs.h:
 /usr/include/x86_64-linux-gnu/qt6/QtCore/qmetacontainer.h:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt6CoreTools/Qt6CoreToolsConfigVersionImpl.cmake:
+
+/usr/lib/x86_64-linux-gnu/cmake/Qt6CoreTools/Qt6CoreToolsTargets.cmake:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt6DBus/Qt6DBusConfig.cmake:
 
@@ -1918,9 +1826,9 @@ otp-mfa_autogen/moc_predefs.h:
 
 /usr/share/cmake-3.28/Modules/CMakeFindBinUtils.cmake:
 
-/usr/include/x86_64-linux-gnu/qt6/QtCore/qbasictimer.h:
-
 /usr/lib/x86_64-linux-gnu/cmake/Qt6DBusTools/Qt6DBusToolsTargets.cmake:
+
+/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qtabbar.h:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt6Gui/Qt6GuiConfigVersion.cmake:
 
@@ -1933,6 +1841,8 @@ otp-mfa_autogen/moc_predefs.h:
 /usr/lib/x86_64-linux-gnu/cmake/Qt6GuiTools/Qt6GuiToolsAdditionalTargetInfo.cmake:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt6GuiTools/Qt6GuiToolsConfig.cmake:
+
+/usr/lib/x86_64-linux-gnu/cmake/Qt6WidgetsTools/Qt6WidgetsToolsConfig.cmake:
 
 /usr/share/cmake-3.28/Modules/CMakeDetermineCompiler.cmake:
 
@@ -1949,3 +1859,33 @@ otp-mfa_autogen/moc_predefs.h:
 /usr/include/ctype.h:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt6Widgets/Qt6WidgetsAdditionalTargetInfo.cmake:
+
+/usr/include/c++/13/bits/ranges_uninitialized.h:
+
+/usr/lib/x86_64-linux-gnu/cmake/Qt6Widgets/Qt6WidgetsConfigVersion.cmake:
+
+/usr/lib/x86_64-linux-gnu/cmake/Qt6Widgets/Qt6WidgetsConfigVersionImpl.cmake:
+
+/usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
+
+/home/oorlovsk/otp-mfa/add_account.ui:
+
+/usr/lib/x86_64-linux-gnu/cmake/Qt6Widgets/Qt6WidgetsTargets-none.cmake:
+
+/usr/include/asm-generic/errno-base.h:
+
+/usr/lib/x86_64-linux-gnu/cmake/Qt6Widgets/Qt6WidgetsTargets.cmake:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h:
+
+/usr/lib/x86_64-linux-gnu/cmake/Qt6WidgetsTools/Qt6WidgetsToolsConfigVersion.cmake:
+
+/usr/lib/x86_64-linux-gnu/cmake/Qt6WidgetsTools/Qt6WidgetsToolsDependencies.cmake:
+
+/usr/lib/x86_64-linux-gnu/cmake/Qt6WidgetsTools/Qt6WidgetsToolsTargets.cmake:
+
+/usr/lib/x86_64-linux-gnu/cmake/Qt6WidgetsTools/Qt6WidgetsToolsVersionlessTargets.cmake:
+
+/usr/share/cmake-3.28/Modules/CMakeCXXCompiler.cmake.in:
+
+/usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp:

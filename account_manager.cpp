@@ -1,59 +1,61 @@
 #include "account_manager.h"
 #include <QFile>
 #include <QJsonDocument>
+#include <QJsonObject>
 #include <QJsonArray>
 
-AccountManager::AccountManager(const QString &filePath)
-    : filePath(filePath) {}
+AccountManager::AccountManager() {
+    loadAccounts();
+}
 
-QList<Account> AccountManager::loadAccounts() {
-    QList<Account> accounts;
-    QFile file(filePath);
+void AccountManager::addAccount(const Account& account) {
+    accounts.append(account);
+    saveAccounts();  // Сохраняем аккаунты после добавления
+}
 
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QByteArray data = file.readAll();
-        file.close();
-
-        QJsonDocument doc = QJsonDocument::fromJson(data);
-        QJsonArray array = doc.array();
-
-        for (const QJsonValue &value : array) {
-            accounts.append(jsonToAccount(value.toObject()));
-        }
-    }
+QList<Account> AccountManager::getAccounts() const {
     return accounts;
 }
 
-void AccountManager::saveAccount(const Account &account) {
-    QList<Account> accounts = loadAccounts();
-    accounts.append(account);
-
-    QJsonArray array;
-    for (const Account &acc : accounts) {
-        array.append(accountToJson(acc));
+void AccountManager::loadAccounts() {
+    QFile file("accounts.json");
+    if (!file.open(QIODevice::ReadOnly)) {
+        return;
     }
 
-    QJsonDocument doc(array);
-    QFile file(filePath);
+    QByteArray data = file.readAll();
+    QJsonDocument document = QJsonDocument::fromJson(data);
+    QJsonArray accountArray = document.array();
 
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        file.write(doc.toJson());
+    for (int i = 0; i < accountArray.size(); ++i) {
+        QJsonObject accountObject = accountArray[i].toObject();
+        Account account;
+        account.name = accountObject["name"].toString();
+        account.secret = accountObject["secret"].toString();
+        account.algorithm = accountObject["algorithm"].toString();
+        account.counter = accountObject["counter"].toInt();
+        accounts.append(account);
+    }
+
+    file.close();
+}
+
+void AccountManager::saveAccounts() {
+    QJsonArray accountArray;
+    for (const Account& account : accounts) {
+        QJsonObject accountObject;
+        accountObject["name"] = account.name;
+        accountObject["secret"] = account.secret;
+        accountObject["algorithm"] = account.algorithm;
+        accountObject["counter"] = account.counter;
+
+        accountArray.append(accountObject);
+    }
+
+    QJsonDocument document(accountArray);
+    QFile file("accounts.json");
+    if (file.open(QIODevice::WriteOnly)) {
+        file.write(document.toJson());
         file.close();
     }
-}
-
-QJsonObject AccountManager::accountToJson(const Account &account) {
-    QJsonObject json;
-    json["name"] = account.name;
-    json["secret"] = account.secret;
-    json["algorithm"] = account.algorithm;
-    return json;
-}
-
-Account AccountManager::jsonToAccount(const QJsonObject &json) {
-    Account account;
-    account.name = json["name"].toString();
-    account.secret = json["secret"].toString();
-    account.algorithm = json["algorithm"].toString();
-    return account;
 }

@@ -1,37 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>OtpWindow</class>
- <widget class="QWidget" name="OtpWindow">
+ <class>OTPWindow</class>
+ <widget class="QMainWindow" name="OTPWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>400</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>OTP Generator</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QLabel" name="otpLabel">
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-     <property name="text">
-      <string>000000</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="addAccountButton">
-     <property name="text">
-      <string>Add Account</string>
-     </property>
-    </widget>
-   </item>
-  </layout>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTableWidget" name="accountsTableWidget">
+      <column>
+       <property name="text">
+        <string>Resource Name</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Algorithm</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>One-Time Password</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="addButton">
+      <property name="text">
+       <string>Add Account</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
  </widget>
  <resources/>
  <connections/>

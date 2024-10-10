@@ -3,24 +3,25 @@
 
 #include <QString>
 #include <QList>
-#include <QJsonObject>
 
 struct Account {
     QString name;
     QString secret;
-    QString algorithm; // "TOTP" или "HOTP"
+    QString algorithm;
+    int counter;  // Для HOTP
 };
 
 class AccountManager {
 public:
-    AccountManager(const QString &filePath);
-    QList<Account> loadAccounts();
-    void saveAccount(const Account &account);
+    AccountManager();
+    QList<Account> getAccounts() const;
+    void addAccount(const Account& account);
 
 private:
-    QString filePath;
-    QJsonObject accountToJson(const Account &account);
-    Account jsonToAccount(const QJsonObject &json);
+    QList<Account> accounts;
+    void saveAccounts() const;  // Сохранение учётных записей в JSON файл
+    void loadAccounts();        // Загрузка учётных записей из JSON файла
+    void saveAccounts();
 };
 
 #endif // ACCOUNT_MANAGER_H

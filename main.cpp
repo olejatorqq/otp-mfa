@@ -2,8 +2,10 @@
 #include "otp_window.h"
 
 int main(int argc, char *argv[]) {
-    QApplication app(argc, argv);
-    OtpWindow window;
+    QApplication a(argc, argv);
+
+    OTPWindow window;
     window.show();
-    return app.exec();
+
+    return a.exec();
 }
