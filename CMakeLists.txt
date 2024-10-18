@@ -50,6 +50,9 @@ if(ANDROID)
 else()
     add_executable(otp-mfa
         ${PROJECT_SOURCES}
+        encrypted_storage.h encrypted_storage.cpp
+        password_dialog.ui
+        password_dialog.h password_dialog.cpp
     )
 endif()
 

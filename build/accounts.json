@@ -1,0 +1,8 @@
+[
+    {
+        "algorithm": "TOTP",
+        "counter": 0,
+        "name": "test",
+        "secret": "aEigPnr5JH/bJKeTZElbmERoWx4FSItLvwtqzTeFA2E="
+    }
+]

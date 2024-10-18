@@ -8,6 +8,8 @@
 #include <QLabel>
 #include <QPixmap>
 #include <QTableWidgetItem>
+#include <QInputDialog>
+#include <QMessageBox>
 
 OTPWindow::OTPWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,8 +18,19 @@ OTPWindow::OTPWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    accounts = accountManager.getAccounts();
-    displayAccounts();
+    // Запрос пароля при запуске приложения
+    bool ok;
+    QString password = QInputDialog::getText(this, tr("Введите пароль"),
+                                             tr("Пароль:"), QLineEdit::Password,
+                                             "", &ok);
+    if (ok && !password.isEmpty()) {
+        accountManager.setPassword(password);
+        accounts = accountManager.getAccounts();
+        displayAccounts();
+    } else {
+        QMessageBox::critical(this, tr("Ошибка"), tr("Пароль обязателен для входа."));
+        close();  // Закрываем приложение, если пароль не введён
+    }
 
     connect(ui->addButton, &QPushButton::clicked, this, &OTPWindow::onAddAccountClicked);
 
@@ -51,10 +64,14 @@ void OTPWindow::displayAccounts() {
     for (const Account& account : accounts) {
         QString otp;
         OtpGenerator generator;
+
+        // Расшифровываем секретный ключ перед генерацией OTP
+        QString decryptedSecret = accountManager.decryptSecret(QByteArray::fromHex(account.secret.toUtf8()));
+
         if (account.algorithm == "TOTP") {
-            otp = generator.generateTOTP(account.secret);
+            otp = generator.generateTOTP(decryptedSecret);
         } else {
-            otp = generator.generateHOTP(account.secret, account.counter);
+            otp = generator.generateHOTP(decryptedSecret, account.counter);
         }
 
         int row = ui->accountsTableWidget->rowCount();
@@ -65,12 +82,10 @@ void OTPWindow::displayAccounts() {
     }
 }
 
-
 void OTPWindow::onAccountDoubleClicked(int row, int column) {
     selectedAccountIndex = row;  // Устанавливаем индекс выбранного аккаунта
     generateQRCodeForSelectedAccount();  // Генерируем QR-код для выбранного аккаунта
 }
-
 
 void OTPWindow::updateAccountsAndQRCode() {
     displayAccounts();
@@ -85,13 +100,16 @@ void OTPWindow::generateQRCodeForSelectedAccount() {
     // Получаем данные аккаунта
     Account selectedAccount = accounts[selectedAccountIndex];
 
+    // Расшифровываем секретный ключ перед генерацией OTP
+    QString decryptedSecret = accountManager.decryptSecret(QByteArray::fromHex(selectedAccount.secret.toUtf8()));
+
     // Генерируем OTP для выбранного аккаунта
     OtpGenerator generator;
     QString otp;
     if (selectedAccount.algorithm == "TOTP") {
-        otp = generator.generateTOTP(selectedAccount.secret);
+        otp = generator.generateTOTP(decryptedSecret);
     } else {
-        otp = generator.generateHOTP(selectedAccount.secret, selectedAccount.counter);
+        otp = generator.generateHOTP(decryptedSecret, selectedAccount.counter);
     }
 
     // Генерируем QR-код с использованием OTP
@@ -128,4 +146,3 @@ void OTPWindow::onGenerateQRButtonClicked() {
     qDeleteAll(ui->qrCodeDisplayLayout->children());
     ui->qrCodeDisplayLayout->addWidget(qrLabel);
 }
-
