@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>OTPWindow</class>
  <widget class="QMainWindow" name="OTPWindow">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>400</width>
-    <height>300</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>OTP Generator</string>
   </property>
@@ -17,21 +9,23 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QTableWidget" name="accountsTableWidget">
-      <column>
-       <property name="text">
-        <string>Resource Name</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
+      <property name="columnCount">
+       <number>3</number>  <!-- Количество колонок: имя, алгоритм, OTP -->
+      </property>
+      <property name="horizontalHeaderLabels">
+       <stringlist>
+        <string>Name</string>
         <string>Algorithm</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>One-Time Password</string>
-       </property>
-      </column>
+        <string>OTP</string>
+       </stringlist>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="generateQRButton">
+      <property name="text">
+       <string>Generate QR Code</string>
+      </property>
      </widget>
     </item>
     <item>
@@ -41,10 +35,11 @@
       </property>
      </widget>
     </item>
+    <item>
+     <layout class="QVBoxLayout" name="qrCodeDisplayLayout"/>  <!-- Layout для отображения QR-кода -->
+    </item>
    </layout>
   </widget>
  </widget>
- <resources/>
- <connections/>
 </ui>
 

@@ -1,8 +1,8 @@
-#ifndef OTP_WINDOW_H
-#define OTP_WINDOW_H
+#ifndef OTPWINDOW_H
+#define OTPWINDOW_H
 
 #include <QMainWindow>
-#include <QListWidgetItem>
+#include <QList>
 #include "account_manager.h"
 
 namespace Ui {
@@ -19,13 +19,18 @@ public:
 
 private slots:
     void onAddAccountClicked();
+    void onAccountDoubleClicked(int row, int column);  // Обработчик двойного нажатия на аккаунт
+    void updateAccountsAndQRCode();  // Метод для обновления списка аккаунтов и QR-кода
+    void generateQRCodeForSelectedAccount();  // Метод для генерации QR-кода для выбранного аккаунта
+    void onGenerateQRButtonClicked();
 
 private:
     Ui::OTPWindow *ui;
+    QList<Account> accounts;  // Список аккаунтов
     AccountManager accountManager;
-    QList<Account> accounts;
+    int selectedAccountIndex;  // Индекс выбранного аккаунта
 
-    void displayAccounts();
+    void displayAccounts();  // Метод для отображения аккаунтов
 };
 
-#endif // OTP_WINDOW_H
+#endif // OTPWINDOW_H
