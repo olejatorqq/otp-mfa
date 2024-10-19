@@ -10,6 +10,7 @@
 #include <QTableWidgetItem>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QTime>
 
 OTPWindow::OTPWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -33,14 +34,20 @@ OTPWindow::OTPWindow(QWidget *parent) :
     }
 
     connect(ui->addButton, &QPushButton::clicked, this, &OTPWindow::onAddAccountClicked);
-
-    // Подключаем обработчик двойного нажатия на строку в таблице
     connect(ui->accountsTableWidget, &QTableWidget::cellDoubleClicked, this, &OTPWindow::onAccountDoubleClicked);
 
     // Таймер для обновления OTP и QR-кода каждые 5 секунд
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &OTPWindow::updateAccountsAndQRCode);
     timer->start(5000);  // Обновляем OTP и QR-код каждые 5 секунд
+
+    // Таймер для плавного обновления прогресс-бара каждую секунду
+    QTimer *progressBarTimer = new QTimer(this);
+    connect(progressBarTimer, &QTimer::timeout, this, &OTPWindow::updateProgressBar);
+    progressBarTimer->start(1000);  // Обновляем прогресс-бар каждую секунду
+
+    // Подключение переключателя темы
+    connect(ui->themeToggleButton, &QPushButton::clicked, this, &OTPWindow::toggleTheme);
 }
 
 OTPWindow::~OTPWindow()
@@ -94,6 +101,9 @@ void OTPWindow::updateAccountsAndQRCode() {
     if (selectedAccountIndex >= 0 && selectedAccountIndex < accounts.size()) {
         generateQRCodeForSelectedAccount();
     }
+
+    // Обновляем прогресс-бар
+    updateProgressBar();
 }
 
 void OTPWindow::generateQRCodeForSelectedAccount() {
@@ -129,20 +139,23 @@ void OTPWindow::generateQRCodeForSelectedAccount() {
     ui->qrCodeDisplayLayout->addWidget(qrLabel);  // Добавляем QLabel в layout для отображения QR-кода
 }
 
-void OTPWindow::onGenerateQRButtonClicked() {
-    if (selectedAccountIndex < 0 || selectedAccountIndex >= accounts.size()) {
-        return;  // Если нет выбранного аккаунта, ничего не делаем
+void OTPWindow::updateProgressBar() {
+    // Обновляем прогресс-бар плавно
+    int secondsPassed = QTime::currentTime().second() % 30;
+    int percentage = (secondsPassed * 100) / 30;  // Обновляем на основе оставшегося времени для обновления TOTP
+    ui->totpProgressBar->setValue(percentage);
+}
+
+void OTPWindow::toggleTheme() {
+    static bool isDarkTheme = false;
+    if (isDarkTheme) {
+        // Применить светлую тему
+        qApp->setStyleSheet("");
+    } else {
+        // Применить темную тему
+        qApp->setStyleSheet("QWidget { background-color: #2e2e2e; color: #ffffff; } "
+                            "QPushButton { background-color: #444444; color: #ffffff; } "
+                            "QLineEdit, QTableWidget, QComboBox { background-color: #3e3e3e; color: #ffffff; }");
     }
-
-    const Account& account = accounts[selectedAccountIndex];
-    QString data = QString("otpauth://totp/%1?secret=%2").arg(account.name).arg(account.secret);  // Пример данных для QR-кода
-
-    // Генерация QR-кода и его отображение
-    QLabel *qrLabel = new QLabel(this);
-    QPixmap qrPixmap = QRGenerator::generate(data);  // Генерация QR-кода как QPixmap
-    qrLabel->setPixmap(qrPixmap.scaled(200, 200));  // Увеличиваем размер QR-кода
-
-    // Очищаем предыдущие QR-коды и добавляем новый
-    qDeleteAll(ui->qrCodeDisplayLayout->children());
-    ui->qrCodeDisplayLayout->addWidget(qrLabel);
+    isDarkTheme = !isDarkTheme;
 }

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>400</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,14 +17,28 @@
    <item>
     <widget class="QLineEdit" name="nameLineEdit">
      <property name="placeholderText">
-      <string>Resource Name</string>
+      <string>Enter Resource Name</string>
+     </property>
+     <property name="styleSheet">
+      <string>QLineEdit {
+          padding: 5px;
+          border: 1px solid #D3D3D3;
+          border-radius: 4px;
+      }</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QLineEdit" name="secretLineEdit">
      <property name="placeholderText">
-      <string>Secret Key</string>
+      <string>Enter Secret Key</string>
+     </property>
+     <property name="styleSheet">
+      <string>QLineEdit {
+          padding: 5px;
+          border: 1px solid #D3D3D3;
+          border-radius: 4px;
+      }</string>
      </property>
     </widget>
    </item>
@@ -40,6 +54,13 @@
        <string>HOTP</string>
       </property>
      </item>
+     <property name="styleSheet">
+      <string>QComboBox {
+          padding: 5px;
+          border: 1px solid #D3D3D3;
+          border-radius: 4px;
+      }</string>
+     </property>
     </widget>
    </item>
    <item>
@@ -49,6 +70,20 @@
      </property>
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+     <property name="centerButtons">
+      <bool>true</bool>
+     </property>
+     <property name="styleSheet">
+      <string>QDialogButtonBox::button {
+          padding: 5px 15px;
+          border-radius: 4px;
+          background-color: #5cb85c;
+          color: white;
+      }
+      QDialogButtonBox::button[role="reject"] {
+          background-color: #d9534f;
+      }</string>
      </property>
     </widget>
    </item>
