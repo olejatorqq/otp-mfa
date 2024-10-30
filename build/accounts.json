@@ -1,0 +1,20 @@
+[
+    {
+        "algorithm": "TOTP",
+        "counter": 0,
+        "name": "asdasd",
+        "secret": "123123"
+    },
+    {
+        "algorithm": "TOTP",
+        "counter": 0,
+        "name": "asdfgdfg",
+        "secret": "23424534"
+    },
+    {
+        "algorithm": "TOTP",
+        "counter": 0,
+        "name": "gdsfdfg",
+        "secret": "24234"
+    }
+]

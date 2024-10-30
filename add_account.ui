@@ -28,20 +28,7 @@
      </property>
     </widget>
    </item>
-   <item>
-    <widget class="QComboBox" name="algorithmComboBox">
-     <item>
-      <property name="text">
-       <string>TOTP</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>HOTP</string>
-      </property>
-     </item>
-    </widget>
-   </item>
+   <!-- Удален выбор алгоритма шифрования -->
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">

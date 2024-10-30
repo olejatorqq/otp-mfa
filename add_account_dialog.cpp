@@ -16,7 +16,7 @@ Account AddAccountDialog::getAccount() const {
     Account account;
     account.name = ui->nameLineEdit->text();
     account.secret = ui->secretLineEdit->text();
-    account.algorithm = ui->algorithmComboBox->currentText();
+    account.algorithm = "TOTP"; // Устанавливаем алгоритм по умолчанию
     account.counter = 0;
     return account;
 }

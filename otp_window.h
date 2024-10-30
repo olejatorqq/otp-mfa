@@ -20,9 +20,7 @@ public:
 private slots:
     void onAddAccountClicked();
     void onAccountDoubleClicked(int row, int column);  // Обработчик двойного нажатия на аккаунт
-    void updateAccountsAndQRCode();  // Метод для обновления списка аккаунтов и QR-кода
-    void generateQRCodeForSelectedAccount();  // Метод для генерации QR-кода для выбранного аккаунта
-    void onGenerateQRButtonClicked();
+    void updateAccounts();  // Метод для обновления списка аккаунтов
 
 private:
     Ui::OTPWindow *ui;
