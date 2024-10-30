@@ -8,15 +8,22 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
+     <widget class="QLineEdit" name="searchLineEdit">
+      <property name="placeholderText">
+       <string>Search Accounts...</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QTableWidget" name="accountsTableWidget">
       <property name="columnCount">
-       <number>3</number>  <!-- Количество колонок: имя, OTP, время до обновления -->
+       <number>3</number>  <!-- Количество колонок: имя, OTP, время -->
       </property>
       <property name="horizontalHeaderLabels">
        <stringlist>
         <string>Name</string>
         <string>OTP</string>
-        <string>Time Left</string>  <!-- Новый заголовок для таймера -->
+        <string>Time Left</string>
        </stringlist>
       </property>
      </widget>

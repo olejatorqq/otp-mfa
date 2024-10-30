@@ -4,14 +4,14 @@
 #include "otp_generator.h"
 #include <QListWidgetItem>
 #include <QTimer>
-#include <QTime>
-
-const int OTP_VALID_DURATION = 30; // Длительность действия OTP в секундах
+#include <QLineEdit>
+#include <QDateTime>
 
 OTPWindow::OTPWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::OTPWindow),
-    selectedAccountIndex(-1)  // Инициализация индекса выбранного аккаунта
+    selectedAccountIndex(-1),  // Инициализация индекса выбранного аккаунта
+    timer(new QTimer(this))  // Инициализация таймера
 {
     ui->setupUi(this);
 
@@ -19,19 +19,13 @@ OTPWindow::OTPWindow(QWidget *parent) :
     displayAccounts();
 
     connect(ui->addButton, &QPushButton::clicked, this, &OTPWindow::onAddAccountClicked);
+    connect(ui->searchLineEdit, &QLineEdit::textChanged, this, &OTPWindow::filterAccounts);  // Подключение фильтрации по тексту
 
     // Подключаем обработчик двойного нажатия на строку в таблице
     connect(ui->accountsTableWidget, &QTableWidget::cellDoubleClicked, this, &OTPWindow::onAccountDoubleClicked);
 
-    // Таймер для обновления OTP каждые 5 секунд
-    QTimer *otpTimer = new QTimer(this);
-    connect(otpTimer, &QTimer::timeout, this, &OTPWindow::updateAccounts);
-    otpTimer->start(5000);  // Обновляем OTP каждые 5 секунд
-
-    // Таймер для обновления оставшегося времени каждую секунду
-    QTimer *timeLeftTimer = new QTimer(this);
-    connect(timeLeftTimer, &QTimer::timeout, this, &OTPWindow::updateTimeLeft);
-    timeLeftTimer->start(1000);  // Обновляем оставшееся время каждую секунду
+    // Таймер для обновления OTP каждую секунду
+    connect(timer, &QTimer::timeout, this, &OTPWindow::updateAccounts);
 }
 
 OTPWindow::~OTPWindow()
@@ -46,6 +40,10 @@ void OTPWindow::onAddAccountClicked() {
         accountManager.addAccount(newAccount);
         accounts = accountManager.getAccounts();
         displayAccounts();
+
+        if (!timer->isActive()) {
+            timer->start(1000);  // Запускаем таймер, если он не активен
+        }
     }
 }
 
@@ -62,9 +60,19 @@ void OTPWindow::displayAccounts() {
         ui->accountsTableWidget->setItem(row, 0, new QTableWidgetItem(account.name));  // Имя аккаунта
         ui->accountsTableWidget->setItem(row, 1, new QTableWidgetItem(otp));  // Сгенерированный OTP
 
-        // Вычисляем оставшееся время до обновления
-        int timeLeft = OTP_VALID_DURATION - (QTime::currentTime().second() % OTP_VALID_DURATION);
-        ui->accountsTableWidget->setItem(row, 2, new QTableWidgetItem(QString::number(timeLeft) + "s"));  // Время до обновления
+        // Установка оставшегося времени (например, 30 секунд для TOTP)
+        int timeLeft = 30 - (QDateTime::currentSecsSinceEpoch() % 30);  // Оставшееся время до следующей генерации
+        ui->accountsTableWidget->setItem(row, 2, new QTableWidgetItem(QString::number(timeLeft)));  // Время оставшееся
+    }
+
+    // Применяем фильтрацию после обновления
+    filterAccounts(ui->searchLineEdit->text());
+}
+
+void OTPWindow::filterAccounts(const QString &filter) {
+    for (int row = 0; row < ui->accountsTableWidget->rowCount(); ++row) {
+        bool matches = ui->accountsTableWidget->item(row, 0)->text().contains(filter, Qt::CaseInsensitive);
+        ui->accountsTableWidget->setRowHidden(row, !matches);
     }
 }
 
@@ -74,11 +82,4 @@ void OTPWindow::onAccountDoubleClicked(int row, int /* column */) {
 
 void OTPWindow::updateAccounts() {
     displayAccounts();
-}
-
-void OTPWindow::updateTimeLeft() {
-    for (int row = 0; row < ui->accountsTableWidget->rowCount(); ++row) {
-        int timeLeft = OTP_VALID_DURATION - (QTime::currentTime().second() % OTP_VALID_DURATION);
-        ui->accountsTableWidget->item(row, 2)->setText(QString::number(timeLeft) + "s");  // Обновляем оставшееся время
-    }
 }
