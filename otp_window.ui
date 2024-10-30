@@ -10,12 +10,13 @@
     <item>
      <widget class="QTableWidget" name="accountsTableWidget">
       <property name="columnCount">
-       <number>2</number>  <!-- Количество колонок: имя, OTP -->
+       <number>3</number>  <!-- Количество колонок: имя, OTP, время до обновления -->
       </property>
       <property name="horizontalHeaderLabels">
        <stringlist>
         <string>Name</string>
         <string>OTP</string>
+        <string>Time Left</string>  <!-- Новый заголовок для таймера -->
        </stringlist>
       </property>
      </widget>

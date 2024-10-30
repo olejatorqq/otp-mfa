@@ -21,6 +21,7 @@ private slots:
     void onAddAccountClicked();
     void onAccountDoubleClicked(int row, int column);  // Обработчик двойного нажатия на аккаунт
     void updateAccounts();  // Метод для обновления списка аккаунтов
+    void updateTimeLeft();
 
 private:
     Ui::OTPWindow *ui;
