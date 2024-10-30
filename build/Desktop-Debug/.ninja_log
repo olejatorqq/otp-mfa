@@ -1,0 +1,14 @@
+# ninja log v5
+1	274	1730287911041281304	otp-mfa_autogen/timestamp	164ccc4a60b9972
+1	274	1730287911041281304	otp-mfa_autogen/mocs_compilation.cpp	164ccc4a60b9972
+1	274	1730287911041281304	/home/oorlovsk/Downloads/otp-mfa-fisrt/build/Desktop-Debug/otp-mfa_autogen/timestamp	164ccc4a60b9972
+1	274	1730287911041281304	/home/oorlovsk/Downloads/otp-mfa-fisrt/build/Desktop-Debug/otp-mfa_autogen/mocs_compilation.cpp	164ccc4a60b9972
+284	1741	1730287912503248936	CMakeFiles/otp-mfa.dir/home/oorlovsk/otp-mfa/include/qrcodegen.cpp.o	ec0a1015878d262e
+283	2031	1730287912805242265	CMakeFiles/otp-mfa.dir/qr_generator.cpp.o	2013fa46a9b09d6d
+278	2141	1730287912916239814	CMakeFiles/otp-mfa.dir/otp_generator.cpp.o	5775c92abc531a01
+276	2358	1730287913132235054	CMakeFiles/otp-mfa.dir/main.cpp.o	d16f87f12edb33e9
+274	2741	1730287913514226648	CMakeFiles/otp-mfa.dir/otp-mfa_autogen/mocs_compilation.cpp.o	9f42f5d65d74c893
+280	2803	1730287913578225239	CMakeFiles/otp-mfa.dir/account_manager.cpp.o	2b8a977b01fa3079
+282	2911	1730287913687222841	CMakeFiles/otp-mfa.dir/add_account_dialog.cpp.o	c8fe81144d7cd5cd
+276	3237	1730287914011215712	CMakeFiles/otp-mfa.dir/otp_window.cpp.o	297622fbb1b34208
+3238	4219	1730287914988194292	otp-mfa	f6c05a1024959638

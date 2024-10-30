@@ -22,5 +22,10 @@ Account AddAccountDialog::getAccount() const {
 }
 
 void AddAccountDialog::on_buttonBox_accepted() {
-    accept();
+    accept(); // Закрывает диалог и возвращает QDialog::Accepted
+}
+
+// Новый обработчик для кнопки "Cancel"
+void AddAccountDialog::on_buttonBox_rejected() {
+    reject(); // Закрывает диалог и возвращает QDialog::Rejected
 }

@@ -5,6 +5,38 @@
   <property name="windowTitle">
    <string>OTP Generator</string>
   </property>
+  <property name="styleSheet">
+   <string>
+    QMainWindow {
+        background-color: #f7f7f7;
+    }
+    QLineEdit {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 5px;
+        font-size: 14px;
+    }
+    QPushButton {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 16px;
+    }
+    QPushButton:hover {
+        background-color: #45a049;
+    }
+    QTableWidget {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+    QTableWidget::item {
+        padding: 5px;
+    }
+   </string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
