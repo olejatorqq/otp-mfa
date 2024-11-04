@@ -8,31 +8,44 @@
   <property name="styleSheet">
    <string>
     QMainWindow {
-        background-color: #f7f7f7;
+        background-color: #F0F0F3;
     }
     QLineEdit {
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 5px;
+        border: 1px solid #A6A6A6;
+        border-radius: 8px;
+        padding: 8px;
         font-size: 14px;
+        background-color: #FFFFFF;
+        color: #333333;
     }
     QPushButton {
-        background-color: #4CAF50;
+        background-color: #007AFF;
         color: white;
-        border: none;
-        border-radius: 5px;
-        padding: 10px;
+        border-radius: 8px;
+        padding: 12px;
         font-size: 16px;
     }
     QPushButton:hover {
-        background-color: #45a049;
+        background-color: #005BB5;
     }
     QTableWidget {
-        border: 1px solid #ccc;
-        border-radius: 5px;
+        border: 1px solid #D3D3D3;
+        border-radius: 8px;
         font-size: 14px;
+        background-color: #FFFFFF;
     }
     QTableWidget::item {
+        padding: 8px;
+    }
+    QTableWidget::item:selected {
+        background-color: #D1E8FF;
+        color: #005BB5;
+    }
+    QHeaderView::section {
+        background-color: #F9F9F9;
+        color: #606060;
+        font-weight: bold;
+        border: none;
         padding: 5px;
     }
    </string>
@@ -42,28 +55,40 @@
     <item>
      <widget class="QLineEdit" name="searchLineEdit">
       <property name="placeholderText">
-       <string>Search Accounts...</string>
+       <string>🔍 Search Accounts...</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QTableWidget" name="accountsTableWidget">
       <property name="columnCount">
-       <number>3</number>  <!-- Количество колонок: имя, OTP, время -->
+       <number>3</number>
       </property>
       <property name="horizontalHeaderLabels">
        <stringlist>
         <string>Name</string>
-        <string>OTP</string>
+        <string>OTP Code</string>
         <string>Time Left</string>
        </stringlist>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::SingleSelection</enum>
+      </property>
+      <property name="showGrid">
+       <bool>false</bool>
+      </property>
+      <property name="alternatingRowColors">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QPushButton" name="addButton">
       <property name="text">
-       <string>Add Account</string>
+       <string>➕ Add New Account</string>
       </property>
      </widget>
     </item>

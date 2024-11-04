@@ -3,6 +3,12 @@
         "algorithm": "TOTP",
         "counter": 0,
         "name": "asdasd",
-        "secret": "123121zsdfsdf"
+        "secret": "213123123123123"
+    },
+    {
+        "algorithm": "TOTP",
+        "counter": 0,
+        "name": "sdfsdfsdfsdf",
+        "secret": "12313123"
     }
 ]

@@ -1,8 +1,0 @@
-[
-    {
-        "algorithm": "TOTP",
-        "counter": 0,
-        "name": "asdasd",
-        "secret": "asdads"
-    }
-]

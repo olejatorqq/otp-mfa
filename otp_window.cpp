@@ -10,8 +10,8 @@
 OTPWindow::OTPWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::OTPWindow),
-    selectedAccountIndex(-1),  // Инициализация индекса выбранного аккаунта
-    timer(new QTimer(this))  // Инициализация таймера
+    selectedAccountIndex(-1),
+    timer(new QTimer(this))
 {
     ui->setupUi(this);
 
@@ -19,13 +19,13 @@ OTPWindow::OTPWindow(QWidget *parent) :
     displayAccounts();
 
     connect(ui->addButton, &QPushButton::clicked, this, &OTPWindow::onAddAccountClicked);
-    connect(ui->searchLineEdit, &QLineEdit::textChanged, this, &OTPWindow::filterAccounts);  // Подключение фильтрации по тексту
-
-    // Подключаем обработчик двойного нажатия на строку в таблице
+    connect(ui->searchLineEdit, &QLineEdit::textChanged, this, &OTPWindow::filterAccounts);
     connect(ui->accountsTableWidget, &QTableWidget::cellDoubleClicked, this, &OTPWindow::onAccountDoubleClicked);
-
-    // Таймер для обновления OTP каждую секунду
     connect(timer, &QTimer::timeout, this, &OTPWindow::updateAccounts);
+
+    if (!timer->isActive()) {
+        timer->start(1000);  // Запускаем таймер на обновление OTP и времени
+    }
 }
 
 OTPWindow::~OTPWindow()
@@ -40,34 +40,35 @@ void OTPWindow::onAddAccountClicked() {
         accountManager.addAccount(newAccount);
         accounts = accountManager.getAccounts();
         displayAccounts();
-
-        if (!timer->isActive()) {
-            timer->start(1000);  // Запускаем таймер, если он не активен
-        }
     }
 }
 
 void OTPWindow::displayAccounts() {
-    ui->accountsTableWidget->setRowCount(0);  // Очищаем таблицу
+    ui->accountsTableWidget->setRowCount(0);
 
     for (const Account& account : accounts) {
         QString otp;
         OtpGenerator generator;
-        otp = generator.generateTOTP(account.secret);  // Используем только TOTP
+        otp = generator.generateTOTP(account.secret);
 
         int row = ui->accountsTableWidget->rowCount();
         ui->accountsTableWidget->insertRow(row);
-        ui->accountsTableWidget->setItem(row, 0, new QTableWidgetItem(account.name));  // Имя аккаунта
-        ui->accountsTableWidget->setItem(row, 1, new QTableWidgetItem(otp));  // Сгенерированный OTP
+        ui->accountsTableWidget->setItem(row, 0, new QTableWidgetItem(account.name));
+        ui->accountsTableWidget->setItem(row, 1, new QTableWidgetItem(otp));
 
-        // Установка оставшегося времени (например, 30 секунд для TOTP)
-        int timeLeft = 30 - (QDateTime::currentSecsSinceEpoch() % 30);  // Оставшееся время до следующей генерации
-        ui->accountsTableWidget->setItem(row, 2, new QTableWidgetItem(QString::number(timeLeft)));  // Время оставшееся
+        int timeLeft = 30 - (QDateTime::currentSecsSinceEpoch() % 30);
+        ui->accountsTableWidget->setItem(row, 2, new QTableWidgetItem(QString::number(timeLeft)));
+
+        if (timeLeft <= 5) {
+            ui->accountsTableWidget->item(row, 1)->setBackgroundColor(Qt::red);
+        } else {
+            ui->accountsTableWidget->item(row, 1)->setBackgroundColor(Qt::white);
+        }
     }
 
-    // Применяем фильтрацию после обновления
     filterAccounts(ui->searchLineEdit->text());
 }
+
 
 void OTPWindow::filterAccounts(const QString &filter) {
     for (int row = 0; row < ui->accountsTableWidget->rowCount(); ++row) {
@@ -77,7 +78,7 @@ void OTPWindow::filterAccounts(const QString &filter) {
 }
 
 void OTPWindow::onAccountDoubleClicked(int row, int /* column */) {
-    selectedAccountIndex = row;  // Устанавливаем индекс выбранного аккаунта
+    selectedAccountIndex = row;
 }
 
 void OTPWindow::updateAccounts() {
