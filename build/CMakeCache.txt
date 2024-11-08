@@ -285,6 +285,9 @@ Qt5Multimedia_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5Multimedia
 //The directory containing a CMake configuration file for Qt5Network.
 Qt5Network_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5Network
 
+//The directory containing a CMake configuration file for Qt5Sql.
+Qt5Sql_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5Sql
+
 //The directory containing a CMake configuration file for Qt5Svg.
 Qt5Svg_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5Svg
 

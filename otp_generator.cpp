@@ -2,6 +2,10 @@
 #include <QDateTime>
 #include <QByteArray>
 #include <QCryptographicHash>
+#include <QDebug>
+#include <QMessageAuthenticationCode>
+#include <QMap>
+#include <cctype> // Добавляем для функции isspace
 
 QString OtpGenerator::generateTOTP(const QString &secret, int timeStep) {
     quint64 time = QDateTime::currentSecsSinceEpoch() / timeStep;
@@ -9,14 +13,24 @@ QString OtpGenerator::generateTOTP(const QString &secret, int timeStep) {
 }
 
 QString OtpGenerator::generateHOTP(const QString &secret, quint64 counter) {
-    QByteArray key = base32Decode(secret).toUtf8();
-    QByteArray message;
+    QByteArray key = base32Decode(secret);
+    if (key.isEmpty()) {
+        qWarning() << "Invalid Base32 secret.";
+        return QString();
+    }
+
+    QByteArray message(8, 0);
     for (int i = 7; i >= 0; --i) {
-        message.append((counter >> (i * 8)) & 0xFF);
+        message[7 - i] = (counter >> (i * 8)) & 0xFF;
     }
 
     QByteArray hash = hmacSha1(key, message);
-    int offset = hash[hash.size() - 1] & 0xF;
+    if (hash.isEmpty()) {
+        qWarning() << "HMAC calculation failed.";
+        return QString();
+    }
+
+    int offset = hash[hash.size() - 1] & 0x0F;
     int binary = ((hash[offset] & 0x7F) << 24) |
                  ((hash[offset + 1] & 0xFF) << 16) |
                  ((hash[offset + 2] & 0xFF) << 8) |
@@ -27,22 +41,49 @@ QString OtpGenerator::generateHOTP(const QString &secret, quint64 counter) {
 }
 
 QByteArray OtpGenerator::hmacSha1(const QByteArray &key, const QByteArray &message) {
-    unsigned char *result;
-    unsigned int len = 20;
-    result = (unsigned char*)malloc(sizeof(char) * len);
-
-    HMAC_CTX *ctx = HMAC_CTX_new();
-    HMAC_Init_ex(ctx, key.data(), key.size(), EVP_sha1(), nullptr);
-    HMAC_Update(ctx, (unsigned char*)message.data(), message.size());
-    HMAC_Final(ctx, result, &len);
-    HMAC_CTX_free(ctx);
-
-    QByteArray hash = QByteArray((char*)result, len);
-    free(result);
-    return hash;
+    // Используем QMessageAuthenticationCode для вычисления HMAC-SHA1
+    QMessageAuthenticationCode code(QCryptographicHash::Sha1, key);
+    code.addData(message);
+    return code.result();
 }
 
-QString OtpGenerator::base32Decode(const QString &input) {
-    // Простая реализация декодирования base32. Для большей гибкости, лучше использовать специализированные библиотеки.
-    return input; // Placeholder: Реализуй эту функцию
+QByteArray OtpGenerator::base32Decode(const QString &input) {
+    // Обновленная функция base32Decode с правильной обработкой символов
+    static const char base32Alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+    QMap<char, quint8> base32Lookup;
+    for (int i = 0; i < 32; ++i) {
+        base32Lookup[base32Alphabet[i]] = i;
+    }
+    // Добавляем соответствия для цифр и часто путаемых символов
+    base32Lookup['0'] = base32Lookup['O']; // 0 как O
+    base32Lookup['1'] = base32Lookup['L']; // 1 как L
+    base32Lookup['8'] = base32Lookup['B']; // 8 как B
+
+    QByteArray buffer = input.trimmed().toUpper().remove('=').toLatin1();
+    QByteArray bytes;
+
+    int bits = 0;
+    int value = 0;
+    for (int i = 0; i < buffer.size(); ++i) {
+        char c = buffer[i];
+        if (isspace(static_cast<unsigned char>(c))) {
+            continue; // Пропускаем пробелы
+        }
+
+        if (!base32Lookup.contains(c)) {
+            qWarning() << "Invalid Base32 character:" << c;
+            return QByteArray();
+        }
+
+        value = (value << 5) | base32Lookup[c];
+        bits += 5;
+
+        if (bits >= 8) {
+            bits -= 8;
+            bytes.append(static_cast<char>((value >> bits) & 0xFF));
+            value &= (1 << bits) - 1;
+        }
+    }
+
+    return bytes;
 }

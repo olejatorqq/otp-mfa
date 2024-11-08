@@ -252,12 +252,14 @@ otp-mfa: /usr/lib/x86_64-linux-gnu/libopencv_viz.so.4.6.0
 otp-mfa: /usr/lib/x86_64-linux-gnu/libopencv_wechat_qrcode.so.4.6.0
 otp-mfa: /usr/lib/x86_64-linux-gnu/libopencv_xobjdetect.so.4.6.0
 otp-mfa: /usr/lib/x86_64-linux-gnu/libopencv_xphoto.so.4.6.0
+otp-mfa: /usr/lib/x86_64-linux-gnu/libQt5Sql.so.5.15.13
+otp-mfa: /usr/lib/x86_64-linux-gnu/libssl.so
+otp-mfa: /usr/lib/x86_64-linux-gnu/libcrypto.so
 otp-mfa: /usr/lib/x86_64-linux-gnu/libQt5Multimedia.so.5.15.13
 otp-mfa: /usr/lib/x86_64-linux-gnu/libQt5Network.so.5.15.13
 otp-mfa: /usr/lib/x86_64-linux-gnu/libopencv_highgui.so.4.6.0
 otp-mfa: /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.13
 otp-mfa: /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.13
-otp-mfa: /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.13
 otp-mfa: /usr/lib/x86_64-linux-gnu/libopencv_datasets.so.4.6.0
 otp-mfa: /usr/lib/x86_64-linux-gnu/libopencv_plot.so.4.6.0
 otp-mfa: /usr/lib/x86_64-linux-gnu/libopencv_text.so.4.6.0
@@ -276,6 +278,7 @@ otp-mfa: /usr/lib/x86_64-linux-gnu/libopencv_flann.so.4.6.0
 otp-mfa: /usr/lib/x86_64-linux-gnu/libopencv_photo.so.4.6.0
 otp-mfa: /usr/lib/x86_64-linux-gnu/libopencv_imgproc.so.4.6.0
 otp-mfa: /usr/lib/x86_64-linux-gnu/libopencv_core.so.4.6.0
+otp-mfa: /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.13
 otp-mfa: CMakeFiles/otp-mfa.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/oorlovsk/Downloads/otp-mfa-fisrt/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable otp-mfa"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/otp-mfa.dir/link.txt --verbose=$(VERBOSE)

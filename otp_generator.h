@@ -2,7 +2,7 @@
 #define OTP_GENERATOR_H
 
 #include <QString>
-#include <openssl/hmac.h>
+#include <QByteArray>
 
 class OtpGenerator {
 public:
@@ -10,7 +10,7 @@ public:
     QString generateHOTP(const QString &secret, quint64 counter);
 
 private:
-    QString base32Decode(const QString &input);
+    QByteArray base32Decode(const QString &input);
     QByteArray hmacSha1(const QByteArray &key, const QByteArray &message);
 };
 

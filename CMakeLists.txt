@@ -17,9 +17,9 @@ find_package(Qt5 COMPONENTS Multimedia MultimediaWidgets REQUIRED)
 find_package(PkgConfig REQUIRED)
 find_package(Qt5Svg REQUIRED)
 find_package(OpenCV REQUIRED)
+find_package(Qt5 REQUIRED COMPONENTS Sql)
 
 include_directories(/usr/local/include/ZXing)
-
 
 set(PROJECT_SOURCES
     main.cpp
@@ -63,6 +63,10 @@ target_link_libraries(otp-mfa PRIVATE ${QREncode_LIBRARIES})
 target_link_libraries(otp-mfa PRIVATE Qt5::Widgets ZXing::ZXing Qt5::Svg)
 target_link_libraries(otp-mfa PRIVATE ZXing)
 target_link_libraries(otp-mfa PRIVATE ${OpenCV_LIBS})
+target_link_libraries(otp-mfa PRIVATE Qt5::Sql)
+target_link_libraries(otp-mfa PRIVATE OpenSSL::SSL OpenSSL::Crypto)
+
+
 
 pkg_check_modules(QREncode REQUIRED libqrencode)
 include_directories(${QREncode_INCLUDE_DIRS})

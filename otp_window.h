@@ -1,11 +1,12 @@
-#ifndef OTPWINDOW_H
-#define OTPWINDOW_H
+#ifndef OTP_WINDOW_H
+#define OTP_WINDOW_H
 
 #include <QMainWindow>
 #include <QList>
+#include <QWidget>
 #include <QTimer>
+
 #include "account_manager.h"
-#include <QDateTime>
 
 namespace Ui {
 class OTPWindow;
@@ -19,20 +20,26 @@ public:
     explicit OTPWindow(QWidget *parent = nullptr);
     ~OTPWindow();
 
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) override;
+
 private slots:
     void onAddAccountClicked();
-    void onAccountDoubleClicked(int row, int column);  // Обработчик двойного нажатия на аккаунт
-    void updateAccounts();  // Метод для обновления списка аккаунтов
-    void filterAccounts(const QString &filter);  // Метод для фильтрации аккаунтов
+    void filterAccounts(const QString &filter);
+    void updateAccounts();
+    void toggleTheme();
 
 private:
-    Ui::OTPWindow *ui;
-    QList<Account> accounts;  // Список аккаунтов
-    AccountManager accountManager;
-    int selectedAccountIndex;  // Индекс выбранного аккаунта
-    QTimer *timer;  // Указатель на таймер
+    void displayAccounts();
+    void copyCodeToClipboard(int index);
+    void applyTheme();
 
-    void displayAccounts();  // Метод для отображения аккаунтов
+    Ui::OTPWindow *ui;
+    AccountManager accountManager;
+    QList<Account> accounts;
+    QList<QWidget*> accountWidgets;
+    QTimer *timer;
+    bool darkThemeEnabled;
 };
 
-#endif // OTPWINDOW_H
+#endif // OTP_WINDOW_H

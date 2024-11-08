@@ -1,2 +1,2 @@
 #!/bin/bash
-cd build;rm -rf*;cmake ..;make; ./otp-mfa
+cd build;rm -rf *;cmake ..;make; ./otp-mfa
