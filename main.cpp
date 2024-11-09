@@ -1,13 +1,32 @@
-#include <QApplication>
 #include "otp_window.h"
+#include "master_password_dialog.h"
+#include "encryption_utils.h"
+#include "account_manager.h"
+#include <QApplication>
+#include <QMessageBox>
 
 int main(int argc, char *argv[]) {
-    // Устанавливаем атрибуты до создания QApplication
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 
     QApplication a(argc, argv);
-    OTPWindow window;
-    window.show();
-    return a.exec();
+
+    while (true) {
+        MasterPasswordDialog passwordDialog;
+        if (passwordDialog.exec() == QDialog::Accepted) {
+            QString masterPassword = passwordDialog.getPassword();
+            EncryptionUtils::instance().setMasterPassword(masterPassword);
+
+            AccountManager accountManager;
+            if (accountManager.verifyMasterPassword()) {
+                OTPWindow window;
+                window.show();
+                return a.exec();
+            } else {
+                QMessageBox::warning(nullptr, "Ошибка", "Неверный мастер-пароль. Попробуйте снова.");
+            }
+        } else {
+            return 0; // Выход из приложения, если пользователь отменил ввод пароля
+        }
+    }
 }

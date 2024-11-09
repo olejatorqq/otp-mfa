@@ -17,9 +17,7 @@ find_package(Qt5 COMPONENTS Multimedia MultimediaWidgets REQUIRED)
 find_package(PkgConfig REQUIRED)
 find_package(Qt5Svg REQUIRED)
 find_package(OpenCV REQUIRED)
-find_package(Qt5 REQUIRED COMPONENTS Sql)
-
-include_directories(/usr/local/include/ZXing)
+find_package(Qt5 REQUIRED COMPONENTS Widgets Sql)
 
 set(PROJECT_SOURCES
     main.cpp
@@ -33,9 +31,6 @@ set(PROJECT_SOURCES
     add_account.ui
     add_account_dialog.h
     add_account_dialog.cpp
-
-
-
     qr_generator.h
     qr_generator.cpp
     /home/oorlovsk/otp-mfa/include/qrcodegen.cpp
@@ -50,6 +45,9 @@ if(ANDROID)
 else()
     add_executable(otp-mfa
         ${PROJECT_SOURCES}
+        encryption_utils.h encryption_utils.cpp
+        master_password_dialog.h master_password_dialog.cpp
+        master_password_dialog.ui
     )
 endif()
 
@@ -63,10 +61,8 @@ target_link_libraries(otp-mfa PRIVATE ${QREncode_LIBRARIES})
 target_link_libraries(otp-mfa PRIVATE Qt5::Widgets ZXing::ZXing Qt5::Svg)
 target_link_libraries(otp-mfa PRIVATE ZXing)
 target_link_libraries(otp-mfa PRIVATE ${OpenCV_LIBS})
-target_link_libraries(otp-mfa PRIVATE Qt5::Sql)
+target_link_libraries(otp-mfa PRIVATE Qt5::Widgets Qt5::Sql)
 target_link_libraries(otp-mfa PRIVATE OpenSSL::SSL OpenSSL::Crypto)
-
-
 
 pkg_check_modules(QREncode REQUIRED libqrencode)
 include_directories(${QREncode_INCLUDE_DIRS})

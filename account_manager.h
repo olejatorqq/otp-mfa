@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QList>
+#include <QSqlDatabase>
 
 struct Account {
     QString name;
@@ -14,14 +15,17 @@ struct Account {
 class AccountManager {
 public:
     AccountManager();
+    ~AccountManager();
+
     QList<Account> getAccounts() const;
     void addAccount(const Account& account);
+    bool verifyMasterPassword();
+
 
 private:
-    QList<Account> accounts;
-    void saveAccounts() const;  // Сохранение учётных записей в JSON файл
-    void loadAccounts();        // Загрузка учётных записей из JSON файла
-    void saveAccounts();
+    QSqlDatabase db;
+
+    void initializeDatabase();  // Инициализация базы данных
 };
 
 #endif // ACCOUNT_MANAGER_H

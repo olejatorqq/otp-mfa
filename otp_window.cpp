@@ -18,6 +18,7 @@
 #include <QStyle>
 #include <QStyleFactory>
 #include <QFont>
+#include <QDebug> // Добавлено для отладки
 
 OTPWindow::OTPWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -25,11 +26,11 @@ OTPWindow::OTPWindow(QWidget *parent) :
     timer(new QTimer(this)),
     darkThemeEnabled(false)
 {
-    ui->setupUi(this);
-
-    // Устанавливаем масштабирование для High-DPI дисплеев
+    // Устанавливаем атрибуты масштабирования до создания QApplication
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+
+    ui->setupUi(this);
 
     // Устанавливаем размер шрифта для всего приложения
     QFont defaultFont = QApplication::font();
@@ -39,9 +40,11 @@ OTPWindow::OTPWindow(QWidget *parent) :
     // Применяем начальную тему
     applyTheme();
 
+    // Получаем аккаунты из базы данных
     accounts = accountManager.getAccounts();
     displayAccounts();
 
+    // Подключаем сигналы и слоты
     connect(ui->addButton, &QPushButton::clicked, this, &OTPWindow::onAddAccountClicked);
     connect(ui->searchLineEdit, &QLineEdit::textChanged, this, &OTPWindow::filterAccounts);
     connect(timer, &QTimer::timeout, this, &OTPWindow::updateAccounts);
@@ -60,6 +63,8 @@ void OTPWindow::onAddAccountClicked() {
     if (dialog.exec() == QDialog::Accepted) {
         Account newAccount = dialog.getAccount();
         accountManager.addAccount(newAccount);
+
+        // Обновляем список аккаунтов из базы данных
         accounts = accountManager.getAccounts();
         displayAccounts();
     }
@@ -100,7 +105,7 @@ void OTPWindow::displayAccounts() {
         // Прогресс-бар для оставшегося времени
         QProgressBar *progressBar = new QProgressBar();
         progressBar->setMinimum(0);
-        progressBar->setMaximum(30); // Исправлено: использован оператор ->
+        progressBar->setMaximum(30);
         int timeLeft = 30 - (QDateTime::currentSecsSinceEpoch() % 30);
         progressBar->setValue(timeLeft);
         progressBar->setTextVisible(false);

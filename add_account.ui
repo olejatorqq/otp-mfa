@@ -2,33 +2,48 @@
 <ui version="4.0">
  <class>AddAccountDialog</class>
  <widget class="QDialog" name="AddAccountDialog">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>320</width>
-    <height>240</height>
-   </rect>
-  </property>
   <property name="windowTitle">
-   <string>Add Account</string>
+   <string>Добавить аккаунт</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
+    <widget class="QLabel" name="labelName">
+     <property name="text">
+      <string>Название ресурса:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QLineEdit" name="nameLineEdit">
      <property name="placeholderText">
-      <string>Resource Name</string>
+      <string>Введите название ресурса</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelSecret">
+     <property name="text">
+      <string>Секретный ключ:</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QLineEdit" name="secretLineEdit">
      <property name="placeholderText">
-      <string>Secret Key</string>
+      <string>Введите секретный ключ</string>
+     </property>
+     <property name="echoMode">
+      <enum>QLineEdit::Password</enum>
      </property>
     </widget>
    </item>
-   <!-- Удален выбор алгоритма шифрования -->
+   <item>
+    <widget class="QCheckBox" name="showSecretCheckBox">
+     <property name="text">
+      <string>Показать секретный ключ</string>
+     </property>
+    </widget>
+   </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
