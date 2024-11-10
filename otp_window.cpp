@@ -18,7 +18,8 @@
 #include <QStyle>
 #include <QStyleFactory>
 #include <QFont>
-#include <QDebug> // Добавлено для отладки
+#include <QDebug>
+#include <QScreen> // Для получения DPI
 
 OTPWindow::OTPWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -27,6 +28,16 @@ OTPWindow::OTPWindow(QWidget *parent) :
     darkThemeEnabled(false)
 {
     ui->setupUi(this);
+
+    // Устанавливаем минимальный и начальный размер окна
+    this->setMinimumSize(400, 600);
+    this->resize(600, 800); // Начальный размер окна
+
+    // Устанавливаем размер шрифта для заголовка
+    QFont titleFont = ui->titleLabel->font();
+    titleFont.setPointSize(18);
+    titleFont.setBold(true);
+    ui->titleLabel->setFont(titleFont);
 
     // Устанавливаем размер шрифта для всего приложения
     QFont defaultFont = QApplication::font();
@@ -76,6 +87,9 @@ void OTPWindow::displayAccounts() {
 
     accountWidgets.clear();
 
+    // Получаем коэффициент масштабирования DPI
+    qreal scaleFactor = QGuiApplication::primaryScreen()->logicalDotsPerInch() / 96.0;
+
     for (const Account& account : accounts) {
         QWidget *accountWidget = new QWidget();
         accountWidget->setObjectName("accountWidget");
@@ -85,18 +99,20 @@ void OTPWindow::displayAccounts() {
         // Имя аккаунта
         QLabel *nameLabel = new QLabel(account.name);
         QFont nameFont = nameLabel->font();
-        nameFont.setPointSize(16); // Увеличено с 14
+        nameFont.setPointSizeF(14 * scaleFactor);
         nameFont.setBold(true);
         nameLabel->setFont(nameFont);
+        nameLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
         // OTP код
         OtpGenerator generator;
         QString otp = generator.generateTOTP(account.secret);
         QLabel *otpLabel = new QLabel(otp);
         QFont otpFont = otpLabel->font();
-        otpFont.setPointSize(28); // Увеличено с 24
+        otpFont.setPointSizeF(24 * scaleFactor);
         otpFont.setBold(true);
         otpLabel->setFont(otpFont);
+        otpLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
         // Прогресс-бар для оставшегося времени
         QProgressBar *progressBar = new QProgressBar();
@@ -105,19 +121,24 @@ void OTPWindow::displayAccounts() {
         int timeLeft = 30 - (QDateTime::currentSecsSinceEpoch() % 30);
         progressBar->setValue(timeLeft);
         progressBar->setTextVisible(false);
-        progressBar->setFixedWidth(120); // Увеличена ширина
+        progressBar->setFixedWidth(100 * scaleFactor); // Учитываем масштабирование
+        progressBar->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
 
         // Стилизация прогресс-бара
-        progressBar->setStyleSheet(R"(
-            QProgressBar {
-                border: 1px solid #CCCCCC;
-                border-radius: 5px;
-                background-color: #E0E0E0;
-            }
-            QProgressBar::chunk {
-                background-color: #76C7C0;
-            }
-        )");
+        QString inputBorderColor = darkThemeEnabled ? "#555555" : "#cccccc";
+        QString backgroundColor = darkThemeEnabled ? "#2E2E2E" : "#f0f0f0";
+        QString progressBarStyle = QString(
+                                       "QProgressBar {"
+                                       "   border: 1px solid %1;"
+                                       "   border-radius: 5px;"
+                                       "   background-color: %2;"
+                                       "}"
+                                       "QProgressBar::chunk {"
+                                       "   background-color: %3;"
+                                       "}"
+                                       ).arg(inputBorderColor, backgroundColor, "#76C7C0");
+
+        progressBar->setStyleSheet(progressBarStyle);
 
         // Размещение элементов в layout
         layout->addWidget(nameLabel);
@@ -171,27 +192,9 @@ void OTPWindow::updateAccounts() {
 
         // Изменение цвета прогресс-бара в зависимости от оставшегося времени
         if (timeLeft <= 5) {
-            progressBar->setStyleSheet(R"(
-                QProgressBar {
-                    border: 1px solid #CCCCCC;
-                    border-radius: 5px;
-                    background-color: #E0E0E0;
-                }
-                QProgressBar::chunk {
-                    background-color: #FF6B6B;
-                }
-            )");
+            progressBar->setStyleSheet(progressBar->styleSheet().replace("#76C7C0", "#FF6B6B"));
         } else {
-            progressBar->setStyleSheet(R"(
-                QProgressBar {
-                    border: 1px solid #CCCCCC;
-                    border-radius: 5px;
-                    background-color: #E0E0E0;
-                }
-                QProgressBar::chunk {
-                    background-color: #76C7C0;
-                }
-            )");
+            progressBar->setStyleSheet(progressBar->styleSheet().replace("#FF6B6B", "#76C7C0"));
         }
     }
 }
@@ -235,37 +238,58 @@ void OTPWindow::toggleTheme() {
 }
 
 void OTPWindow::applyTheme() {
+    // Стили для светлой и темной тем
+    QString buttonColor = darkThemeEnabled ? "#2E2E2E" : "#007BFF";
+    QString buttonHoverColor = darkThemeEnabled ? "#444444" : "#0056b3";
+    QString textColor = darkThemeEnabled ? "white" : "white";
+    QString inputBorderColor = darkThemeEnabled ? "#555555" : "#cccccc";
+    QString backgroundColor = darkThemeEnabled ? "#2E2E2E" : "#f0f0f0";
+    QString textInputColor = darkThemeEnabled ? "#ffffff" : "#000000";
+
+    // Устанавливаем палитру для основного окна
     QPalette palette;
+    palette.setColor(QPalette::Window, QColor(backgroundColor));
+    palette.setColor(QPalette::WindowText, QColor(textColor));
+    this->setPalette(palette);
 
-    if (darkThemeEnabled) {
-        qApp->setStyle(QStyleFactory::create("Fusion"));
-        palette.setColor(QPalette::Window, QColor(53,53,53));
-        palette.setColor(QPalette::WindowText, Qt::white);
-        palette.setColor(QPalette::Base, QColor(25,25,25));
-        palette.setColor(QPalette::AlternateBase, QColor(53,53,53));
-        palette.setColor(QPalette::ToolTipBase, Qt::white);
-        palette.setColor(QPalette::ToolTipText, Qt::white);
-        palette.setColor(QPalette::Text, Qt::white);
-        palette.setColor(QPalette::Button, QColor(53,53,53));
-        palette.setColor(QPalette::ButtonText, Qt::white);
-        palette.setColor(QPalette::BrightText, Qt::red);
-        palette.setColor(QPalette::Highlight, QColor(142,45,197).lighter());
-        palette.setColor(QPalette::HighlightedText, Qt::black);
-    } else {
-        qApp->setStyle(QStyleFactory::create("Fusion"));
-        palette = qApp->style()->standardPalette();
-    }
-
-    qApp->setPalette(palette);
-
-    // Обновляем стили для кнопок и других элементов
-    QString buttonStyle = darkThemeEnabled ?
-                              "QPushButton { background-color: #5A5A5A; color: white; border-radius: 8px; padding: 12px; font-size: 18px; }"
-                              "QPushButton:hover { background-color: #777777; }"
-                                           :
-                              "QPushButton { background-color: #007AFF; color: white; border-radius: 8px; padding: 12px; font-size: 18px; }"
-                              "QPushButton:hover { background-color: #005BB5; }";
+    // Стили для кнопки "Добавить"
+    QString buttonStyle = QString(
+                              "QPushButton {"
+                              "   background-color: %1;"
+                              "   color: %2;"
+                              "   border: none;"
+                              "   border-radius: 8px;"
+                              "   padding: 12px;"
+                              "   font-size: 16px;"
+                              "}"
+                              "QPushButton:hover {"
+                              "   background-color: %3;"
+                              "}"
+                              ).arg(buttonColor, textColor, buttonHoverColor);
 
     ui->addButton->setStyleSheet(buttonStyle);
-    ui->searchLineEdit->setStyleSheet("QLineEdit { padding: 8px; border-radius: 8px; font-size: 16px; }");
+
+    // Стили для поля поиска
+    QString searchStyle = QString(
+                              "QLineEdit {"
+                              "   padding: 8px;"
+                              "   border: 1px solid %1;"
+                              "   border-radius: 8px;"
+                              "   font-size: 14px;"
+                              "   color: %2;"
+                              "   background-color: %3;"
+                              "}"
+                              ).arg(inputBorderColor, textInputColor, backgroundColor);
+
+    ui->searchLineEdit->setStyleSheet(searchStyle);
+
+    // Стили для заголовка
+    QString titleStyle = QString(
+                             "QLabel {"
+                             "   color: %1;"
+                             "}"
+                             ).arg(textColor);
+
+    ui->titleLabel->setStyleSheet(titleStyle);
 }
+

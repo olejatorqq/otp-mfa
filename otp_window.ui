@@ -7,6 +7,18 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
+    <!-- Добавлен заголовок "Мои аккаунты" -->
+    <item>
+     <widget class="QLabel" name="titleLabel">
+      <property name="text">
+       <string>Мои аккаунты</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <!-- Поле поиска -->
     <item>
      <widget class="QLineEdit" name="searchLineEdit">
       <property name="placeholderText">
@@ -14,6 +26,7 @@
       </property>
      </widget>
     </item>
+    <!-- Область с аккаунтами -->
     <item>
      <widget class="QScrollArea" name="accountsScrollArea">
       <property name="widgetResizable">
@@ -21,15 +34,16 @@
       </property>
       <widget class="QWidget" name="accountsWidget">
        <layout class="QVBoxLayout" name="accountsLayout">
-        <!-- Account widgets will be added here programmatically -->
+        <!-- Виджеты аккаунтов будут добавлены программно -->
        </layout>
       </widget>
      </widget>
     </item>
+    <!-- Кнопка "Добавить" -->
     <item>
      <widget class="QPushButton" name="addButton">
       <property name="text">
-       <string>➕ Добавить новый аккаунт</string>
+       <string>Добавить новый аккаунт</string>
       </property>
      </widget>
     </item>
