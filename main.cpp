@@ -1,11 +1,11 @@
 #include "otp_window.h"
 #include "master_password_dialog.h"
 #include "encryption_utils.h"
-#include "account_manager.h"
 #include <QApplication>
 #include <QMessageBox>
 
 int main(int argc, char *argv[]) {
+    // Устанавливаем атрибуты перед созданием QApplication
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 
@@ -17,10 +17,15 @@ int main(int argc, char *argv[]) {
             QString masterPassword = passwordDialog.getPassword();
             EncryptionUtils::instance().setMasterPassword(masterPassword);
 
-            AccountManager accountManager;
-            if (accountManager.verifyMasterPassword()) {
+            if (AccountManager::instance().verifyMasterPassword()) {
                 OTPWindow window;
                 window.show();
+
+                // Подключаемся к сигналу aboutToQuit для логирования выхода
+                QObject::connect(&a, &QApplication::aboutToQuit, []() {
+                    AccountManager::instance().logEvent("Пользователь вышел из приложения");
+                });
+
                 return a.exec();
             } else {
                 QMessageBox::warning(nullptr, "Ошибка", "Неверный мастер-пароль. Попробуйте снова.");

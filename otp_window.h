@@ -35,7 +35,7 @@ private:
     void applyTheme();
 
     Ui::OTPWindow *ui;
-    AccountManager accountManager;
+    // Удаляем AccountManager accountManager;
     QList<Account> accounts;
     QList<QWidget*> accountWidgets;
     QTimer *timer;

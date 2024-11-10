@@ -26,22 +26,18 @@ OTPWindow::OTPWindow(QWidget *parent) :
     timer(new QTimer(this)),
     darkThemeEnabled(false)
 {
-    // Устанавливаем атрибуты масштабирования до создания QApplication
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-
     ui->setupUi(this);
 
     // Устанавливаем размер шрифта для всего приложения
     QFont defaultFont = QApplication::font();
-    defaultFont.setPointSize(12); // Увеличиваем размер шрифта
+    defaultFont.setPointSize(12);
     QApplication::setFont(defaultFont);
 
     // Применяем начальную тему
     applyTheme();
 
     // Получаем аккаунты из базы данных
-    accounts = accountManager.getAccounts();
+    accounts = AccountManager::instance().getAccounts();
     displayAccounts();
 
     // Подключаем сигналы и слоты
@@ -62,10 +58,10 @@ void OTPWindow::onAddAccountClicked() {
     AddAccountDialog dialog(this);
     if (dialog.exec() == QDialog::Accepted) {
         Account newAccount = dialog.getAccount();
-        accountManager.addAccount(newAccount);
+        AccountManager::instance().addAccount(newAccount);
 
         // Обновляем список аккаунтов из базы данных
-        accounts = accountManager.getAccounts();
+        accounts = AccountManager::instance().getAccounts();
         displayAccounts();
     }
 }
