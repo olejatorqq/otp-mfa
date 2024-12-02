@@ -5,6 +5,7 @@
 #include <QList>
 #include <QWidget>
 #include <QTimer>
+#include <QSettings>
 
 #include "account_manager.h"
 
@@ -28,6 +29,7 @@ private slots:
     void filterAccounts(const QString &filter);
     void updateAccounts();
     void toggleTheme();
+    void openSettingsDialog(); // Новый слот
 
 private:
     void displayAccounts();
@@ -40,6 +42,8 @@ private:
     QList<QWidget*> accountWidgets;
     QTimer *timer;
     bool darkThemeEnabled;
+    int interval; // Новый параметр
+
 };
 
 #endif // OTP_WINDOW_H

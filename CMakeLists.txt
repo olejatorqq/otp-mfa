@@ -48,6 +48,7 @@ else()
         encryption_utils.h encryption_utils.cpp
         master_password_dialog.h master_password_dialog.cpp
         master_password_dialog.ui
+        settings_dialog.h settings_dialog.cpp settings_dialog.ui
 
     )
 endif()

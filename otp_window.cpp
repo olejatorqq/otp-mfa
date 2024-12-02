@@ -3,6 +3,7 @@
 #include "add_account_dialog.h"
 #include "otp_generator.h"
 #include "account_manager.h"
+#include "settings_dialog.h"
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -19,7 +20,8 @@
 #include <QStyleFactory>
 #include <QFont>
 #include <QDebug>
-#include <QScreen> // Для получения DPI
+#include <QScreen>
+#include <QSettings>
 
 OTPWindow::OTPWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -47,6 +49,10 @@ OTPWindow::OTPWindow(QWidget *parent) :
     // Применяем начальную тему
     applyTheme();
 
+    // Загружаем интервал из настроек или устанавливаем значение по умолчанию
+    QSettings settings("YourCompany", "YourApp");
+    interval = settings.value("interval", 30).toInt();
+
     // Получаем аккаунты из базы данных
     accounts = AccountManager::instance().getAccounts();
     displayAccounts();
@@ -54,6 +60,7 @@ OTPWindow::OTPWindow(QWidget *parent) :
     // Подключаем сигналы и слоты
     connect(ui->addButton, &QPushButton::clicked, this, &OTPWindow::onAddAccountClicked);
     connect(ui->searchLineEdit, &QLineEdit::textChanged, this, &OTPWindow::filterAccounts);
+    connect(ui->settingsButton, &QPushButton::clicked, this, &OTPWindow::openSettingsDialog); // Добавлено подключение
     connect(timer, &QTimer::timeout, this, &OTPWindow::updateAccounts);
 
     // Запускаем таймер для обновления OTP
@@ -106,7 +113,7 @@ void OTPWindow::displayAccounts() {
 
         // OTP код
         OtpGenerator generator;
-        QString otp = generator.generateTOTP(account.secret);
+        QString otp = generator.generateTOTP(account.secret, interval); // Используем interval
         QLabel *otpLabel = new QLabel(otp);
         QFont otpFont = otpLabel->font();
         otpFont.setPointSizeF(24 * scaleFactor);
@@ -117,8 +124,9 @@ void OTPWindow::displayAccounts() {
         // Прогресс-бар для оставшегося времени
         QProgressBar *progressBar = new QProgressBar();
         progressBar->setMinimum(0);
-        progressBar->setMaximum(30);
-        int timeLeft = 30 - (QDateTime::currentSecsSinceEpoch() % 30);
+        progressBar->setMaximum(interval); // Используем interval
+        int timeElapsed = QDateTime::currentSecsSinceEpoch() % interval;
+        int timeLeft = interval - timeElapsed;
         progressBar->setValue(timeLeft);
         progressBar->setTextVisible(false);
         progressBar->setFixedWidth(100 * scaleFactor); // Учитываем масштабирование
@@ -178,16 +186,17 @@ void OTPWindow::updateAccounts() {
         QHBoxLayout *layout = qobject_cast<QHBoxLayout*>(accountWidget->layout());
         if (!layout) continue;
 
-        QLabel *nameLabel = qobject_cast<QLabel*>(layout->itemAt(0)->widget());
         QLabel *otpLabel = qobject_cast<QLabel*>(layout->itemAt(2)->widget());
         QProgressBar *progressBar = qobject_cast<QProgressBar*>(layout->itemAt(3)->widget());
 
-        if (!nameLabel || !otpLabel || !progressBar) continue;
+        if (!otpLabel || !progressBar) continue;
 
-        QString otp = generator.generateTOTP(account.secret);
+        QString otp = generator.generateTOTP(account.secret, interval); // Используем interval
         otpLabel->setText(otp);
 
-        int timeLeft = 30 - (QDateTime::currentSecsSinceEpoch() % 30);
+        int timeElapsed = QDateTime::currentSecsSinceEpoch() % interval;
+        int timeLeft = interval - timeElapsed;
+        progressBar->setMaximum(interval); // Используем interval
         progressBar->setValue(timeLeft);
 
         // Изменение цвета прогресс-бара в зависимости от оставшегося времени
@@ -215,7 +224,7 @@ void OTPWindow::copyCodeToClipboard(int index) {
     if (index < 0 || index >= accounts.size()) return;
 
     OtpGenerator generator;
-    QString otp = generator.generateTOTP(accounts[index].secret);
+    QString otp = generator.generateTOTP(accounts[index].secret, interval); // Используем interval
 
     QClipboard *clipboard = QApplication::clipboard();
     clipboard->setText(otp);
@@ -291,5 +300,36 @@ void OTPWindow::applyTheme() {
                              ).arg(textColor);
 
     ui->titleLabel->setStyleSheet(titleStyle);
+
+    // Стили для кнопки настроек
+    QString settingsButtonStyle = QString(
+                                      "QPushButton {"
+                                      "   background-color: transparent;"
+                                      "   color: %1;"
+                                      "   border: none;"
+                                      "   font-size: 18px;"
+                                      "}"
+                                      "QPushButton:hover {"
+                                      "   color: %2;"
+                                      "}"
+                                      ).arg(textColor, buttonHoverColor);
+
+    ui->settingsButton->setStyleSheet(settingsButtonStyle);
 }
 
+void OTPWindow::openSettingsDialog()
+{
+    SettingsDialog dialog(this);
+    dialog.setInterval(interval);
+
+    if (dialog.exec() == QDialog::Accepted) {
+        interval = dialog.getInterval();
+
+        // Сохраняем значение в настройках
+        QSettings settings("YourCompany", "YourApp");
+        settings.setValue("interval", interval);
+
+        // Обновляем отображение
+        displayAccounts();
+    }
+}

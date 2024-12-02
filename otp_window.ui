@@ -7,16 +7,46 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
-    <!-- Добавлен заголовок "Мои аккаунты" -->
+    <!-- Верхняя панель с заголовком и кнопкой настроек -->
     <item>
-     <widget class="QLabel" name="titleLabel">
-      <property name="text">
-       <string>Мои аккаунты</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="topLayout">
+      <item>
+       <widget class="QLabel" name="titleLabel">
+        <property name="text">
+         <string>Мои аккаунты</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeft | Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Expanding</enum>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="settingsButton">
+        <property name="text">
+         <string>⚙</string>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
     <!-- Поле поиска -->
     <item>
