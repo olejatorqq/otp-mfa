@@ -22,6 +22,9 @@
 #include <QDebug>
 #include <QScreen>
 #include <QSettings>
+#include <QMenu>
+#include <QMessageBox>
+#include <QContextMenuEvent>
 
 OTPWindow::OTPWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -60,7 +63,7 @@ OTPWindow::OTPWindow(QWidget *parent) :
     // Подключаем сигналы и слоты
     connect(ui->addButton, &QPushButton::clicked, this, &OTPWindow::onAddAccountClicked);
     connect(ui->searchLineEdit, &QLineEdit::textChanged, this, &OTPWindow::filterAccounts);
-    connect(ui->settingsButton, &QPushButton::clicked, this, &OTPWindow::openSettingsDialog); // Добавлено подключение
+    connect(ui->settingsButton, &QPushButton::clicked, this, &OTPWindow::openSettingsDialog);
     connect(timer, &QTimer::timeout, this, &OTPWindow::updateAccounts);
 
     // Запускаем таймер для обновления OTP
@@ -100,7 +103,8 @@ void OTPWindow::displayAccounts() {
     // Получаем текущее время один раз
     quint64 currentTime = QDateTime::currentSecsSinceEpoch();
 
-    for (Account &account : accounts) {
+    for (int i = 0; i < accounts.size(); ++i) {
+        Account &account = accounts[i];
         QWidget *accountWidget = new QWidget();
         accountWidget->setObjectName("accountWidget");
 
@@ -195,19 +199,16 @@ void OTPWindow::displayAccounts() {
         // Сохраняем виджет для обновления
         accountWidgets.append(accountWidget);
 
-        // Устанавливаем фильтр событий для двойного щелчка
+        // Устанавливаем фильтр событий для двойного щелчка и правого клика
         accountWidget->installEventFilter(this);
     }
 
     // Добавляем растяжку в конец для выравнивания вверх
     ui->accountsLayout->addStretch();
 
+    // Применяем фильтр после добавления всех виджетов
     filterAccounts(ui->searchLineEdit->text());
 }
-
-
-
-
 
 void OTPWindow::filterAccounts(const QString &filter) {
     for (int i = 0; i < accounts.size(); ++i) {
@@ -242,40 +243,40 @@ void OTPWindow::updateAccounts() {
         QString otp;
         if (account.type == "TOTP") {
             otp = generator.generateTOTP(account.secret, currentTime, account.period, account.algorithm, account.digits);
-        } else if (account.type == "HOTP") {
-            otp = generator.generateHOTP(account.secret, account.counter, account.algorithm, account.digits);
-            // Увеличиваем счетчик для HOTP
-            account.counter += 1;
-        }
-
-        otpLabel->setText(otp);
-
-        if (account.type == "TOTP") {
+            // Обновляем прогресс-бар
             int timeLeft = account.period - (currentTime % account.period);
             progressBar->setMaximum(account.period);
             progressBar->setValue(timeLeft);
 
             // Изменение цвета прогресс-бара в зависимости от оставшегося времени
+            QString currentStyle = progressBar->styleSheet();
             if (timeLeft <= 5) {
-                progressBar->setStyleSheet(progressBar->styleSheet().replace("#76C7C0", "#FF6B6B"));
+                progressBar->setStyleSheet(currentStyle.replace("#76C7C0", "#FF6B6B"));
             } else {
-                progressBar->setStyleSheet(progressBar->styleSheet().replace("#FF6B6B", "#76C7C0"));
+                progressBar->setStyleSheet(currentStyle.replace("#FF6B6B", "#76C7C0"));
             }
-        } else {
-            // Для HOTP скрываем прогресс-бар
-            progressBar->setVisible(false);
         }
+        // Для HOTP пропускаем обновление
+        else if (account.type == "HOTP") {
+            // HOTP не обновляется по таймеру
+            // Оставляем текущий OTP без изменений
+            continue;
+        }
+
+        otpLabel->setText(otp);
     }
 }
 
 
-
-
 bool OTPWindow::eventFilter(QObject *watched, QEvent *event) {
-    if (event->type() == QEvent::MouseButtonDblClick) {
-        for (int i = 0; i < accountWidgets.size(); ++i) {
-            if (watched == accountWidgets[i]) {
+    for (int i = 0; i < accountWidgets.size(); ++i) {
+        if (watched == accountWidgets[i]) {
+            if (event->type() == QEvent::MouseButtonDblClick) {
                 copyCodeToClipboard(i);
+                return true;
+            } else if (event->type() == QEvent::ContextMenu) {
+                QContextMenuEvent *contextEvent = static_cast<QContextMenuEvent*>(event);
+                showContextMenuForAccount(i, contextEvent->globalPos());
                 return true;
             }
         }
@@ -286,16 +287,28 @@ bool OTPWindow::eventFilter(QObject *watched, QEvent *event) {
 void OTPWindow::copyCodeToClipboard(int index) {
     if (index < 0 || index >= accounts.size()) return;
 
+    Account &account = accounts[index];
     OtpGenerator generator;
-    quint64 currentTime = QDateTime::currentSecsSinceEpoch(); // Получаем текущее время
-    QString otp = generator.generateTOTP(accounts[index].secret, currentTime, interval); // Передаём currentTime
+    quint64 currentTime = QDateTime::currentSecsSinceEpoch();
+    QString otp;
+
+    if (account.type == "TOTP") {
+        otp = generator.generateTOTP(account.secret, currentTime, account.period, account.algorithm, account.digits);
+    } else if (account.type == "HOTP") {
+        otp = generator.generateHOTP(account.secret, account.counter, account.algorithm, account.digits);
+        // Увеличиваем счётчик только при использовании HOTP
+        account.counter += 1;
+        AccountManager::instance().updateAccount(account.name, account);
+    }
 
     QClipboard *clipboard = QApplication::clipboard();
     clipboard->setText(otp);
 
     // Отображение временного сообщения
     QLabel *copiedLabel = new QLabel("Скопировано в буфер обмена");
-    copiedLabel->setStyleSheet("background-color: rgba(0, 0, 0, 0.7); color: white; padding: 10px; border-radius: 5px; font-size: 14px;");
+    copiedLabel->setStyleSheet("background-color: rgba(0, 0, 0, 0.7);"
+                               "color: white; padding: 10px; border-radius: 5px;"
+                               "font-size: 14px;");
     copiedLabel->setAlignment(Qt::AlignCenter);
     copiedLabel->setWindowFlags(Qt::ToolTip);
     copiedLabel->setAttribute(Qt::WA_DeleteOnClose);
@@ -304,6 +317,7 @@ void OTPWindow::copyCodeToClipboard(int index) {
     copiedLabel->show();
     QTimer::singleShot(1000, copiedLabel, &QLabel::close);
 }
+
 
 void OTPWindow::toggleTheme() {
     darkThemeEnabled = !darkThemeEnabled;
@@ -314,7 +328,7 @@ void OTPWindow::applyTheme() {
     // Стили для светлой и темной тем
     QString buttonColor = darkThemeEnabled ? "#2E2E2E" : "#007BFF";
     QString buttonHoverColor = darkThemeEnabled ? "#444444" : "#0056b3";
-    QString textColor = darkThemeEnabled ? "white" : "black"; // Изменено здесь
+    QString textColor = darkThemeEnabled ? "white" : "black";
     QString inputBorderColor = darkThemeEnabled ? "#555555" : "#cccccc";
     QString backgroundColor = darkThemeEnabled ? "#2E2E2E" : "#f0f0f0";
     QString textInputColor = darkThemeEnabled ? "#ffffff" : "#000000";
@@ -329,7 +343,7 @@ void OTPWindow::applyTheme() {
     QString buttonStyle = QString(
                               "QPushButton {"
                               "   background-color: %1;"
-                              "   color: white;" // Цвет текста кнопки оставляем белым для контраста
+                              "   color: white;"
                               "   border: none;"
                               "   border-radius: 8px;"
                               "   padding: 12px;"
@@ -380,7 +394,7 @@ void OTPWindow::applyTheme() {
 
     ui->settingsButton->setStyleSheet(settingsButtonStyle);
 
-    // Дополнительно: устанавливаем цвет текста для всех QLabel в приложении
+    // Устанавливаем цвет текста для всех QLabel в приложении
     QPalette labelPalette;
     labelPalette.setColor(QPalette::WindowText, QColor(textColor));
     QList<QLabel*> labels = this->findChildren<QLabel*>();
@@ -388,7 +402,6 @@ void OTPWindow::applyTheme() {
         label->setPalette(labelPalette);
     }
 }
-
 
 void OTPWindow::openSettingsDialog()
 {
@@ -403,6 +416,76 @@ void OTPWindow::openSettingsDialog()
         settings.setValue("interval", interval);
 
         // Обновляем отображение
+        displayAccounts();
+    }
+}
+
+void OTPWindow::showContextMenuForAccount(int index, const QPoint &globalPos) {
+    QMenu contextMenu;
+
+    QAction *editAction = new QAction("Редактировать", &contextMenu);
+    QAction *deleteAction = new QAction("Удалить", &contextMenu);
+
+    contextMenu.addAction(editAction);
+    contextMenu.addAction(deleteAction);
+
+    connect(editAction, &QAction::triggered, [this, index]() {
+        editAccount(index);
+    });
+
+    connect(deleteAction, &QAction::triggered, [this, index]() {
+        deleteAccount(index);
+    });
+
+    contextMenu.exec(globalPos);
+}
+
+void OTPWindow::editAccount(int index) {
+    if (index < 0 || index >= accounts.size()) return;
+
+    Account &account = accounts[index];
+
+    AddAccountDialog dialog(this);
+    dialog.setWindowTitle("Редактировать аккаунт");
+
+    // Заполняем диалог текущими данными аккаунта
+    dialog.setAccount(account);
+
+    if (dialog.exec() == QDialog::Accepted) {
+        // Получаем обновлённый аккаунт из диалога
+        Account updatedAccount = dialog.getAccount();
+
+        // Сохраняем изменения в менеджере аккаунтов
+        AccountManager::instance().updateAccount(account.name, updatedAccount);
+
+        // Обновляем список аккаунтов из базы данных
+        accounts = AccountManager::instance().getAccounts();
+
+        // Обновляем интерфейс
+        displayAccounts();
+    }
+}
+
+void OTPWindow::deleteAccount(int index) {
+    if (index < 0 || index >= accounts.size()) return;
+
+    Account &account = accounts[index];
+
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Удаление аккаунта",
+                                  "Вы действительно хотите удалить этот аккаунт?",
+                                  QMessageBox::Yes | QMessageBox::No);
+
+    if (reply == QMessageBox::Yes) {
+        // Удаляем аккаунт из менеджера аккаунтов
+        AccountManager::instance().deleteAccount(account.name);
+
+        // Удаляем аккаунт из списка и виджетов
+        accounts.removeAt(index);
+        QWidget *accountWidget = accountWidgets.takeAt(index);
+        delete accountWidget;
+
+        // Обновляем интерфейс
         displayAccounts();
     }
 }

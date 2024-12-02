@@ -29,7 +29,12 @@ private slots:
     void filterAccounts(const QString &filter);
     void updateAccounts();
     void toggleTheme();
-    void openSettingsDialog(); // Новый слот
+    void openSettingsDialog();
+
+    // Добавленные слоты для контекстного меню
+    void showContextMenuForAccount(int index, const QPoint &globalPos);
+    void editAccount(int index);
+    void deleteAccount(int index);
 
 private:
     void displayAccounts();
@@ -37,13 +42,11 @@ private:
     void applyTheme();
 
     Ui::OTPWindow *ui;
-    // Удаляем AccountManager accountManager;
     QList<Account> accounts;
     QList<QWidget*> accountWidgets;
     QTimer *timer;
     bool darkThemeEnabled;
-    int interval; // Новый параметр
-
+    int interval;
 };
 
 #endif // OTP_WINDOW_H

@@ -53,6 +53,27 @@ Account AddAccountDialog::getAccount() const {
     return account;
 }
 
+void AddAccountDialog::setAccount(const Account &account) {
+    // Устанавливаем данные в поля диалога
+    ui->nameLineEdit->setText(account.name);
+    ui->secretLineEdit->setText(account.secret);
+    ui->algorithmComboBox->setCurrentText(account.algorithm);
+    ui->digitsSpinBox->setValue(account.digits);
+
+    if (account.type == "TOTP") {
+        ui->typeComboBox->setCurrentText("По времени");
+        ui->periodSpinBox->setValue(account.period);
+    } else if (account.type == "HOTP") {
+        ui->typeComboBox->setCurrentText("По счетчику");
+        ui->counterSpinBox->setValue(account.counter);
+    }
+
+    // Устанавливаем метод ввода на "Ручной ввод"
+    ui->manualInputRadioButton->setChecked(true);
+    ui->manualInputWidget->setVisible(true);
+    ui->uriInputWidget->setVisible(false);
+}
+
 void AddAccountDialog::on_buttonBox_accepted() {
     // Валидация введенных данных
     if (ui->manualInputRadioButton->isChecked()) {

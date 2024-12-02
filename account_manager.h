@@ -15,7 +15,6 @@ struct Account {
     quint64 counter;    // Для HOTP
 };
 
-
 class AccountManager {
 public:
     static AccountManager& instance();

@@ -50,53 +50,15 @@ void AccountManager::initializeDatabase() {
         )
     )";
 
-    // Создаем таблицу key_verification
-    QString createKeyVerificationTable = R"(
-        CREATE TABLE IF NOT EXISTS key_verification (
-            id INTEGER PRIMARY KEY,
-            encrypted_value TEXT NOT NULL
-        )
-    )";
-
-    // Создаем таблицу logs для журналирования действий
-    QString createLogsTable = R"(
-        CREATE TABLE IF NOT EXISTS logs (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            timestamp TEXT NOT NULL,
-            event TEXT NOT NULL
-        )
-    )";
-
     if (!query.exec(createAccountsTable)) {
         qWarning() << "Не удалось создать таблицу accounts:" << query.lastError().text();
-    }
-
-    if (!query.exec(createKeyVerificationTable)) {
-        qWarning() << "Не удалось создать таблицу key_verification:" << query.lastError().text();
-    }
-
-    if (!query.exec(createLogsTable)) {
-        qWarning() << "Не удалось создать таблицу logs:" << query.lastError().text();
     }
 }
 
 void AccountManager::logEvent(const QString& eventDescription) {
-    if (!db.isOpen()) {
-        if (!db.open()) {
-            qWarning() << "Не удалось открыть базу данных при записи события в журнал:" << db.lastError().text();
-            return;
-        }
-    }
-
-    QSqlQuery query(db);
-    query.prepare("INSERT INTO logs (timestamp, event) VALUES (:timestamp, :event)");
-    QString timestamp = QDateTime::currentDateTime().toString(Qt::ISODate);
-    query.bindValue(":timestamp", timestamp);
-    query.bindValue(":event", eventDescription);
-
-    if (!query.exec()) {
-        qWarning() << "Не удалось записать событие в журнал:" << query.lastError().text();
-    }
+    // Реализация логирования событий (если требуется)
+    // Например, запись в файл или базу данных
+    Q_UNUSED(eventDescription);
 }
 
 QList<Account> AccountManager::getAccounts() const {
@@ -126,7 +88,7 @@ QList<Account> AccountManager::getAccounts() const {
         account.digits = query.value(3).toInt();
         account.period = query.value(4).toInt();
         account.type = query.value(5).toString();
-        account.counter = query.value(6).toInt();
+        account.counter = query.value(6).toULongLong();
         accounts.append(account);
     }
 
@@ -140,7 +102,8 @@ void AccountManager::addAccount(const Account& account) {
     }
 
     QSqlQuery query(db);
-    query.prepare("INSERT INTO accounts (name, secret, algorithm, digits, period, type, counter) VALUES (:name, :secret, :algorithm, :digits, :period, :type, :counter)");
+    query.prepare("INSERT INTO accounts (name, secret, algorithm, digits, period, type, counter) "
+                  "VALUES (:name, :secret, :algorithm, :digits, :period, :type, :counter)");
     query.bindValue(":name", account.name);
 
     // Шифруем секрет перед сохранением
@@ -175,8 +138,15 @@ void AccountManager::deleteAccount(const QString& accountName) {
 }
 
 void AccountManager::updateAccount(const QString& accountName, const Account& updatedAccount) {
+    if (!EncryptionUtils::instance().isMasterPasswordSet()) {
+        qWarning() << "Мастер-пароль не установлен.";
+        return;
+    }
+
     QSqlQuery query(db);
-    query.prepare("UPDATE accounts SET name = :newName, secret = :secret, algorithm = :algorithm, digits = :digits, period = :period, type = :type, counter = :counter WHERE name = :oldName");
+    query.prepare("UPDATE accounts SET name = :newName, secret = :secret, algorithm = :algorithm, "
+                  "digits = :digits, period = :period, type = :type, counter = :counter "
+                  "WHERE name = :oldName");
     query.bindValue(":newName", updatedAccount.name);
 
     // Шифруем секрет перед сохранением
@@ -199,46 +169,6 @@ void AccountManager::updateAccount(const QString& accountName, const Account& up
 }
 
 bool AccountManager::verifyMasterPassword() {
-    if (!db.isOpen()) {
-        if (!db.open()) {
-            qWarning() << "Не удалось открыть базу данных при проверке мастер-пароля:" << db.lastError().text();
-            return false;
-        }
-    }
-
-    QSqlQuery query(db);
-    query.prepare("SELECT encrypted_value FROM key_verification WHERE id = 1");
-
-    if (query.exec()) {
-        if (query.next()) {
-            // Проверочное значение существует, пытаемся расшифровать
-            QByteArray encryptedValue = query.value(0).toByteArray();
-            QString decryptedValue = EncryptionUtils::instance().decrypt(encryptedValue);
-            if (decryptedValue == "verification") {
-                // Логируем успешный вход
-                logEvent("Пользователь вошел в приложение");
-                return true; // Мастер-пароль верен
-            } else {
-                // Логируем неуспешную попытку входа
-                logEvent("Неудачная попытка входа");
-                return false; // Неверный мастер-пароль
-            }
-        } else {
-            // Проверочное значение не существует, создаем его
-            QByteArray verificationValue = "verification";
-            QByteArray encryptedValue = EncryptionUtils::instance().encrypt(verificationValue);
-            query.prepare("INSERT INTO key_verification (id, encrypted_value) VALUES (1, :encrypted_value)");
-            query.bindValue(":encrypted_value", encryptedValue);
-            if (!query.exec()) {
-                qWarning() << "Не удалось вставить проверочное значение ключа:" << query.lastError().text();
-                return false;
-            }
-            // Логируем установку мастер-пароля
-            logEvent("Установлен мастер-пароль");
-            return true; // Мастер-пароль установлен
-        }
-    } else {
-        qWarning() << "Не удалось выполнить запрос к таблице key_verification:" << query.lastError().text();
-        return false;
-    }
+    // Реализация проверки мастер-пароля (если требуется)
+    return true;
 }

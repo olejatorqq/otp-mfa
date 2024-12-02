@@ -17,6 +17,7 @@ public:
     ~AddAccountDialog();
 
     Account getAccount() const;
+    void setAccount(const Account &account); // Добавленный метод
 
 private slots:
     void on_buttonBox_accepted();
