@@ -97,6 +97,11 @@ void OTPWindow::displayAccounts() {
     // Получаем коэффициент масштабирования DPI
     qreal scaleFactor = QGuiApplication::primaryScreen()->logicalDotsPerInch() / 96.0;
 
+    // Получаем текущее время один раз
+    quint64 currentTime = QDateTime::currentSecsSinceEpoch();
+    int timeElapsed = currentTime % interval;
+    int timeLeft = interval - timeElapsed;
+
     for (const Account& account : accounts) {
         QWidget *accountWidget = new QWidget();
         accountWidget->setObjectName("accountWidget");
@@ -113,7 +118,7 @@ void OTPWindow::displayAccounts() {
 
         // OTP код
         OtpGenerator generator;
-        QString otp = generator.generateTOTP(account.secret, interval); // Используем interval
+        QString otp = generator.generateTOTP(account.secret, currentTime, interval); // Передаём currentTime и interval
         QLabel *otpLabel = new QLabel(otp);
         QFont otpFont = otpLabel->font();
         otpFont.setPointSizeF(24 * scaleFactor);
@@ -125,8 +130,6 @@ void OTPWindow::displayAccounts() {
         QProgressBar *progressBar = new QProgressBar();
         progressBar->setMinimum(0);
         progressBar->setMaximum(interval); // Используем interval
-        int timeElapsed = QDateTime::currentSecsSinceEpoch() % interval;
-        int timeLeft = interval - timeElapsed;
         progressBar->setValue(timeLeft);
         progressBar->setTextVisible(false);
         progressBar->setFixedWidth(100 * scaleFactor); // Учитываем масштабирование
@@ -167,6 +170,7 @@ void OTPWindow::displayAccounts() {
     filterAccounts(ui->searchLineEdit->text());
 }
 
+
 void OTPWindow::filterAccounts(const QString &filter) {
     for (int i = 0; i < accounts.size(); ++i) {
         const Account &account = accounts[i];
@@ -178,6 +182,11 @@ void OTPWindow::filterAccounts(const QString &filter) {
 
 void OTPWindow::updateAccounts() {
     OtpGenerator generator;
+
+    // Получаем текущее время один раз
+    quint64 currentTime = QDateTime::currentSecsSinceEpoch();
+    int timeElapsed = currentTime % interval;
+    int timeLeft = interval - timeElapsed;
 
     for (int i = 0; i < accounts.size(); ++i) {
         const Account &account = accounts[i];
@@ -191,11 +200,10 @@ void OTPWindow::updateAccounts() {
 
         if (!otpLabel || !progressBar) continue;
 
-        QString otp = generator.generateTOTP(account.secret, interval); // Используем interval
+        // Передаём currentTime в generateTOTP
+        QString otp = generator.generateTOTP(account.secret, currentTime, interval); // Используем currentTime и interval
         otpLabel->setText(otp);
 
-        int timeElapsed = QDateTime::currentSecsSinceEpoch() % interval;
-        int timeLeft = interval - timeElapsed;
         progressBar->setMaximum(interval); // Используем interval
         progressBar->setValue(timeLeft);
 
@@ -207,6 +215,7 @@ void OTPWindow::updateAccounts() {
         }
     }
 }
+
 
 bool OTPWindow::eventFilter(QObject *watched, QEvent *event) {
     if (event->type() == QEvent::MouseButtonDblClick) {
@@ -224,7 +233,8 @@ void OTPWindow::copyCodeToClipboard(int index) {
     if (index < 0 || index >= accounts.size()) return;
 
     OtpGenerator generator;
-    QString otp = generator.generateTOTP(accounts[index].secret, interval); // Используем interval
+    quint64 currentTime = QDateTime::currentSecsSinceEpoch(); // Получаем текущее время
+    QString otp = generator.generateTOTP(accounts[index].secret, currentTime, interval); // Передаём currentTime
 
     QClipboard *clipboard = QApplication::clipboard();
     clipboard->setText(otp);

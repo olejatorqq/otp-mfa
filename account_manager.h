@@ -9,8 +9,12 @@ struct Account {
     QString name;
     QString secret;
     QString algorithm;
-    int counter;  // Для HOTP
+    int digits;
+    int period;
+    QString type;   // "TOTP" или "HOTP"
+    quint64 counter;    // Для HOTP
 };
+
 
 class AccountManager {
 public:

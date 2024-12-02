@@ -43,6 +43,9 @@ void AccountManager::initializeDatabase() {
             name TEXT NOT NULL,
             secret TEXT NOT NULL,
             algorithm TEXT NOT NULL,
+            digits INTEGER NOT NULL,
+            period INTEGER NOT NULL,
+            type TEXT NOT NULL,
             counter INTEGER DEFAULT 0
         )
     )";
@@ -99,7 +102,7 @@ void AccountManager::logEvent(const QString& eventDescription) {
 QList<Account> AccountManager::getAccounts() const {
     QList<Account> accounts;
     QSqlQuery query(db);
-    query.prepare("SELECT name, secret, algorithm, counter FROM accounts");
+    query.prepare("SELECT name, secret, algorithm, digits, period, type, counter FROM accounts");
 
     if (!query.exec()) {
         qWarning() << "Не удалось выполнить запрос к таблице accounts:" << query.lastError().text();
@@ -120,7 +123,10 @@ QList<Account> AccountManager::getAccounts() const {
         account.secret = decryptedSecret;
 
         account.algorithm = query.value(2).toString();
-        account.counter = query.value(3).toInt();
+        account.digits = query.value(3).toInt();
+        account.period = query.value(4).toInt();
+        account.type = query.value(5).toString();
+        account.counter = query.value(6).toInt();
         accounts.append(account);
     }
 
@@ -134,7 +140,7 @@ void AccountManager::addAccount(const Account& account) {
     }
 
     QSqlQuery query(db);
-    query.prepare("INSERT INTO accounts (name, secret, algorithm, counter) VALUES (:name, :secret, :algorithm, :counter)");
+    query.prepare("INSERT INTO accounts (name, secret, algorithm, digits, period, type, counter) VALUES (:name, :secret, :algorithm, :digits, :period, :type, :counter)");
     query.bindValue(":name", account.name);
 
     // Шифруем секрет перед сохранением
@@ -142,6 +148,9 @@ void AccountManager::addAccount(const Account& account) {
     query.bindValue(":secret", encryptedSecret);
 
     query.bindValue(":algorithm", account.algorithm);
+    query.bindValue(":digits", account.digits);
+    query.bindValue(":period", account.period);
+    query.bindValue(":type", account.type);
     query.bindValue(":counter", account.counter);
 
     if (!query.exec()) {
@@ -167,7 +176,7 @@ void AccountManager::deleteAccount(const QString& accountName) {
 
 void AccountManager::updateAccount(const QString& accountName, const Account& updatedAccount) {
     QSqlQuery query(db);
-    query.prepare("UPDATE accounts SET name = :newName, secret = :secret, algorithm = :algorithm, counter = :counter WHERE name = :oldName");
+    query.prepare("UPDATE accounts SET name = :newName, secret = :secret, algorithm = :algorithm, digits = :digits, period = :period, type = :type, counter = :counter WHERE name = :oldName");
     query.bindValue(":newName", updatedAccount.name);
 
     // Шифруем секрет перед сохранением
@@ -175,6 +184,9 @@ void AccountManager::updateAccount(const QString& accountName, const Account& up
     query.bindValue(":secret", encryptedSecret);
 
     query.bindValue(":algorithm", updatedAccount.algorithm);
+    query.bindValue(":digits", updatedAccount.digits);
+    query.bindValue(":period", updatedAccount.period);
+    query.bindValue(":type", updatedAccount.type);
     query.bindValue(":counter", updatedAccount.counter);
     query.bindValue(":oldName", accountName);
 
@@ -187,6 +199,13 @@ void AccountManager::updateAccount(const QString& accountName, const Account& up
 }
 
 bool AccountManager::verifyMasterPassword() {
+    if (!db.isOpen()) {
+        if (!db.open()) {
+            qWarning() << "Не удалось открыть базу данных при проверке мастер-пароля:" << db.lastError().text();
+            return false;
+        }
+    }
+
     QSqlQuery query(db);
     query.prepare("SELECT encrypted_value FROM key_verification WHERE id = 1");
 

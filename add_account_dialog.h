@@ -22,9 +22,16 @@ private slots:
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
     void on_showSecretCheckBox_toggled(bool checked);
+    void on_manualInputRadioButton_toggled(bool checked);
+    void on_uriInputRadioButton_toggled(bool checked);
+    void on_uriLineEdit_textChanged(const QString &text);
+    void on_typeComboBox_currentIndexChanged(const QString &type);
 
 private:
     Ui::AddAccountDialog *ui;
+
+    void parseUriAndFillFields(const QString &uri);
+    void updateTypeSettings(const QString &type);
 };
 
 #endif // ADD_ACCOUNT_DIALOG_H

@@ -9,16 +9,21 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Явно используем Qt5
-find_package(Qt5 REQUIRED COMPONENTS Widgets Multimedia)
+# Находим необходимые пакеты
+find_package(Qt5 REQUIRED COMPONENTS Widgets Multimedia Sql Svg)
 find_package(ZXing REQUIRED)
 find_package(OpenSSL REQUIRED)
-find_package(Qt5 COMPONENTS Multimedia MultimediaWidgets REQUIRED)
 find_package(PkgConfig REQUIRED)
-find_package(Qt5Svg REQUIRED)
 find_package(OpenCV REQUIRED)
-find_package(Qt5 REQUIRED COMPONENTS Widgets Sql)
 
+pkg_check_modules(QREncode REQUIRED libqrencode)
+
+# Добавляем директории включаемых файлов
+include_directories(${QREncode_INCLUDE_DIRS})
+include_directories("/home/oorlovsk/otp-mfa/include")
+include_directories(${OpenCV_INCLUDE_DIRS})
+
+# Источники для основного приложения
 set(PROJECT_SOURCES
     main.cpp
     otp_window.cpp
@@ -33,47 +38,39 @@ set(PROJECT_SOURCES
     add_account_dialog.cpp
     qr_generator.h
     qr_generator.cpp
+    encryption_utils.h
+    encryption_utils.cpp
+    master_password_dialog.h
+    master_password_dialog.cpp
+    master_password_dialog.ui
+    settings_dialog.h
+    settings_dialog.cpp
+    settings_dialog.ui
     /home/oorlovsk/otp-mfa/include/qrcodegen.cpp
     /home/oorlovsk/otp-mfa/include/qrcodegen.hpp
 )
 
-# Конфигурация сборки для Qt5
-if(ANDROID)
-    add_library(otp-mfa SHARED
-        ${PROJECT_SOURCES}
-    )
-else()
-    add_executable(otp-mfa
-        ${PROJECT_SOURCES}
-        encryption_utils.h encryption_utils.cpp
-        master_password_dialog.h master_password_dialog.cpp
-        master_password_dialog.ui
-        settings_dialog.h settings_dialog.cpp settings_dialog.ui
+# Создаём основной исполняемый файл
+add_executable(otp-mfa
+    ${PROJECT_SOURCES}
+)
 
-    )
-endif()
-
-# Линкуем необходимые библиотеки
-target_link_libraries(otp-mfa PRIVATE Qt5::Widgets)
+# Линкуем библиотеки для основного приложения
+target_link_libraries(otp-mfa PRIVATE Qt5::Widgets Qt5::Multimedia Qt5::Sql Qt5::Svg)
 target_link_libraries(otp-mfa PRIVATE ZXing::ZXing)
-target_link_libraries(otp-mfa PRIVATE Qt5::Multimedia)
 target_link_libraries(otp-mfa PRIVATE OpenSSL::SSL OpenSSL::Crypto)
-target_link_libraries(otp-mfa PRIVATE Qt5::Multimedia Qt5::MultimediaWidgets)
-target_link_libraries(otp-mfa PRIVATE ${QREncode_LIBRARIES})
-target_link_libraries(otp-mfa PRIVATE Qt5::Widgets ZXing::ZXing Qt5::Svg)
-target_link_libraries(otp-mfa PRIVATE ZXing)
 target_link_libraries(otp-mfa PRIVATE ${OpenCV_LIBS})
-target_link_libraries(otp-mfa PRIVATE Qt5::Widgets Qt5::Sql)
-target_link_libraries(otp-mfa PRIVATE OpenSSL::SSL OpenSSL::Crypto)
 
-pkg_check_modules(QREncode REQUIRED libqrencode)
-include_directories(${QREncode_INCLUDE_DIRS})
-include_directories("/home/oorlovsk/otp-mfa/include")
+# Создаём отдельный исполняемый файл для тестирования
+add_executable(otp_generator_test
+    otp_generator_test.cpp
+    otp_generator.cpp
+    otp_generator.h
+)
 
-# OpenCV
-find_package(OpenCV REQUIRED)
-include_directories(${OpenCV_INCLUDE_DIRS})
-
+# Линкуем библиотеки для тестового приложения
+target_link_libraries(otp_generator_test PRIVATE Qt5::Core)
+target_link_libraries(otp_generator_test PRIVATE OpenSSL::Crypto)
 
 # Свойства для macOS и Windows
 set_target_properties(otp-mfa PROPERTIES
