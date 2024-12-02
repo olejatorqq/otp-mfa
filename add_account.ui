@@ -75,11 +75,11 @@
         </property>
        </widget>
       </item>
-      <!-- Выбор типа алгоритма: TOTP или HOTP -->
+      <!-- Выбор типа алгоритма: по времени или по счетчику -->
       <item>
        <widget class="QLabel" name="labelType">
         <property name="text">
-         <string>Тип алгоритма:</string>
+         <string>Тип ключа:</string>
         </property>
        </widget>
       </item>
@@ -87,12 +87,12 @@
        <widget class="QComboBox" name="typeComboBox">
         <item>
          <property name="text">
-          <string>TOTP</string>
+          <string>По времени</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>HOTP</string>
+          <string>По счетчику</string>
          </property>
         </item>
        </widget>
@@ -144,7 +144,7 @@
         </property>
        </widget>
       </item>
-      <!-- Поле периода для TOTP и счетчика для HOTP -->
+      <!-- Поле периода для по времени и счетчика для по счетчику -->
       <item>
        <widget class="QStackedWidget" name="typeSettingsStackedWidget">
         <property name="currentIndex">
@@ -152,7 +152,7 @@
         </property>
         <widget class="QWidget" name="totpSettingsPage">
          <attribute name="title">
-          <string>TOTP Settings</string>
+          <string>Настройки по времени</string>
          </attribute>
          <layout class="QVBoxLayout" name="totpSettingsLayout">
           <item>
@@ -179,7 +179,7 @@
         </widget>
         <widget class="QWidget" name="hotpSettingsPage">
          <attribute name="title">
-          <string>HOTP Settings</string>
+          <string>Настройки по счетчику</string>
          </attribute>
          <layout class="QVBoxLayout" name="hotpSettingsLayout">
           <item>

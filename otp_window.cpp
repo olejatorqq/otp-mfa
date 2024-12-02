@@ -99,14 +99,30 @@ void OTPWindow::displayAccounts() {
 
     // Получаем текущее время один раз
     quint64 currentTime = QDateTime::currentSecsSinceEpoch();
-    int timeElapsed = currentTime % interval;
-    int timeLeft = interval - timeElapsed;
 
-    for (const Account& account : accounts) {
+    for (Account &account : accounts) {
         QWidget *accountWidget = new QWidget();
         accountWidget->setObjectName("accountWidget");
-        accountWidget->setStyleSheet("#accountWidget { background-color: transparent; border-radius: 8px; padding: 16px; }");
+
+        QString accountBackgroundColor = darkThemeEnabled ? "#3E3E3E" : "#FFFFFF";
+        QString accountBorderColor = darkThemeEnabled ? "#555555" : "#cccccc";
+
+        accountWidget->setStyleSheet(
+            QString(
+                "#accountWidget {"
+                "   background-color: %1;"
+                "   border: 1px solid %2;"
+                "   border-radius: 8px;"
+                "   padding: 8px;"
+                "}"
+                ).arg(accountBackgroundColor, accountBorderColor)
+            );
+
+        accountWidget->setToolTip("Дважды щёлкните, чтобы скопировать код");
+
         QHBoxLayout *layout = new QHBoxLayout(accountWidget);
+        layout->setContentsMargins(10, 5, 10, 5);
+        layout->setSpacing(10);
 
         // Имя аккаунта
         QLabel *nameLabel = new QLabel(account.name);
@@ -114,25 +130,27 @@ void OTPWindow::displayAccounts() {
         nameFont.setPointSizeF(14 * scaleFactor);
         nameFont.setBold(true);
         nameLabel->setFont(nameFont);
-        nameLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        nameLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
         // OTP код
         OtpGenerator generator;
-        QString otp = generator.generateTOTP(account.secret, currentTime, interval); // Передаём currentTime и interval
+        QString otp;
+        if (account.type == "TOTP") {
+            otp = generator.generateTOTP(account.secret, currentTime, account.period, account.algorithm, account.digits);
+        } else if (account.type == "HOTP") {
+            otp = generator.generateHOTP(account.secret, account.counter, account.algorithm, account.digits);
+        }
         QLabel *otpLabel = new QLabel(otp);
         QFont otpFont = otpLabel->font();
         otpFont.setPointSizeF(24 * scaleFactor);
         otpFont.setBold(true);
         otpLabel->setFont(otpFont);
-        otpLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        otpLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
         // Прогресс-бар для оставшегося времени
         QProgressBar *progressBar = new QProgressBar();
-        progressBar->setMinimum(0);
-        progressBar->setMaximum(interval); // Используем interval
-        progressBar->setValue(timeLeft);
         progressBar->setTextVisible(false);
-        progressBar->setFixedWidth(100 * scaleFactor); // Учитываем масштабирование
+        progressBar->setFixedWidth(100 * scaleFactor);
         progressBar->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
 
         // Стилизация прогресс-бара
@@ -148,17 +166,31 @@ void OTPWindow::displayAccounts() {
                                        "   background-color: %3;"
                                        "}"
                                        ).arg(inputBorderColor, backgroundColor, "#76C7C0");
-
         progressBar->setStyleSheet(progressBarStyle);
 
+        if (account.type == "TOTP") {
+            int timeLeft = account.period - (currentTime % account.period);
+            progressBar->setMinimum(0);
+            progressBar->setMaximum(account.period);
+            progressBar->setValue(timeLeft);
+        } else {
+            // Для HOTP скрываем прогресс-бар
+            progressBar->setVisible(false);
+        }
+
         // Размещение элементов в layout
-        layout->addWidget(nameLabel);
-        layout->addStretch();
-        layout->addWidget(otpLabel);
-        layout->addWidget(progressBar);
+        layout->addWidget(nameLabel, 2);
+        layout->addWidget(otpLabel, 1);
+        layout->addWidget(progressBar, 0);
 
         // Добавляем виджет аккаунта в основной layout
         ui->accountsLayout->addWidget(accountWidget);
+
+        // Добавляем разделитель
+        QFrame *separator = new QFrame();
+        separator->setFrameShape(QFrame::HLine);
+        separator->setFrameShadow(QFrame::Sunken);
+        ui->accountsLayout->addWidget(separator);
 
         // Сохраняем виджет для обновления
         accountWidgets.append(accountWidget);
@@ -167,8 +199,14 @@ void OTPWindow::displayAccounts() {
         accountWidget->installEventFilter(this);
     }
 
+    // Добавляем растяжку в конец для выравнивания вверх
+    ui->accountsLayout->addStretch();
+
     filterAccounts(ui->searchLineEdit->text());
 }
+
+
+
 
 
 void OTPWindow::filterAccounts(const QString &filter) {
@@ -185,36 +223,52 @@ void OTPWindow::updateAccounts() {
 
     // Получаем текущее время один раз
     quint64 currentTime = QDateTime::currentSecsSinceEpoch();
-    int timeElapsed = currentTime % interval;
-    int timeLeft = interval - timeElapsed;
 
     for (int i = 0; i < accounts.size(); ++i) {
-        const Account &account = accounts[i];
+        Account &account = accounts[i];
         QWidget *accountWidget = accountWidgets[i];
+
+        if (!accountWidget) continue;
 
         QHBoxLayout *layout = qobject_cast<QHBoxLayout*>(accountWidget->layout());
         if (!layout) continue;
 
-        QLabel *otpLabel = qobject_cast<QLabel*>(layout->itemAt(2)->widget());
-        QProgressBar *progressBar = qobject_cast<QProgressBar*>(layout->itemAt(3)->widget());
+        QLabel *nameLabel = qobject_cast<QLabel*>(layout->itemAt(0)->widget());
+        QLabel *otpLabel = qobject_cast<QLabel*>(layout->itemAt(1)->widget());
+        QProgressBar *progressBar = qobject_cast<QProgressBar*>(layout->itemAt(2)->widget());
 
         if (!otpLabel || !progressBar) continue;
 
-        // Передаём currentTime в generateTOTP
-        QString otp = generator.generateTOTP(account.secret, currentTime, interval); // Используем currentTime и interval
+        QString otp;
+        if (account.type == "TOTP") {
+            otp = generator.generateTOTP(account.secret, currentTime, account.period, account.algorithm, account.digits);
+        } else if (account.type == "HOTP") {
+            otp = generator.generateHOTP(account.secret, account.counter, account.algorithm, account.digits);
+            // Увеличиваем счетчик для HOTP
+            account.counter += 1;
+        }
+
         otpLabel->setText(otp);
 
-        progressBar->setMaximum(interval); // Используем interval
-        progressBar->setValue(timeLeft);
+        if (account.type == "TOTP") {
+            int timeLeft = account.period - (currentTime % account.period);
+            progressBar->setMaximum(account.period);
+            progressBar->setValue(timeLeft);
 
-        // Изменение цвета прогресс-бара в зависимости от оставшегося времени
-        if (timeLeft <= 5) {
-            progressBar->setStyleSheet(progressBar->styleSheet().replace("#76C7C0", "#FF6B6B"));
+            // Изменение цвета прогресс-бара в зависимости от оставшегося времени
+            if (timeLeft <= 5) {
+                progressBar->setStyleSheet(progressBar->styleSheet().replace("#76C7C0", "#FF6B6B"));
+            } else {
+                progressBar->setStyleSheet(progressBar->styleSheet().replace("#FF6B6B", "#76C7C0"));
+            }
         } else {
-            progressBar->setStyleSheet(progressBar->styleSheet().replace("#FF6B6B", "#76C7C0"));
+            // Для HOTP скрываем прогресс-бар
+            progressBar->setVisible(false);
         }
     }
 }
+
+
 
 
 bool OTPWindow::eventFilter(QObject *watched, QEvent *event) {
@@ -260,7 +314,7 @@ void OTPWindow::applyTheme() {
     // Стили для светлой и темной тем
     QString buttonColor = darkThemeEnabled ? "#2E2E2E" : "#007BFF";
     QString buttonHoverColor = darkThemeEnabled ? "#444444" : "#0056b3";
-    QString textColor = darkThemeEnabled ? "white" : "white";
+    QString textColor = darkThemeEnabled ? "white" : "black"; // Изменено здесь
     QString inputBorderColor = darkThemeEnabled ? "#555555" : "#cccccc";
     QString backgroundColor = darkThemeEnabled ? "#2E2E2E" : "#f0f0f0";
     QString textInputColor = darkThemeEnabled ? "#ffffff" : "#000000";
@@ -275,16 +329,16 @@ void OTPWindow::applyTheme() {
     QString buttonStyle = QString(
                               "QPushButton {"
                               "   background-color: %1;"
-                              "   color: %2;"
+                              "   color: white;" // Цвет текста кнопки оставляем белым для контраста
                               "   border: none;"
                               "   border-radius: 8px;"
                               "   padding: 12px;"
                               "   font-size: 16px;"
                               "}"
                               "QPushButton:hover {"
-                              "   background-color: %3;"
+                              "   background-color: %2;"
                               "}"
-                              ).arg(buttonColor, textColor, buttonHoverColor);
+                              ).arg(buttonColor, buttonHoverColor);
 
     ui->addButton->setStyleSheet(buttonStyle);
 
@@ -325,7 +379,16 @@ void OTPWindow::applyTheme() {
                                       ).arg(textColor, buttonHoverColor);
 
     ui->settingsButton->setStyleSheet(settingsButtonStyle);
+
+    // Дополнительно: устанавливаем цвет текста для всех QLabel в приложении
+    QPalette labelPalette;
+    labelPalette.setColor(QPalette::WindowText, QColor(textColor));
+    QList<QLabel*> labels = this->findChildren<QLabel*>();
+    for (QLabel* label : labels) {
+        label->setPalette(labelPalette);
+    }
 }
+
 
 void OTPWindow::openSettingsDialog()
 {

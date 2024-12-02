@@ -1,5 +1,6 @@
 #include "add_account_dialog.h"
 #include "ui_add_account.h"
+#include "otp_generator.h"
 #include <QMessageBox>
 #include <QLineEdit>
 #include <QCheckBox>
@@ -23,8 +24,8 @@ AddAccountDialog::AddAccountDialog(QWidget *parent) :
     ui->algorithmComboBox->setCurrentText("SHA1");
     ui->digitsSpinBox->setValue(6);
     ui->periodSpinBox->setValue(30);
-    ui->typeComboBox->setCurrentText("TOTP");
-    updateTypeSettings("TOTP");
+    ui->typeComboBox->setCurrentText("По времени");
+    updateTypeSettings("По времени");
 }
 
 AddAccountDialog::~AddAccountDialog() {
@@ -37,12 +38,14 @@ Account AddAccountDialog::getAccount() const {
     account.secret = ui->secretLineEdit->text().trimmed();
     account.algorithm = ui->algorithmComboBox->currentText();
     account.digits = ui->digitsSpinBox->value();
-    account.type = ui->typeComboBox->currentText();
 
-    if (account.type == "TOTP") {
+    QString typeText = ui->typeComboBox->currentText();
+    if (typeText == "По времени") {
+        account.type = "TOTP";
         account.period = ui->periodSpinBox->value();
         account.counter = 0; // Для TOTP счетчик не используется
-    } else if (account.type == "HOTP") {
+    } else if (typeText == "По счетчику") {
+        account.type = "HOTP";
         account.period = 0; // Для HOTP период не используется
         account.counter = ui->counterSpinBox->value();
     }
@@ -61,6 +64,14 @@ void AddAccountDialog::on_buttonBox_accepted() {
             QMessageBox::warning(this, "Ошибка", "Пожалуйста, введите секретный ключ.");
             return;
         }
+
+        // Валидация секретного ключа
+        QString errorMessage;
+        QByteArray decodedKey = OtpGenerator::base32Decode(ui->secretLineEdit->text().trimmed(), errorMessage);
+        if (decodedKey.isEmpty()) {
+            QMessageBox::warning(this, "Ошибка", errorMessage);
+            return;
+        }
     } else if (ui->uriInputRadioButton->isChecked()) {
         if (ui->uriLineEdit->text().trimmed().isEmpty()) {
             QMessageBox::warning(this, "Ошибка", "Пожалуйста, введите otpauth:// URI.");
@@ -70,6 +81,14 @@ void AddAccountDialog::on_buttonBox_accepted() {
         parseUriAndFillFields(ui->uriLineEdit->text().trimmed());
         if (ui->nameLineEdit->text().isEmpty() || ui->secretLineEdit->text().isEmpty()) {
             QMessageBox::warning(this, "Ошибка", "Не удалось распознать URI.");
+            return;
+        }
+
+        // Валидация секретного ключа после парсинга URI
+        QString errorMessage;
+        QByteArray decodedKey = OtpGenerator::base32Decode(ui->secretLineEdit->text().trimmed(), errorMessage);
+        if (decodedKey.isEmpty()) {
+            QMessageBox::warning(this, "Ошибка", errorMessage);
             return;
         }
     }
@@ -104,9 +123,9 @@ void AddAccountDialog::on_typeComboBox_currentIndexChanged(const QString &type) 
 }
 
 void AddAccountDialog::updateTypeSettings(const QString &type) {
-    if (type == "TOTP") {
+    if (type == "По времени") {
         ui->typeSettingsStackedWidget->setCurrentWidget(ui->totpSettingsPage);
-    } else if (type == "HOTP") {
+    } else if (type == "По счетчику") {
         ui->typeSettingsStackedWidget->setCurrentWidget(ui->hotpSettingsPage);
     }
 }
@@ -120,7 +139,7 @@ void AddAccountDialog::parseUriAndFillFields(const QString &uri) {
 
     QUrl url(uri);
     QString type = url.host(); // "totp" или "hotp"
-    QString label = url.path().mid(1); // Удаляем начальный '/'
+    QString label = QUrl::fromPercentEncoding(url.path().mid(1).toUtf8()); // Удаляем начальный '/' и декодируем
     QUrlQuery query(url);
 
     QString secret = query.queryItemValue("secret");
@@ -135,11 +154,15 @@ void AddAccountDialog::parseUriAndFillFields(const QString &uri) {
     ui->secretLineEdit->setText(secret);
     ui->algorithmComboBox->setCurrentText(algorithm.isEmpty() ? "SHA1" : algorithm);
     ui->digitsSpinBox->setValue(digits == 0 ? 6 : digits);
-    ui->typeComboBox->setCurrentText(type.toUpper());
 
     if (type.toLower() == "totp") {
+        ui->typeComboBox->setCurrentText("По времени");
         ui->periodSpinBox->setValue(period == 0 ? 30 : period);
     } else if (type.toLower() == "hotp") {
+        ui->typeComboBox->setCurrentText("По счетчику");
         ui->counterSpinBox->setValue(counter);
+    } else {
+        QMessageBox::warning(this, "Ошибка", "Неизвестный тип алгоритма в URI.");
+        return;
     }
 }
