@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/otp_generator_test.dir/otp_generator_test_autogen/mocs_compilation.cpp.o CMakeFiles/otp_generator_test.dir/otp_generator_test.cpp.o CMakeFiles/otp_generator_test.dir/otp_generator.cpp.o -o otp_generator_test  /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.13 /usr/lib/x86_64-linux-gnu/libcrypto.so 

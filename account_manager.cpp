@@ -5,13 +5,30 @@
 #include <QVariant>
 #include <QDebug>
 #include <QDateTime>
+#include <QNetworkRequest>
+#include <QSslConfiguration>
+#include <QSslCertificate>
+#include <QCryptographicHash>
+
+// Образец: разбиение хэша на части
+static const char* hashPart1 = "980afe02";
+static const char* hashPart2 = "39f05b57";
+static const char* hashPart3 = "d83b4c38";
+static const char* hashPart4 = "06de0ea7";
+static const char* hashPart5 = "4ec4718f";
+static const char* hashPart6 = "e1c0ec44";
+static const char* hashPart7 = "4ad8f48d";
+static const char* hashPart8 = "7683a89d";
+
+// Приватный ключ для XOR
+static const char xorKey = 0x5A; // Пример ключа
 
 AccountManager& AccountManager::instance() {
     static AccountManager instance;
     return instance;
 }
 
-AccountManager::AccountManager() {
+AccountManager::AccountManager() : QObject(nullptr), networkManager(new QNetworkAccessManager(this)) {
     // Проверяем, существует ли подключение с именем "OTPConnection"
     if (QSqlDatabase::contains("OTPConnection")) {
         db = QSqlDatabase::database("OTPConnection");
@@ -25,6 +42,10 @@ AccountManager::AccountManager() {
     } else {
         initializeDatabase();
     }
+
+    // Подключаем сигналы для обработки ответов и SSL ошибок
+    connect(networkManager, &QNetworkAccessManager::finished, this, &AccountManager::onNetworkReplyFinished);
+    connect(networkManager, &QNetworkAccessManager::sslErrors, this, &AccountManager::onSslErrors);
 }
 
 AccountManager::~AccountManager() {
@@ -56,8 +77,7 @@ void AccountManager::initializeDatabase() {
 }
 
 void AccountManager::logEvent(const QString& eventDescription) {
-    // Реализация логирования событий (если требуется)
-    // Например, запись в файл или базу данных
+    // Реализация логирования событий (например, запись в файл или базу данных)
     Q_UNUSED(eventDescription);
 }
 
@@ -171,4 +191,95 @@ void AccountManager::updateAccount(const QString& accountName, const Account& up
 bool AccountManager::verifyMasterPassword() {
     // Реализация проверки мастер-пароля (если требуется)
     return true;
+}
+
+void AccountManager::fetchDataFromServer(const QUrl &url) {
+    if (!url.isValid() || url.scheme() != "https") {
+        emit fetchError("Неверный URL или не используется HTTPS.");
+        return;
+    }
+
+    QNetworkRequest request(url);
+
+    // Настройка SSL конфигурации
+    QSslConfiguration sslConfig = request.sslConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyPeer); // Верификация сертификата сервера
+    sslConfig.setProtocol(QSsl::TlsV1_2); // Установка версии протокола TLS
+    request.setSslConfiguration(sslConfig);
+
+    // Выполнение GET-запроса
+    networkManager->get(request);
+}
+
+void AccountManager::onNetworkReplyFinished(QNetworkReply* reply) {
+    if (reply->error() == QNetworkReply::NoError) {
+        QByteArray responseData = reply->readAll();
+        qDebug() << "Ответ сервера:" << responseData;
+        emit dataFetched(responseData);
+    } else {
+        qWarning() << "Ошибка сетевого запроса:" << reply->errorString();
+        emit fetchError(reply->errorString());
+    }
+
+    reply->deleteLater();
+}
+
+void AccountManager::onSslErrors(QNetworkReply* reply, const QList<QSslError> &errors) {
+    for (const QSslError &error : errors) {
+        qWarning() << "SSL ошибка:" << error.errorString();
+    }
+
+    // Реализация сертификатного пиннинга
+    QList<QSslCertificate> certs = reply->sslConfiguration().peerCertificateChain();
+    if (!certs.isEmpty()) {
+        QSslCertificate serverCert = certs.first();
+        QByteArray certHash = QCryptographicHash::hash(serverCert.toDer(), QCryptographicHash::Sha256).toHex();
+
+        // Восстанавливаем ожидаемый хэш
+        QByteArray expectedHash = getExpectedCertHash();
+
+        if (certHash != expectedHash) {
+            qWarning() << "Неверный сертификат сервера!";
+            emit fetchError("Неверный сертификат сервера.");
+            reply->abort();
+            return;
+        }
+    } else {
+        qWarning() << "Сертификаты сервера не найдены!";
+        emit fetchError("Сертификаты сервера не найдены.");
+        reply->abort();
+        return;
+    }
+
+    // Если сертификат прошёл проверку, можно продолжить
+    // В противном случае, соединение уже прервано выше
+}
+
+QByteArray AccountManager::getExpectedCertHash() const {
+    // Обфусцированный хэш сертификата
+    QByteArray obfuscatedHash;
+
+    // Восстанавливаем хэш из частей и применяем XOR
+    QByteArray fullHash;
+    fullHash.append(hashPart1);
+    fullHash.append(hashPart2);
+    fullHash.append(hashPart3);
+    fullHash.append(hashPart4);
+    fullHash.append(hashPart5);
+    fullHash.append(hashPart6);
+    fullHash.append(hashPart7);
+    fullHash.append(hashPart8);
+
+    // Применяем XOR к каждому байту
+    for (char byte : fullHash) {
+        obfuscatedHash.append(byte ^ xorKey);
+    }
+
+    // Расшифровка хэша
+    QByteArray decryptedHash;
+    for (char byte : obfuscatedHash) {
+        decryptedHash.append(byte ^ xorKey);
+    }
+
+    return decryptedHash.toLower();
 }

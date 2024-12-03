@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Находим необходимые пакеты
-find_package(Qt5 REQUIRED COMPONENTS Widgets Multimedia Sql Svg)
+find_package(Qt5 REQUIRED COMPONENTS Widgets Multimedia Sql Svg Network REQUIRED)
 find_package(ZXing REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(PkgConfig REQUIRED)
@@ -56,7 +56,7 @@ add_executable(otp-mfa
 )
 
 # Линкуем библиотеки для основного приложения
-target_link_libraries(otp-mfa PRIVATE Qt5::Widgets Qt5::Multimedia Qt5::Sql Qt5::Svg)
+target_link_libraries(otp-mfa PRIVATE Qt5::Widgets Qt5::Multimedia Qt5::Sql Qt5::Svg Qt5::Network)
 target_link_libraries(otp-mfa PRIVATE ZXing::ZXing)
 target_link_libraries(otp-mfa PRIVATE OpenSSL::SSL OpenSSL::Crypto)
 target_link_libraries(otp-mfa PRIVATE ${OpenCV_LIBS})

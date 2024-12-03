@@ -19,6 +19,9 @@ AddAccountDialog::AddAccountDialog(QWidget *parent) :
     connect(ui->uriInputRadioButton, &QRadioButton::toggled, this, &AddAccountDialog::on_uriInputRadioButton_toggled);
     connect(ui->uriLineEdit, &QLineEdit::textChanged, this, &AddAccountDialog::on_uriLineEdit_textChanged);
     connect(ui->typeComboBox, &QComboBox::currentTextChanged, this, &AddAccountDialog::on_typeComboBox_currentIndexChanged);
+    connect(ui->toggleAdvancedParamsButton, &QPushButton::clicked, this, &AddAccountDialog::toggleAdvancedParams);
+    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &AddAccountDialog::on_buttonBox_accepted);
+    connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &AddAccountDialog::on_buttonBox_rejected);
 
     // Устанавливаем значения по умолчанию
     ui->algorithmComboBox->setCurrentText("SHA1");
@@ -26,6 +29,9 @@ AddAccountDialog::AddAccountDialog(QWidget *parent) :
     ui->periodSpinBox->setValue(30);
     ui->typeComboBox->setCurrentText("По времени");
     updateTypeSettings("По времени");
+
+    // Устанавливаем минимальный размер окна (опционально)
+    setMinimumSize(400, 300);
 }
 
 AddAccountDialog::~AddAccountDialog() {
@@ -70,8 +76,11 @@ void AddAccountDialog::setAccount(const Account &account) {
 
     // Устанавливаем метод ввода на "Ручной ввод"
     ui->manualInputRadioButton->setChecked(true);
-    ui->manualInputWidget->setVisible(true);
-    ui->uriInputWidget->setVisible(false);
+    ui->inputMethodStackedWidget->setCurrentWidget(ui->manualInputWidget);
+    ui->advancedParamsGroupBox->setVisible(false);
+
+    // Автоматически подстраиваем размер окна
+    adjustSize();
 }
 
 void AddAccountDialog::on_buttonBox_accepted() {
@@ -125,29 +134,48 @@ void AddAccountDialog::on_showSecretCheckBox_toggled(bool checked) {
 }
 
 void AddAccountDialog::on_manualInputRadioButton_toggled(bool checked) {
-    ui->manualInputWidget->setVisible(checked);
-    ui->uriInputWidget->setVisible(!checked);
+    if (checked) {
+        ui->inputMethodStackedWidget->setCurrentWidget(ui->manualInputWidget);
+    }
 }
 
 void AddAccountDialog::on_uriInputRadioButton_toggled(bool checked) {
-    ui->manualInputWidget->setVisible(!checked);
-    ui->uriInputWidget->setVisible(checked);
+    if (checked) {
+        ui->inputMethodStackedWidget->setCurrentWidget(ui->uriInputWidget);
+    }
 }
 
 void AddAccountDialog::on_uriLineEdit_textChanged(const QString &text) {
     // Можно автоматически парсить URI при изменении текста
-    // parseUriAndFillFields(text);
+    parseUriAndFillFields(text);
 }
 
 void AddAccountDialog::on_typeComboBox_currentIndexChanged(const QString &type) {
     updateTypeSettings(type);
 }
 
+void AddAccountDialog::toggleAdvancedParams() {
+    bool isVisible = ui->advancedParamsGroupBox->isVisible();
+    ui->advancedParamsGroupBox->setVisible(!isVisible);
+
+    // Изменяем текст кнопки
+    if (isVisible) {
+        ui->toggleAdvancedParamsButton->setText("Дополнительные параметры");
+    } else {
+        ui->toggleAdvancedParamsButton->setText("Скрыть дополнительные параметры");
+    }
+
+    // Автоматически подстраиваем размер окна под содержимое
+    adjustSize();
+}
+
 void AddAccountDialog::updateTypeSettings(const QString &type) {
     if (type == "По времени") {
-        ui->typeSettingsStackedWidget->setCurrentWidget(ui->totpSettingsPage);
+        ui->periodSpinBox->setEnabled(true);
+        ui->counterSpinBox->setEnabled(false);
     } else if (type == "По счетчику") {
-        ui->typeSettingsStackedWidget->setCurrentWidget(ui->hotpSettingsPage);
+        ui->periodSpinBox->setEnabled(false);
+        ui->counterSpinBox->setEnabled(true);
     }
 }
 

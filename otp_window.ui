@@ -7,7 +7,7 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
-    <!-- Верхняя панель с заголовком и кнопкой настроек -->
+    <!-- Верхняя панель с заголовком -->
     <item>
      <layout class="QHBoxLayout" name="topLayout">
       <item>
@@ -30,22 +30,7 @@
         </property>
        </spacer>
       </item>
-      <item>
-       <widget class="QPushButton" name="settingsButton">
-        <property name="text">
-         <string>⚙</string>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>30</width>
-          <height>30</height>
-         </size>
-        </property>
-       </widget>
-      </item>
+      <!-- Удалена кнопка настроек -->
      </layout>
     </item>
     <!-- Поле поиска -->

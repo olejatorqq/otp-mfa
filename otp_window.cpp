@@ -25,6 +25,7 @@
 #include <QMenu>
 #include <QMessageBox>
 #include <QContextMenuEvent>
+#include <QUrl>
 
 OTPWindow::OTPWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -63,8 +64,15 @@ OTPWindow::OTPWindow(QWidget *parent) :
     // Подключаем сигналы и слоты
     connect(ui->addButton, &QPushButton::clicked, this, &OTPWindow::onAddAccountClicked);
     connect(ui->searchLineEdit, &QLineEdit::textChanged, this, &OTPWindow::filterAccounts);
-    connect(ui->settingsButton, &QPushButton::clicked, this, &OTPWindow::openSettingsDialog);
     connect(timer, &QTimer::timeout, this, &OTPWindow::updateAccounts);
+
+    // Подключаемся к сигналам AccountManager для обработки сетевых запросов
+    connect(&AccountManager::instance(), &AccountManager::dataFetched, this, &OTPWindow::onDataFetched);
+    connect(&AccountManager::instance(), &AccountManager::fetchError, this, &OTPWindow::onFetchError);
+
+    // Пример вызова HTTPS-запроса (можете разместить это в нужном месте)
+    // QUrl url("https://localhost:4443/api/data"); // Замените на ваш URL
+    // AccountManager::instance().fetchDataFromServer(url);
 
     // Запускаем таймер для обновления OTP
     timer->start(1000);
@@ -267,7 +275,6 @@ void OTPWindow::updateAccounts() {
     }
 }
 
-
 bool OTPWindow::eventFilter(QObject *watched, QEvent *event) {
     for (int i = 0; i < accountWidgets.size(); ++i) {
         if (watched == accountWidgets[i]) {
@@ -317,7 +324,6 @@ void OTPWindow::copyCodeToClipboard(int index) {
     copiedLabel->show();
     QTimer::singleShot(1000, copiedLabel, &QLabel::close);
 }
-
 
 void OTPWindow::toggleTheme() {
     darkThemeEnabled = !darkThemeEnabled;
@@ -378,21 +384,6 @@ void OTPWindow::applyTheme() {
                              ).arg(textColor);
 
     ui->titleLabel->setStyleSheet(titleStyle);
-
-    // Стили для кнопки настроек
-    QString settingsButtonStyle = QString(
-                                      "QPushButton {"
-                                      "   background-color: transparent;"
-                                      "   color: %1;"
-                                      "   border: none;"
-                                      "   font-size: 18px;"
-                                      "}"
-                                      "QPushButton:hover {"
-                                      "   color: %2;"
-                                      "}"
-                                      ).arg(textColor, buttonHoverColor);
-
-    ui->settingsButton->setStyleSheet(settingsButtonStyle);
 
     // Устанавливаем цвет текста для всех QLabel в приложении
     QPalette labelPalette;
@@ -488,4 +479,17 @@ void OTPWindow::deleteAccount(int index) {
         // Обновляем интерфейс
         displayAccounts();
     }
+}
+
+// Новые слоты для обработки сетевых запросов
+void OTPWindow::onDataFetched(const QByteArray &data) {
+    // Обработка полученных данных
+    qDebug() << "Получены данные с сервера:" << data;
+    QMessageBox::information(this, "Данные получены", "Успешно получили данные с сервера.");
+}
+
+void OTPWindow::onFetchError(const QString &errorString) {
+    // Обработка ошибок
+    qWarning() << "Ошибка при получении данных с сервера:" << errorString;
+    QMessageBox::critical(this, "Ошибка", "Не удалось получить данные с сервера: " + errorString);
 }

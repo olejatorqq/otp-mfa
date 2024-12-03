@@ -1,9 +1,13 @@
 #ifndef ACCOUNT_MANAGER_H
 #define ACCOUNT_MANAGER_H
 
+#include <QObject>
 #include <QString>
 #include <QList>
 #include <QSqlDatabase>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QSslError>
 
 struct Account {
     QString name;
@@ -15,7 +19,9 @@ struct Account {
     quint64 counter;    // Для HOTP
 };
 
-class AccountManager {
+class AccountManager : public QObject {
+    Q_OBJECT
+
 public:
     static AccountManager& instance();
 
@@ -33,13 +39,28 @@ public:
     // Метод для записи в журнал
     void logEvent(const QString& eventDescription);
 
+    // Новая функция для выполнения HTTPS-запроса
+    void fetchDataFromServer(const QUrl &url);
+
+signals:
+    void dataFetched(const QByteArray &data);
+    void fetchError(const QString &errorString);
+
+private slots:
+    void onNetworkReplyFinished(QNetworkReply* reply);
+    void onSslErrors(QNetworkReply* reply, const QList<QSslError> &errors);
+
 private:
     AccountManager();
     ~AccountManager();
 
     QSqlDatabase db;
+    QNetworkAccessManager* networkManager;
 
     void initializeDatabase();  // Инициализация базы данных
+
+    // Приватный метод для получения обфусцированного хэша
+    QByteArray getExpectedCertHash() const;
 };
 
 #endif // ACCOUNT_MANAGER_H

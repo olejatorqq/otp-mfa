@@ -27,6 +27,7 @@ private slots:
     void on_uriInputRadioButton_toggled(bool checked);
     void on_uriLineEdit_textChanged(const QString &text);
     void on_typeComboBox_currentIndexChanged(const QString &type);
+    void toggleAdvancedParams(); // Добавленный слот
 
 private:
     Ui::AddAccountDialog *ui;

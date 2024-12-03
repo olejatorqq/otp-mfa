@@ -21,6 +21,8 @@ public:
     explicit OTPWindow(QWidget *parent = nullptr);
     ~OTPWindow();
 
+    void onDataFetched(const QByteArray &data);
+    void onFetchError(const QString &errorString);
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 
