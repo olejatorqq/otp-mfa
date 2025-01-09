@@ -50,26 +50,10 @@ set(PROJECT_SOURCES
     /home/oorlovsk/otp-mfa/include/qrcodegen.hpp
 )
 
-<<<<<<< HEAD
 # Создаём основной исполняемый файл
 add_executable(otp-mfa
     ${PROJECT_SOURCES}
 )
-=======
-# Конфигурация сборки для Qt5
-if(ANDROID)
-    add_library(otp-mfa SHARED
-        ${PROJECT_SOURCES}
-    )
-else()
-    add_executable(otp-mfa
-        ${PROJECT_SOURCES}
-        encrypted_storage.h encrypted_storage.cpp
-        password_dialog.ui
-        password_dialog.h password_dialog.cpp
-    )
-endif()
->>>>>>> 9aa011e288283510cac46a946f74ac09ede64cef
 
 # Линкуем библиотеки для основного приложения
 target_link_libraries(otp-mfa PRIVATE Qt5::Widgets Qt5::Multimedia Qt5::Sql Qt5::Svg Qt5::Network)

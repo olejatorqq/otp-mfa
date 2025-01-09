@@ -2,14 +2,11 @@
 #define OTP_WINDOW_H
 
 #include <QMainWindow>
-<<<<<<< HEAD
 #include <QList>
 #include <QWidget>
 #include <QTimer>
 #include <QSettings>
 
-=======
->>>>>>> 9aa011e288283510cac46a946f74ac09ede64cef
 #include "account_manager.h"
 
 namespace Ui {
@@ -31,7 +28,6 @@ protected:
 
 private slots:
     void onAddAccountClicked();
-<<<<<<< HEAD
     void filterAccounts(const QString &filter);
     void updateAccounts();
     void toggleTheme();
@@ -53,20 +49,6 @@ private:
     QTimer *timer;
     bool darkThemeEnabled;
     int interval;
-=======
-    void displayAccounts();
-    void onAccountDoubleClicked(int row, int column);
-    void updateAccountsAndQRCode();
-    void generateQRCodeForSelectedAccount();
-    void toggleTheme();  // Переключение между светлой и темной темами
-    void updateProgressBar();
-
-private:
-    Ui::OTPWindow *ui;
-    AccountManager accountManager;
-    QList<Account> accounts;
-    int selectedAccountIndex;
->>>>>>> 9aa011e288283510cac46a946f74ac09ede64cef
 };
 
 #endif // OTP_WINDOW_H

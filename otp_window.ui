@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>OTPWindow</class>
  <widget class="QMainWindow" name="OTPWindow">
@@ -8,7 +9,6 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <!-- Верхняя панель с заголовком -->
     <item>
-<<<<<<< HEAD
      <layout class="QHBoxLayout" name="topLayout">
       <item>
        <widget class="QLabel" name="titleLabel">
@@ -38,27 +38,6 @@
      <widget class="QLineEdit" name="searchLineEdit">
       <property name="placeholderText">
        <string>Поиск</string>
-=======
-     <widget class="QTableWidget" name="accountsTableWidget">
-      <property name="columnCount">
-       <number>3</number>
-      </property>
-      <property name="horizontalHeaderLabels">
-       <stringlist>
-        <string>Name</string>
-        <string>Algorithm</string>
-        <string>OTP</string>
-       </stringlist>
->>>>>>> 9aa011e288283510cac46a946f74ac09ede64cef
-      </property>
-      <property name="alternatingRowColors">
-       <bool>true</bool>
-      </property>
-      <property name="styleSheet">
-       <string>QTableWidget {
-          padding: 5px;
-          gridline-color: #D3D3D3;
-       }</string>
       </property>
      </widget>
     </item>
@@ -68,22 +47,11 @@
       <property name="widgetResizable">
        <bool>true</bool>
       </property>
-<<<<<<< HEAD
       <widget class="QWidget" name="accountsWidget">
        <layout class="QVBoxLayout" name="accountsLayout">
         <!-- Виджеты аккаунтов будут добавлены программно -->
        </layout>
       </widget>
-=======
-      <property name="styleSheet">
-       <string>QPushButton {
-          padding: 10px;
-          background-color: #0275d8;
-          color: white;
-          border-radius: 5px;
-       }</string>
-      </property>
->>>>>>> 9aa011e288283510cac46a946f74ac09ede64cef
      </widget>
     </item>
     <!-- Кнопка "Добавить" -->
@@ -92,62 +60,8 @@
       <property name="text">
        <string>Добавить новый аккаунт</string>
       </property>
-      <property name="styleSheet">
-       <string>QPushButton {
-          padding: 10px;
-          background-color: #5cb85c;
-          color: white;
-          border-radius: 5px;
-       }</string>
-      </property>
      </widget>
     </item>
-<<<<<<< HEAD
-=======
-    <item>
-     <layout class="QVBoxLayout" name="qrCodeDisplayLayout"/>
-    </item>
-    <item>
-     <widget class="QProgressBar" name="totpProgressBar">
-      <property name="minimum">
-       <number>0</number>
-      </property>
-      <property name="maximum">
-       <number>100</number>
-      </property>
-      <property name="textVisible">
-       <bool>false</bool>
-      </property>
-      <property name="styleSheet">
-       <string>QProgressBar {
-           border: 2px solid #D3D3D3;
-           border-radius: 5px;
-           background-color: white;
-           height: 15px;
-       }
-       QProgressBar::chunk {
-           background-color: #0275d8;
-           width: 10px;
-       }</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="themeToggleButton">
-      <property name="text">
-       <string>Toggle Theme</string>
-      </property>
-      <property name="styleSheet">
-       <string>QPushButton {
-          padding: 10px;
-          background-color: #f0ad4e;
-          color: white;
-          border-radius: 5px;
-       }</string>
-      </property>
-     </widget>
-    </item>
->>>>>>> 9aa011e288283510cac46a946f74ac09ede64cef
    </layout>
   </widget>
  </widget>

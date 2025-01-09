@@ -4,14 +4,10 @@
 #include <QObject>
 #include <QString>
 #include <QList>
-<<<<<<< HEAD
 #include <QSqlDatabase>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QSslError>
-=======
-#include <QByteArray>
->>>>>>> 9aa011e288283510cac46a946f74ac09ede64cef
 
 struct Account {
     QString name;
@@ -35,7 +31,6 @@ public:
 
     QList<Account> getAccounts() const;
     void addAccount(const Account& account);
-<<<<<<< HEAD
     void deleteAccount(const QString& accountName);
     void updateAccount(const QString& accountName, const Account& updatedAccount);
 
@@ -66,20 +61,6 @@ private:
 
     // Метод для получения обфусцированного хэша
     QByteArray getExpectedCertHash() const;
-=======
-    void setPassword(const QString &password);  // Установка пароля для шифрования
-
-    QString decryptSecret(const QByteArray &encryptedSecret) const;  // Расшифровка секрета
-
-private:
-    QList<Account> accounts;
-    QByteArray encryptionKey;  // Ключ для AES-шифрования
-
-    void saveAccounts() const;  // Сохранение учётных записей в JSON файл
-    void loadAccounts();        // Загрузка учётных записей из JSON файла
-
-    QByteArray encryptSecret(const QString &secret) const;      // Шифрование секрета
->>>>>>> 9aa011e288283510cac46a946f74ac09ede64cef
 };
 
 #endif // ACCOUNT_MANAGER_H
