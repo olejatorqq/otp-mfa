@@ -2,10 +2,22 @@
 <ui version="4.0">
  <class>AddAccountDialog</class>
  <widget class="QDialog" name="AddAccountDialog">
+<<<<<<< HEAD
+=======
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+>>>>>>> 9aa011e288283510cac46a946f74ac09ede64cef
   <property name="windowTitle">
    <string>Добавить аккаунт</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+<<<<<<< HEAD
     <!-- Установка ограничения размера -->
     <property name="sizeConstraint">
       <enum>QLayout::SetNoConstraint</enum>
@@ -277,6 +289,81 @@
       </widget>
     </item>
     
+=======
+   <item>
+    <widget class="QLineEdit" name="nameLineEdit">
+     <property name="placeholderText">
+      <string>Enter Resource Name</string>
+     </property>
+     <property name="styleSheet">
+      <string>QLineEdit {
+          padding: 5px;
+          border: 1px solid #D3D3D3;
+          border-radius: 4px;
+      }</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="secretLineEdit">
+     <property name="placeholderText">
+      <string>Enter Secret Key</string>
+     </property>
+     <property name="styleSheet">
+      <string>QLineEdit {
+          padding: 5px;
+          border: 1px solid #D3D3D3;
+          border-radius: 4px;
+      }</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QComboBox" name="algorithmComboBox">
+     <item>
+      <property name="text">
+       <string>TOTP</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>HOTP</string>
+      </property>
+     </item>
+     <property name="styleSheet">
+      <string>QComboBox {
+          padding: 5px;
+          border: 1px solid #D3D3D3;
+          border-radius: 4px;
+      }</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+     <property name="centerButtons">
+      <bool>true</bool>
+     </property>
+     <property name="styleSheet">
+      <string>QDialogButtonBox::button {
+          padding: 5px 15px;
+          border-radius: 4px;
+          background-color: #5cb85c;
+          color: white;
+      }
+      QDialogButtonBox::button[role="reject"] {
+          background-color: #d9534f;
+      }</string>
+     </property>
+    </widget>
+   </item>
+>>>>>>> 9aa011e288283510cac46a946f74ac09ede64cef
   </layout>
  </widget>
  <resources/>

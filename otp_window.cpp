@@ -5,6 +5,7 @@
 #include "account_manager.h"
 #include "settings_dialog.h"
 #include <QLabel>
+<<<<<<< HEAD
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QTimer>
@@ -26,6 +27,13 @@
 #include <QMessageBox>
 #include <QContextMenuEvent>
 #include <QUrl>
+=======
+#include <QPixmap>
+#include <QTableWidgetItem>
+#include <QInputDialog>
+#include <QMessageBox>
+#include <QTime>
+>>>>>>> 9aa011e288283510cac46a946f74ac09ede64cef
 
 OTPWindow::OTPWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -35,6 +43,7 @@ OTPWindow::OTPWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+<<<<<<< HEAD
     // Устанавливаем минимальный и начальный размер окна
     this->setMinimumSize(400, 600);
     this->resize(600, 800); // Начальный размер окна
@@ -58,9 +67,25 @@ OTPWindow::OTPWindow(QWidget *parent) :
     // Получаем аккаунты из базы данных
     accounts = AccountManager::instance().getAccounts();
     displayAccounts();
+=======
+    // Запрос пароля при запуске приложения
+    bool ok;
+    QString password = QInputDialog::getText(this, tr("Введите пароль"),
+                                             tr("Пароль:"), QLineEdit::Password,
+                                             "", &ok);
+    if (ok && !password.isEmpty()) {
+        accountManager.setPassword(password);
+        accounts = accountManager.getAccounts();
+        displayAccounts();
+    } else {
+        QMessageBox::critical(this, tr("Ошибка"), tr("Пароль обязателен для входа."));
+        close();  // Закрываем приложение, если пароль не введён
+    }
+>>>>>>> 9aa011e288283510cac46a946f74ac09ede64cef
 
     // Подключаем сигналы и слоты
     connect(ui->addButton, &QPushButton::clicked, this, &OTPWindow::onAddAccountClicked);
+<<<<<<< HEAD
     connect(ui->searchLineEdit, &QLineEdit::textChanged, this, &OTPWindow::filterAccounts);
     connect(timer, &QTimer::timeout, this, &OTPWindow::updateAccounts);
 
@@ -74,6 +99,22 @@ OTPWindow::OTPWindow(QWidget *parent) :
 
     // Запускаем таймер для обновления OTP
     timer->start(1000);
+=======
+    connect(ui->accountsTableWidget, &QTableWidget::cellDoubleClicked, this, &OTPWindow::onAccountDoubleClicked);
+
+    // Таймер для обновления OTP и QR-кода каждые 5 секунд
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &OTPWindow::updateAccountsAndQRCode);
+    timer->start(5000);  // Обновляем OTP и QR-код каждые 5 секунд
+
+    // Таймер для плавного обновления прогресс-бара каждую секунду
+    QTimer *progressBarTimer = new QTimer(this);
+    connect(progressBarTimer, &QTimer::timeout, this, &OTPWindow::updateProgressBar);
+    progressBarTimer->start(1000);  // Обновляем прогресс-бар каждую секунду
+
+    // Подключение переключателя темы
+    connect(ui->themeToggleButton, &QPushButton::clicked, this, &OTPWindow::toggleTheme);
+>>>>>>> 9aa011e288283510cac46a946f74ac09ede64cef
 }
 
 OTPWindow::~OTPWindow()
@@ -144,6 +185,7 @@ void OTPWindow::displayAccounts() {
 
         // OTP код
         OtpGenerator generator;
+<<<<<<< HEAD
         QString otp;
         if (account.type == "TOTP") {
             otp = generator.generateTOTP(account.secret, currentTime, account.period, account.algorithm, account.digits);
@@ -185,6 +227,16 @@ void OTPWindow::displayAccounts() {
             progressBar->setValue(timeLeft);
         } else {
             progressBar->setVisible(false);
+=======
+
+        // Расшифровываем секретный ключ перед генерацией OTP
+        QString decryptedSecret = accountManager.decryptSecret(QByteArray::fromHex(account.secret.toUtf8()));
+
+        if (account.algorithm == "TOTP") {
+            otp = generator.generateTOTP(decryptedSecret);
+        } else {
+            otp = generator.generateHOTP(decryptedSecret, account.counter);
+>>>>>>> 9aa011e288283510cac46a946f74ac09ede64cef
         }
 
         // Размещение элементов в layout
@@ -218,7 +270,35 @@ void OTPWindow::filterAccounts(const QString &filter) {
     }
 }
 
+<<<<<<< HEAD
 void OTPWindow::updateAccounts() {
+=======
+void OTPWindow::onAccountDoubleClicked(int row, int column) {
+    selectedAccountIndex = row;  // Устанавливаем индекс выбранного аккаунта
+    generateQRCodeForSelectedAccount();  // Генерируем QR-код для выбранного аккаунта
+}
+
+void OTPWindow::updateAccountsAndQRCode() {
+    displayAccounts();
+
+    // Если выбран аккаунт, обновляем QR-код для него
+    if (selectedAccountIndex >= 0 && selectedAccountIndex < accounts.size()) {
+        generateQRCodeForSelectedAccount();
+    }
+
+    // Обновляем прогресс-бар
+    updateProgressBar();
+}
+
+void OTPWindow::generateQRCodeForSelectedAccount() {
+    // Получаем данные аккаунта
+    Account selectedAccount = accounts[selectedAccountIndex];
+
+    // Расшифровываем секретный ключ перед генерацией OTP
+    QString decryptedSecret = accountManager.decryptSecret(QByteArray::fromHex(selectedAccount.secret.toUtf8()));
+
+    // Генерируем OTP для выбранного аккаунта
+>>>>>>> 9aa011e288283510cac46a946f74ac09ede64cef
     OtpGenerator generator;
 
     // Получаем текущее время один раз
@@ -287,6 +367,7 @@ void OTPWindow::copyCodeToClipboard(int index) {
     OtpGenerator generator;
     quint64 currentTime = QDateTime::currentSecsSinceEpoch();
     QString otp;
+<<<<<<< HEAD
 
     if (account.type == "TOTP") {
         otp = generator.generateTOTP(account.secret, currentTime, account.period, account.algorithm, account.digits);
@@ -295,6 +376,12 @@ void OTPWindow::copyCodeToClipboard(int index) {
         // Увеличиваем счётчик только при использовании HOTP
         account.counter += 1;
         AccountManager::instance().updateAccount(account.name, account);
+=======
+    if (selectedAccount.algorithm == "TOTP") {
+        otp = generator.generateTOTP(decryptedSecret);
+    } else {
+        otp = generator.generateHOTP(decryptedSecret, selectedAccount.counter);
+>>>>>>> 9aa011e288283510cac46a946f74ac09ede64cef
     }
 
     QClipboard *clipboard = QApplication::clipboard();
@@ -314,6 +401,7 @@ void OTPWindow::copyCodeToClipboard(int index) {
     QTimer::singleShot(1000, copiedLabel, &QLabel::close);
 }
 
+<<<<<<< HEAD
 void OTPWindow::toggleTheme() {
     darkThemeEnabled = !darkThemeEnabled;
     applyTheme();
@@ -480,4 +568,25 @@ void OTPWindow::onFetchError(const QString &errorString) {
     // Обработка ошибок
     qWarning() << "Ошибка при получении данных с сервера:" << errorString;
     QMessageBox::critical(this, "Ошибка", "Не удалось получить данные с сервера: " + errorString);
+=======
+void OTPWindow::updateProgressBar() {
+    // Обновляем прогресс-бар плавно
+    int secondsPassed = QTime::currentTime().second() % 30;
+    int percentage = (secondsPassed * 100) / 30;  // Обновляем на основе оставшегося времени для обновления TOTP
+    ui->totpProgressBar->setValue(percentage);
+}
+
+void OTPWindow::toggleTheme() {
+    static bool isDarkTheme = false;
+    if (isDarkTheme) {
+        // Применить светлую тему
+        qApp->setStyleSheet("");
+    } else {
+        // Применить темную тему
+        qApp->setStyleSheet("QWidget { background-color: #2e2e2e; color: #ffffff; } "
+                            "QPushButton { background-color: #444444; color: #ffffff; } "
+                            "QLineEdit, QTableWidget, QComboBox { background-color: #3e3e3e; color: #ffffff; }");
+    }
+    isDarkTheme = !isDarkTheme;
+>>>>>>> 9aa011e288283510cac46a946f74ac09ede64cef
 }
