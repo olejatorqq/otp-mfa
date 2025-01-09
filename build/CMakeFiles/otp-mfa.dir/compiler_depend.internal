@@ -24,6 +24,8 @@
  /home/oorlovsk/Downloads/otp-mfa-fisrt/otp_window.ui
  /home/oorlovsk/Downloads/otp-mfa-fisrt/qr_generator.cpp
  /home/oorlovsk/Downloads/otp-mfa-fisrt/qr_generator.h
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/screenshot_tool.cpp
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/screenshot_tool.h
  /home/oorlovsk/Downloads/otp-mfa-fisrt/settings_dialog.cpp
  /home/oorlovsk/Downloads/otp-mfa-fisrt/settings_dialog.h
  /home/oorlovsk/Downloads/otp-mfa-fisrt/settings_dialog.ui
@@ -300,6 +302,8 @@
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QList
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QMetaType
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QObject
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/QPoint
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/QRect
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QSettings
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QSharedDataPointer
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QString
@@ -376,6 +380,7 @@
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qvarlengtharray.h
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qvector.h
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qversiontagging.h
+ /usr/include/x86_64-linux-gnu/qt5/QtGui/QPixmap
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qbrush.h
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qcolor.h
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qcursor.h

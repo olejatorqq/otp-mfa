@@ -1,37 +1,46 @@
 #include "otp_window.h"
 #include "master_password_dialog.h"
 #include "encryption_utils.h"
+#include "account_manager.h" // Добавлено
 #include <QApplication>
 #include <QMessageBox>
 
 int main(int argc, char *argv[]) {
-    // Устанавливаем атрибуты перед созданием QApplication
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 
     QApplication a(argc, argv);
 
-    while (true) {
+    const int maxAttempts = 3;
+    int attempts = 0;
+
+    while (attempts < maxAttempts) {
         MasterPasswordDialog passwordDialog;
         if (passwordDialog.exec() == QDialog::Accepted) {
             QString masterPassword = passwordDialog.getPassword();
-            EncryptionUtils::instance().setMasterPassword(masterPassword);
 
-            if (AccountManager::instance().verifyMasterPassword()) {
+            if (AccountManager::instance().verifyMasterPassword(masterPassword)) {
+                EncryptionUtils::instance().setMasterPassword(masterPassword);
+
                 OTPWindow window;
                 window.show();
 
-                // Подключаемся к сигналу aboutToQuit для логирования выхода
                 QObject::connect(&a, &QApplication::aboutToQuit, []() {
                     AccountManager::instance().logEvent("Пользователь вышел из приложения");
                 });
 
                 return a.exec();
             } else {
-                QMessageBox::warning(nullptr, "Ошибка", "Неверный мастер-пароль. Попробуйте снова.");
+                attempts++;
+                QMessageBox::warning(nullptr, "Ошибка",
+                                     QString("Неверный мастер-пароль. Попыток осталось: %1").arg(maxAttempts - attempts));
             }
         } else {
-            return 0; // Выход из приложения, если пользователь отменил ввод пароля
+            return 0; // Выход из приложения
         }
     }
+
+    QMessageBox::critical(nullptr, "Ошибка", "Превышено количество попыток ввода мастер-пароля. Приложение будет закрыто.");
+    return 0;
 }
+

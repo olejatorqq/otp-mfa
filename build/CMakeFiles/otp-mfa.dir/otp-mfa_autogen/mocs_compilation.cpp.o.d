@@ -362,5 +362,15 @@ CMakeFiles/otp-mfa.dir/otp-mfa_autogen/mocs_compilation.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qbasictimer.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QSettings \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qsettings.h \
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/build/otp-mfa_autogen/EWIEGA46WW/moc_qr_generator.cpp \
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/build/otp-mfa_autogen/EWIEGA46WW/../../../qr_generator.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtGui/QPixmap \
+ /usr/include/x86_64-linux-gnu/qt5/QtGui/qpixmap.h \
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/build/otp-mfa_autogen/EWIEGA46WW/moc_screenshot_tool.cpp \
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/build/otp-mfa_autogen/EWIEGA46WW/../../../screenshot_tool.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/QPoint \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qpoint.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/QRect \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qrect.h \
  /home/oorlovsk/Downloads/otp-mfa-fisrt/build/otp-mfa_autogen/EWIEGA46WW/moc_settings_dialog.cpp \
  /home/oorlovsk/Downloads/otp-mfa-fisrt/build/otp-mfa_autogen/EWIEGA46WW/../../../settings_dialog.h

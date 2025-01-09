@@ -22,6 +22,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/otp-mfa.dir/otp_window.cpp.o.d"
   "CMakeFiles/otp-mfa.dir/qr_generator.cpp.o"
   "CMakeFiles/otp-mfa.dir/qr_generator.cpp.o.d"
+  "CMakeFiles/otp-mfa.dir/screenshot_tool.cpp.o"
+  "CMakeFiles/otp-mfa.dir/screenshot_tool.cpp.o.d"
   "CMakeFiles/otp-mfa.dir/settings_dialog.cpp.o"
   "CMakeFiles/otp-mfa.dir/settings_dialog.cpp.o.d"
   "otp-mfa"

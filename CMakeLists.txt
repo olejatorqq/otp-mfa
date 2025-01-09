@@ -22,6 +22,13 @@ pkg_check_modules(QREncode REQUIRED libqrencode)
 include_directories(${QREncode_INCLUDE_DIRS})
 include_directories("/home/oorlovsk/otp-mfa/include")
 include_directories(${OpenCV_INCLUDE_DIRS})
+# Указываем, что нужно искать заголовки и внутри ${CMAKE_CURRENT_SOURCE_DIR}/ZXing_libs
+
+# Если ZXing_libs лежит непосредственно в корне проекта:
+# include_directories("${CMAKE_CURRENT_SOURCE_DIR}")
+
+# Или, если хотите писать #include "ReadBarcode.h" без ZXing_libs, то:
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/ZXing_libs")
 
 # Источники для основного приложения
 set(PROJECT_SOURCES
@@ -53,6 +60,7 @@ set(PROJECT_SOURCES
 # Создаём основной исполняемый файл
 add_executable(otp-mfa
     ${PROJECT_SOURCES}
+    screenshot_tool.h screenshot_tool.cpp
 )
 
 # Линкуем библиотеки для основного приложения

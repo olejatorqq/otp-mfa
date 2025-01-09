@@ -1,6 +1,10 @@
 #include "add_account_dialog.h"
 #include "ui_add_account.h"
+
 #include "otp_generator.h"
+#include "screenshot_tool.h"
+#include "qr_generator.h"
+
 #include <QMessageBox>
 #include <QLineEdit>
 #include <QCheckBox>
@@ -14,53 +18,162 @@ AddAccountDialog::AddAccountDialog(QWidget *parent) :
     ui->setupUi(this);
 
     // Подключаем сигналы
-    connect(ui->showSecretCheckBox, &QCheckBox::toggled, this, &AddAccountDialog::on_showSecretCheckBox_toggled);
-    connect(ui->manualInputRadioButton, &QRadioButton::toggled, this, &AddAccountDialog::on_manualInputRadioButton_toggled);
-    connect(ui->uriInputRadioButton, &QRadioButton::toggled, this, &AddAccountDialog::on_uriInputRadioButton_toggled);
-    connect(ui->uriLineEdit, &QLineEdit::textChanged, this, &AddAccountDialog::on_uriLineEdit_textChanged);
-    connect(ui->typeComboBox, &QComboBox::currentTextChanged, this, &AddAccountDialog::on_typeComboBox_currentIndexChanged);
-    connect(ui->toggleAdvancedParamsButton, &QPushButton::clicked, this, &AddAccountDialog::toggleAdvancedParams);
-    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &AddAccountDialog::on_buttonBox_accepted);
-    connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &AddAccountDialog::on_buttonBox_rejected);
+    connect(ui->showSecretCheckBox, &QCheckBox::toggled,
+            this, &AddAccountDialog::on_showSecretCheckBox_toggled);
+
+    // Радиокнопки
+    connect(ui->manualInputRadioButton, &QRadioButton::toggled,
+            this, &AddAccountDialog::on_manualInputRadioButton_toggled);
+    connect(ui->scanInputRadioButton, &QRadioButton::toggled,
+            this, &AddAccountDialog::on_scanInputRadioButton_toggled);
+
+    // Дополнительные параметры
+    connect(ui->toggleAdvancedParamsButton, &QPushButton::clicked,
+            this, &AddAccountDialog::toggleAdvancedParams);
+
+    // Кнопка «Сканировать»
+    connect(ui->scanQrButton, &QPushButton::clicked,
+            this, &AddAccountDialog::on_scanQrButton_clicked);
+
+    // Кнопки OK/Cancel
+    connect(ui->buttonBox, &QDialogButtonBox::accepted,
+            this, &AddAccountDialog::on_buttonBox_accepted);
+    connect(ui->buttonBox, &QDialogButtonBox::rejected,
+            this, &AddAccountDialog::on_buttonBox_rejected);
+
+    // Тип ключа
+    connect(ui->typeComboBox, &QComboBox::currentTextChanged,
+            this, &AddAccountDialog::on_typeComboBox_currentIndexChanged);
 
     // Устанавливаем значения по умолчанию
     ui->algorithmComboBox->setCurrentText("SHA1");
     ui->digitsSpinBox->setValue(6);
     ui->periodSpinBox->setValue(30);
     ui->typeComboBox->setCurrentText("По времени");
+
     updateTypeSettings("По времени");
 
-    // Устанавливаем минимальный размер окна (опционально)
-    setMinimumSize(400, 300);
+    // По умолчанию включена радиокнопка «Ручной ввод»
+    ui->inputMethodStackedWidget->setCurrentWidget(ui->manualInputWidget);
 }
 
-AddAccountDialog::~AddAccountDialog() {
+AddAccountDialog::~AddAccountDialog()
+{
     delete ui;
 }
 
-Account AddAccountDialog::getAccount() const {
+// ==================================================================
+// ===============     СЛОТЫ для RadioButton    ======================
+// ==================================================================
+
+void AddAccountDialog::on_manualInputRadioButton_toggled(bool checked)
+{
+    if (checked) {
+        ui->inputMethodStackedWidget->setCurrentWidget(ui->manualInputWidget);
+    }
+}
+
+void AddAccountDialog::on_scanInputRadioButton_toggled(bool checked)
+{
+    if (checked) {
+        ui->inputMethodStackedWidget->setCurrentWidget(ui->scanInputWidget);
+    }
+}
+
+// ==================================================================
+// ===============  Сканирование QR  ================================
+// ==================================================================
+void AddAccountDialog::on_scanQrButton_clicked()
+{
+    ScreenshotTool *tool = new ScreenshotTool(this);
+    tool->setAttribute(Qt::WA_DeleteOnClose);
+
+    QRGenerator *qrGenerator = new QRGenerator(tool);
+
+    // Когда qrGenerator успешно декодирует
+    connect(qrGenerator, &QRGenerator::qrDecoded, this,
+            [this, tool](const QString &decodedText) {
+                tool->close();
+                handleDecodedQr(decodedText);
+            });
+
+    // Когда не удалось
+    connect(qrGenerator, &QRGenerator::qrError, this,
+            [this, tool](const QString &err) {
+                tool->close();
+                QMessageBox::warning(this, "Ошибка", "Не удалось распознать QR: " + err);
+            });
+
+    // Когда пользователь выделил область
+    connect(tool, &ScreenshotTool::areaSelected,
+            qrGenerator, &QRGenerator::processPixmap);
+
+    tool->showFullScreen();
+}
+
+void AddAccountDialog::handleDecodedQr(const QString &decodedText)
+{
+    // Если нужно парсить otpauth://
+    if (!decodedText.startsWith("otpauth://", Qt::CaseInsensitive)) {
+        QMessageBox::warning(this, "Ошибка", "QR-код не содержит otpauth:// URI");
+        return;
+    }
+
+    // Автоматически распарсить и заполнить поля
+    parseUriAndFillFields(decodedText);
+
+    // Переключаемся обратно на «Ручной ввод»?
+    // Или оставляем как есть?
+    // Логично оставить на «Ручной ввод», чтобы поля отобразились
+    ui->manualInputRadioButton->setChecked(true);
+    ui->inputMethodStackedWidget->setCurrentWidget(ui->manualInputWidget);
+}
+
+// ==================================================================
+// ===============   Дополнительные параметры  =======================
+// ==================================================================
+
+void AddAccountDialog::toggleAdvancedParams()
+{
+    bool isVisible = ui->advancedParamsGroupBox->isVisible();
+    ui->advancedParamsGroupBox->setVisible(!isVisible);
+
+    // Меняем текст кнопки
+    if (isVisible)
+        ui->toggleAdvancedParamsButton->setText("Дополнительные параметры");
+    else
+        ui->toggleAdvancedParamsButton->setText("Скрыть дополнительные параметры");
+
+    adjustSize();
+}
+
+// ==================================================================
+// ===============   Основной CRUD диалога  =========================
+// ==================================================================
+
+Account AddAccountDialog::getAccount() const
+{
     Account account;
-    account.name = ui->nameLineEdit->text().trimmed();
-    account.secret = ui->secretLineEdit->text().trimmed();
+    account.name      = ui->nameLineEdit->text().trimmed();
+    account.secret    = ui->secretLineEdit->text().trimmed();
     account.algorithm = ui->algorithmComboBox->currentText();
-    account.digits = ui->digitsSpinBox->value();
+    account.digits    = ui->digitsSpinBox->value();
 
     QString typeText = ui->typeComboBox->currentText();
     if (typeText == "По времени") {
-        account.type = "TOTP";
+        account.type   = "TOTP";
         account.period = ui->periodSpinBox->value();
-        account.counter = 0; // Для TOTP счетчик не используется
-    } else if (typeText == "По счетчику") {
-        account.type = "HOTP";
-        account.period = 0; // Для HOTP период не используется
+        account.counter = 0; // TOTP не использует счётчик
+    } else {
+        account.type   = "HOTP";
+        account.period = 0;
         account.counter = ui->counterSpinBox->value();
     }
-
     return account;
 }
 
-void AddAccountDialog::setAccount(const Account &account) {
-    // Устанавливаем данные в поля диалога
+void AddAccountDialog::setAccount(const Account &account)
+{
     ui->nameLineEdit->setText(account.name);
     ui->secretLineEdit->setText(account.secret);
     ui->algorithmComboBox->setCurrentText(account.algorithm);
@@ -69,149 +182,136 @@ void AddAccountDialog::setAccount(const Account &account) {
     if (account.type == "TOTP") {
         ui->typeComboBox->setCurrentText("По времени");
         ui->periodSpinBox->setValue(account.period);
-    } else if (account.type == "HOTP") {
+        ui->counterSpinBox->setValue(0);
+    } else {
         ui->typeComboBox->setCurrentText("По счетчику");
+        ui->periodSpinBox->setValue(0);
         ui->counterSpinBox->setValue(account.counter);
     }
 
-    // Устанавливаем метод ввода на "Ручной ввод"
+    // По умолчанию, показываем форму ручного ввода
     ui->manualInputRadioButton->setChecked(true);
     ui->inputMethodStackedWidget->setCurrentWidget(ui->manualInputWidget);
     ui->advancedParamsGroupBox->setVisible(false);
 
-    // Автоматически подстраиваем размер окна
     adjustSize();
 }
 
-void AddAccountDialog::on_buttonBox_accepted() {
-    // Валидация введенных данных
+void AddAccountDialog::on_buttonBox_accepted()
+{
+    // Проверяем, какая радиокнопка выбрана
     if (ui->manualInputRadioButton->isChecked()) {
+        // Проверяем, что поля не пустые
         if (ui->nameLineEdit->text().trimmed().isEmpty()) {
-            QMessageBox::warning(this, "Ошибка", "Пожалуйста, введите название ресурса.");
+            QMessageBox::warning(this, "Ошибка", "Введите название ресурса");
             return;
         }
         if (ui->secretLineEdit->text().trimmed().isEmpty()) {
-            QMessageBox::warning(this, "Ошибка", "Пожалуйста, введите секретный ключ.");
+            QMessageBox::warning(this, "Ошибка", "Введите секретный ключ");
             return;
         }
-
-        // Валидация секретного ключа
+        // Проверка base32
         QString errorMessage;
-        QByteArray decodedKey = OtpGenerator::base32Decode(ui->secretLineEdit->text().trimmed(), errorMessage);
-        if (decodedKey.isEmpty()) {
-            QMessageBox::warning(this, "Ошибка", errorMessage);
-            return;
-        }
-    } else if (ui->uriInputRadioButton->isChecked()) {
-        if (ui->uriLineEdit->text().trimmed().isEmpty()) {
-            QMessageBox::warning(this, "Ошибка", "Пожалуйста, введите otpauth:// URI.");
-            return;
-        }
-        // Парсим URI и заполняем поля
-        parseUriAndFillFields(ui->uriLineEdit->text().trimmed());
-        if (ui->nameLineEdit->text().isEmpty() || ui->secretLineEdit->text().isEmpty()) {
-            QMessageBox::warning(this, "Ошибка", "Не удалось распознать URI.");
-            return;
-        }
-
-        // Валидация секретного ключа после парсинга URI
-        QString errorMessage;
-        QByteArray decodedKey = OtpGenerator::base32Decode(ui->secretLineEdit->text().trimmed(), errorMessage);
+        QByteArray decodedKey =
+            OtpGenerator::base32Decode(ui->secretLineEdit->text().trimmed(), errorMessage);
         if (decodedKey.isEmpty()) {
             QMessageBox::warning(this, "Ошибка", errorMessage);
             return;
         }
     }
-    accept(); // Закрываем диалог с результатом Accepted
-}
-
-void AddAccountDialog::on_buttonBox_rejected() {
-    reject(); // Закрываем диалог с результатом Rejected
-}
-
-void AddAccountDialog::on_showSecretCheckBox_toggled(bool checked) {
-    ui->secretLineEdit->setEchoMode(checked ? QLineEdit::Normal : QLineEdit::Password);
-}
-
-void AddAccountDialog::on_manualInputRadioButton_toggled(bool checked) {
-    if (checked) {
-        ui->inputMethodStackedWidget->setCurrentWidget(ui->manualInputWidget);
+    else if (ui->scanInputRadioButton->isChecked()) {
+        // Теоретически, в режиме «Сканирование QR»
+        // мы уже должны были распознать и заполнить поля
+        // Проверяем, не пустое ли поле secret
+        if (ui->secretLineEdit->text().trimmed().isEmpty()) {
+            QMessageBox::warning(this, "Ошибка", "Сначала просканируйте QR-код");
+            return;
+        }
     }
+
+    accept();
 }
 
-void AddAccountDialog::on_uriInputRadioButton_toggled(bool checked) {
-    if (checked) {
-        ui->inputMethodStackedWidget->setCurrentWidget(ui->uriInputWidget);
-    }
+void AddAccountDialog::on_buttonBox_rejected()
+{
+    reject();
 }
 
-void AddAccountDialog::on_uriLineEdit_textChanged(const QString &text) {
-    // Можно автоматически парсить URI при изменении текста
-    parseUriAndFillFields(text);
+// ==================================================================
+// ===============   Прочие слоты / методы   ========================
+// ==================================================================
+
+void AddAccountDialog::on_showSecretCheckBox_toggled(bool checked)
+{
+    ui->secretLineEdit->setEchoMode(checked ?
+                                        QLineEdit::Normal : QLineEdit::Password);
 }
 
-void AddAccountDialog::on_typeComboBox_currentIndexChanged(const QString &type) {
+void AddAccountDialog::on_typeComboBox_currentIndexChanged(const QString &type)
+{
     updateTypeSettings(type);
 }
 
-void AddAccountDialog::toggleAdvancedParams() {
-    bool isVisible = ui->advancedParamsGroupBox->isVisible();
-    ui->advancedParamsGroupBox->setVisible(!isVisible);
-
-    // Изменяем текст кнопки
-    if (isVisible) {
-        ui->toggleAdvancedParamsButton->setText("Дополнительные параметры");
-    } else {
-        ui->toggleAdvancedParamsButton->setText("Скрыть дополнительные параметры");
-    }
-
-    // Автоматически подстраиваем размер окна под содержимое
-    adjustSize();
-}
-
-void AddAccountDialog::updateTypeSettings(const QString &type) {
+void AddAccountDialog::updateTypeSettings(const QString &type)
+{
     if (type == "По времени") {
         ui->periodSpinBox->setEnabled(true);
         ui->counterSpinBox->setEnabled(false);
-    } else if (type == "По счетчику") {
+    } else {
+        // HOTP
         ui->periodSpinBox->setEnabled(false);
         ui->counterSpinBox->setEnabled(true);
     }
 }
 
-void AddAccountDialog::parseUriAndFillFields(const QString &uri) {
-    // Проверяем, начинается ли строка с "otpauth://"
-    if (!uri.startsWith("otpauth://")) {
-        QMessageBox::warning(this, "Ошибка", "Неверный формат URI.");
+void AddAccountDialog::parseUriAndFillFields(const QString &uri)
+{
+    // Например, если QR-код был otpauth://
+    if (!uri.startsWith("otpauth://", Qt::CaseInsensitive)) {
+        // Можно просто return
         return;
     }
-
     QUrl url(uri);
-    QString type = url.host(); // "totp" или "hotp"
-    QString label = QUrl::fromPercentEncoding(url.path().mid(1).toUtf8()); // Удаляем начальный '/' и декодируем
+    if (!url.isValid()) {
+        return;
+    }
+    QString type = url.host().toLower(); // totp/hotp
+    QString path = url.path().mid(1);    // без слеша
     QUrlQuery query(url);
 
-    QString secret = query.queryItemValue("secret");
-    QString issuer = query.queryItemValue("issuer");
+    QString secret    = query.queryItemValue("secret");
+    QString issuer    = query.queryItemValue("issuer");
     QString algorithm = query.queryItemValue("algorithm").toUpper();
-    int digits = query.queryItemValue("digits").toInt();
-    int period = query.queryItemValue("period").toInt();
-    int counter = query.queryItemValue("counter").toInt();
+    int digits        = query.queryItemValue("digits").toInt();
+    int period        = query.queryItemValue("period").toInt();
+    int counter       = query.queryItemValue("counter").toInt();
 
-    // Заполняем поля
-    ui->nameLineEdit->setText(issuer.isEmpty() ? label : issuer + " (" + label + ")");
-    ui->secretLineEdit->setText(secret);
-    ui->algorithmComboBox->setCurrentText(algorithm.isEmpty() ? "SHA1" : algorithm);
-    ui->digitsSpinBox->setValue(digits == 0 ? 6 : digits);
-
-    if (type.toLower() == "totp") {
-        ui->typeComboBox->setCurrentText("По времени");
-        ui->periodSpinBox->setValue(period == 0 ? 30 : period);
-    } else if (type.toLower() == "hotp") {
-        ui->typeComboBox->setCurrentText("По счетчику");
-        ui->counterSpinBox->setValue(counter);
+    // Простейший разбор поля path: issuer:Account
+    // В зависимости от реального формата
+    QString fullName;
+    if (!issuer.isEmpty()) {
+        fullName = issuer + " (" + path + ")";
     } else {
-        QMessageBox::warning(this, "Ошибка", "Неизвестный тип алгоритма в URI.");
-        return;
+        fullName = path;
+    }
+
+    ui->nameLineEdit->setText(fullName);
+    ui->secretLineEdit->setText(secret);
+    if (!algorithm.isEmpty()) {
+        ui->algorithmComboBox->setCurrentText(algorithm);
+    }
+    if (digits > 0) {
+        ui->digitsSpinBox->setValue(digits);
+    }
+    if (type == "totp") {
+        ui->typeComboBox->setCurrentText("По времени");
+        if (period > 0) {
+            ui->periodSpinBox->setValue(period);
+        }
+    } else if (type == "hotp") {
+        ui->typeComboBox->setCurrentText("По счетчику");
+        if (counter > 0) {
+            ui->counterSpinBox->setValue(counter);
+        }
     }
 }

@@ -393,6 +393,14 @@ CMakeFiles/otp-mfa.dir/otp_window.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QByteArray \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qbytearray.h \
  /home/oorlovsk/Downloads/otp-mfa-fisrt/settings_dialog.h \
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/screenshot_tool.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtGui/QPixmap \
+ /usr/include/x86_64-linux-gnu/qt5/QtGui/qpixmap.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/QPoint \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qpoint.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/QRect \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qrect.h \
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/qr_generator.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QLabel \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QHBoxLayout \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QVBoxLayout \
@@ -426,7 +434,6 @@ CMakeFiles/otp-mfa.dir/otp_window.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qscreen.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QList \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QRect \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qrect.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QSize \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qsize.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QSizeF \
@@ -440,4 +447,44 @@ CMakeFiles/otp-mfa.dir/otp_window.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qmessagebox.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qdialog.h \
  /usr/include/x86_64-linux-gnu/qt5/QtGui/QContextMenuEvent \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QUrl
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/QUrl \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/QUrlQuery \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qurlquery.h \
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/ZXing_libs/ReadBarcode.h \
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/ZXing_libs/ReaderOptions.h \
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/ZXing_libs/BarcodeFormat.h \
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/ZXing_libs/Flags.h \
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/ZXing_libs/BitHacks.h \
+ /usr/include/c++/13/cassert /usr/include/c++/13/cstring \
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/ZXing_libs/CharacterSet.h \
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/ZXing_libs/ImageView.h \
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/ZXing_libs/Barcode.h \
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/ZXing_libs/ByteArray.h \
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/ZXing_libs/Content.h \
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/ZXing_libs/Error.h \
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/ZXing_libs/Quadrilateral.h \
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/ZXing_libs/Point.h \
+ /usr/include/c++/13/cmath /usr/include/math.h \
+ /usr/include/x86_64-linux-gnu/bits/math-vector.h \
+ /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+ /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
+ /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
+ /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
+ /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
+ /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+ /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
+ /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
+ /usr/include/c++/13/bits/specfun.h /usr/include/c++/13/tr1/gamma.tcc \
+ /usr/include/c++/13/tr1/special_function_util.h \
+ /usr/include/c++/13/tr1/bessel_function.tcc \
+ /usr/include/c++/13/tr1/beta_function.tcc \
+ /usr/include/c++/13/tr1/ell_integral.tcc \
+ /usr/include/c++/13/tr1/exp_integral.tcc \
+ /usr/include/c++/13/tr1/hypergeometric.tcc \
+ /usr/include/c++/13/tr1/legendre_function.tcc \
+ /usr/include/c++/13/tr1/modified_bessel_func.tcc \
+ /usr/include/c++/13/tr1/poly_hermite.tcc \
+ /usr/include/c++/13/tr1/poly_laguerre.tcc \
+ /usr/include/c++/13/tr1/riemann_zeta.tcc \
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/ZXing_libs/ZXAlgorithms.h \
+ /home/oorlovsk/Downloads/otp-mfa-fisrt/ZXing_libs/StructuredAppend.h

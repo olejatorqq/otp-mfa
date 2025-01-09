@@ -74,6 +74,62 @@ void AccountManager::initializeDatabase() {
     if (!query.exec(createAccountsTable)) {
         qWarning() << "Не удалось создать таблицу accounts:" << query.lastError().text();
     }
+
+    // Создаем таблицу settings для хранения хэша мастер-пароля
+    QString createSettingsTable = R"(
+        CREATE TABLE IF NOT EXISTS settings (
+            key TEXT PRIMARY KEY,
+            value TEXT NOT NULL
+        )
+    )";
+
+    if (!query.exec(createSettingsTable)) {
+        qWarning() << "Не удалось создать таблицу settings:" << query.lastError().text();
+    }
+}
+
+bool AccountManager::setMasterPassword(const QString& password) {
+    QSqlQuery query(db);
+    // Хэшируем пароль с использованием SHA-256
+    QByteArray passwordHash = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex();
+
+    // Вставляем или заменяем хэш мастер-пароля в таблице settings
+    query.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES (:key, :value)");
+    query.bindValue(":key", "master_password_hash");
+    query.bindValue(":value", QString(passwordHash));
+
+    if (!query.exec()) {
+        qWarning() << "Не удалось установить мастер-пароль:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool AccountManager::verifyMasterPassword(const QString& password) {
+    QSqlQuery query(db);
+    query.prepare("SELECT value FROM settings WHERE key = :key");
+    query.bindValue(":key", "master_password_hash");
+
+    if (!query.exec()) {
+        qWarning() << "Не удалось выполнить запрос к settings:" << query.lastError().text();
+        return false;
+    }
+
+    if (query.next()) {
+        QString storedHash = query.value(0).toString();
+        QByteArray enteredHash = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex();
+
+        return storedHash == QString(enteredHash);
+    } else {
+        // Если хэш мастер-пароля не установлен, устанавливаем его
+        if (setMasterPassword(password)) {
+            qDebug() << "Мастер-пароль установлен.";
+            return true;
+        } else {
+            qWarning() << "Не удалось установить мастер-пароль.";
+            return false;
+        }
+    }
 }
 
 void AccountManager::logEvent(const QString& eventDescription) {

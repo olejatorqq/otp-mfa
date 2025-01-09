@@ -42,6 +42,9 @@ public:
     // Новая функция для выполнения HTTPS-запроса
     void fetchDataFromServer(const QUrl &url);
 
+    bool setMasterPassword(const QString& password);
+    bool verifyMasterPassword(const QString& password);
+
 signals:
     void dataFetched(const QByteArray &data);
     void fetchError(const QString &errorString);

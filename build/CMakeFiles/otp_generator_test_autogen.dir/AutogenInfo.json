@@ -193,6 +193,7 @@
 	[
 		"/home/oorlovsk/otp-mfa/include",
 		"/usr/include/opencv4",
+		"/home/oorlovsk/Downloads/otp-mfa-fisrt/ZXing_libs",
 		"/usr/include/x86_64-linux-gnu/qt5",
 		"/usr/include/x86_64-linux-gnu/qt5/QtCore",
 		"/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++",
@@ -226,7 +227,7 @@
 		"/home/oorlovsk/Downloads/otp-mfa-fisrt/build/otp-mfa_autogen/include/ui_settings_dialog.h"
 	],
 	"MULTI_CONFIG" : false,
-	"PARALLEL" : 4,
+	"PARALLEL" : 6,
 	"PARSE_CACHE_FILE" : "/home/oorlovsk/Downloads/otp-mfa-fisrt/build/CMakeFiles/otp_generator_test_autogen.dir/ParseCache.txt",
 	"QT_MOC_EXECUTABLE" : "/usr/lib/qt5/bin/moc",
 	"QT_UIC_EXECUTABLE" : "/usr/lib/qt5/bin/uic",

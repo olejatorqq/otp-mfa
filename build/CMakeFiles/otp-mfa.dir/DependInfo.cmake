@@ -19,6 +19,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/oorlovsk/Downloads/otp-mfa-fisrt/otp_generator.cpp" "CMakeFiles/otp-mfa.dir/otp_generator.cpp.o" "gcc" "CMakeFiles/otp-mfa.dir/otp_generator.cpp.o.d"
   "/home/oorlovsk/Downloads/otp-mfa-fisrt/otp_window.cpp" "CMakeFiles/otp-mfa.dir/otp_window.cpp.o" "gcc" "CMakeFiles/otp-mfa.dir/otp_window.cpp.o.d"
   "/home/oorlovsk/Downloads/otp-mfa-fisrt/qr_generator.cpp" "CMakeFiles/otp-mfa.dir/qr_generator.cpp.o" "gcc" "CMakeFiles/otp-mfa.dir/qr_generator.cpp.o.d"
+  "/home/oorlovsk/Downloads/otp-mfa-fisrt/screenshot_tool.cpp" "CMakeFiles/otp-mfa.dir/screenshot_tool.cpp.o" "gcc" "CMakeFiles/otp-mfa.dir/screenshot_tool.cpp.o.d"
   "/home/oorlovsk/Downloads/otp-mfa-fisrt/settings_dialog.cpp" "CMakeFiles/otp-mfa.dir/settings_dialog.cpp.o" "gcc" "CMakeFiles/otp-mfa.dir/settings_dialog.cpp.o.d"
   )
 

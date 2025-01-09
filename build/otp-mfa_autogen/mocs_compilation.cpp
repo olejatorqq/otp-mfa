@@ -3,4 +3,6 @@
 #include "EWIEGA46WW/moc_add_account_dialog.cpp"
 #include "EWIEGA46WW/moc_master_password_dialog.cpp"
 #include "EWIEGA46WW/moc_otp_window.cpp"
+#include "EWIEGA46WW/moc_qr_generator.cpp"
+#include "EWIEGA46WW/moc_screenshot_tool.cpp"
 #include "EWIEGA46WW/moc_settings_dialog.cpp"

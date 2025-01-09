@@ -7,6 +7,7 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
+
     <!-- Верхняя панель с заголовком -->
     <item>
      <layout class="QHBoxLayout" name="topLayout">
@@ -30,9 +31,10 @@
         </property>
        </spacer>
       </item>
-      <!-- Удалена кнопка настроек -->
+      <!-- Удалена кнопка настроек, как просили -->
      </layout>
     </item>
+
     <!-- Поле поиска -->
     <item>
      <widget class="QLineEdit" name="searchLineEdit">
@@ -41,6 +43,7 @@
       </property>
      </widget>
     </item>
+
     <!-- Область с аккаунтами -->
     <item>
      <widget class="QScrollArea" name="accountsScrollArea">
@@ -49,19 +52,32 @@
       </property>
       <widget class="QWidget" name="accountsWidget">
        <layout class="QVBoxLayout" name="accountsLayout">
-        <!-- Виджеты аккаунтов будут добавлены программно -->
+        <!-- Виджеты аккаунтов будут добавляться программно -->
        </layout>
       </widget>
      </widget>
     </item>
-    <!-- Кнопка "Добавить" -->
+
+    <!-- Горизонтальный layout с кнопками "Добавить" и "Сканировать QR" -->
     <item>
-     <widget class="QPushButton" name="addButton">
-      <property name="text">
-       <string>Добавить новый аккаунт</string>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="buttonLayout">
+      <item>
+       <widget class="QPushButton" name="addButton">
+        <property name="text">
+         <string>Добавить новый аккаунт</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="scanQrButton">
+        <property name="text">
+         <string>Сканировать QR</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
+
    </layout>
   </widget>
  </widget>
