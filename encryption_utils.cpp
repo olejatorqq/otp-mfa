@@ -21,7 +21,7 @@ bool EncryptionUtils::isMasterPasswordSet() const {
 
 QByteArray EncryptionUtils::deriveKey(const QString& password) {
     // Используем PBKDF2 для генерации ключа из мастер-пароля
-    QByteArray salt = "your_salt_value"; // Используйте уникальную соль
+    QByteArray salt = "saltsalt";
     const int iterations = 100000;
     const int keyLength = 32; // Для AES-256
 

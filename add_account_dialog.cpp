@@ -30,7 +30,7 @@ AddAccountDialog::AddAccountDialog(QWidget *parent) :
     ui->typeComboBox->setCurrentText("По времени");
     updateTypeSettings("По времени");
 
-    // Устанавливаем минимальный размер окна (опционально)
+    // Устанавливаем минимальный размер окна
     setMinimumSize(400, 300);
 }
 
@@ -122,11 +122,11 @@ void AddAccountDialog::on_buttonBox_accepted() {
             return;
         }
     }
-    accept(); // Закрываем диалог с результатом Accepted
+    accept();
 }
 
 void AddAccountDialog::on_buttonBox_rejected() {
-    reject(); // Закрываем диалог с результатом Rejected
+    reject();
 }
 
 void AddAccountDialog::on_showSecretCheckBox_toggled(bool checked) {
@@ -146,7 +146,6 @@ void AddAccountDialog::on_uriInputRadioButton_toggled(bool checked) {
 }
 
 void AddAccountDialog::on_uriLineEdit_textChanged(const QString &text) {
-    // Можно автоматически парсить URI при изменении текста
     parseUriAndFillFields(text);
 }
 
@@ -158,14 +157,12 @@ void AddAccountDialog::toggleAdvancedParams() {
     bool isVisible = ui->advancedParamsGroupBox->isVisible();
     ui->advancedParamsGroupBox->setVisible(!isVisible);
 
-    // Изменяем текст кнопки
     if (isVisible) {
         ui->toggleAdvancedParamsButton->setText("Дополнительные параметры");
     } else {
         ui->toggleAdvancedParamsButton->setText("Скрыть дополнительные параметры");
     }
 
-    // Автоматически подстраиваем размер окна под содержимое
     adjustSize();
 }
 

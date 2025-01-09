@@ -10,7 +10,7 @@
 #include <QSslCertificate>
 #include <QCryptographicHash>
 
-// Образец: разбиение хэша на части
+// Разбиение хэша на части - Поменяй логику!!!
 static const char* hashPart1 = "980afe02";
 static const char* hashPart2 = "39f05b57";
 static const char* hashPart3 = "d83b4c38";
@@ -57,7 +57,7 @@ AccountManager::~AccountManager() {
 void AccountManager::initializeDatabase() {
     QSqlQuery query(db);
 
-    // Создаем таблицу accounts
+    // Создание таблицы accounts
     QString createAccountsTable = R"(
         CREATE TABLE IF NOT EXISTS accounts (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -77,7 +77,7 @@ void AccountManager::initializeDatabase() {
 }
 
 void AccountManager::logEvent(const QString& eventDescription) {
-    // Реализация логирования событий (например, запись в файл или базу данных)
+    // Логирования событий
     Q_UNUSED(eventDescription);
 }
 
@@ -100,7 +100,7 @@ QList<Account> AccountManager::getAccounts() const {
         QString decryptedSecret = EncryptionUtils::instance().decrypt(encryptedSecret);
         if (decryptedSecret.isEmpty()) {
             qWarning() << "Не удалось расшифровать секрет для аккаунта:" << account.name;
-            continue; // Пропускаем этот аккаунт
+            continue;
         }
         account.secret = decryptedSecret;
 
@@ -189,7 +189,7 @@ void AccountManager::updateAccount(const QString& accountName, const Account& up
 }
 
 bool AccountManager::verifyMasterPassword() {
-    // Реализация проверки мастер-пароля (если требуется)
+    // Реализация проверки мастер-пароля (чекни)
     return true;
 }
 
@@ -250,9 +250,6 @@ void AccountManager::onSslErrors(QNetworkReply* reply, const QList<QSslError> &e
         reply->abort();
         return;
     }
-
-    // Если сертификат прошёл проверку, можно продолжить
-    // В противном случае, соединение уже прервано выше
 }
 
 QByteArray AccountManager::getExpectedCertHash() const {
@@ -260,6 +257,7 @@ QByteArray AccountManager::getExpectedCertHash() const {
     QByteArray obfuscatedHash;
 
     // Восстанавливаем хэш из частей и применяем XOR
+    // Шляпа, поправь
     QByteArray fullHash;
     fullHash.append(hashPart1);
     fullHash.append(hashPart2);

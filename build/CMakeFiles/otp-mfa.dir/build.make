@@ -263,7 +263,7 @@ otp-mfa: /usr/lib/x86_64-linux-gnu/libQt5Multimedia.so.5.15.13
 otp-mfa: /usr/lib/x86_64-linux-gnu/libQt5Sql.so.5.15.13
 otp-mfa: /usr/lib/x86_64-linux-gnu/libQt5Svg.so.5.15.13
 otp-mfa: /usr/lib/x86_64-linux-gnu/libQt5Network.so.5.15.13
-otp-mfa: /usr/local/lib/libZXing.so.2.2.1
+otp-mfa: /usr/local/lib/libZXing.so.2.3.0
 otp-mfa: /usr/lib/x86_64-linux-gnu/libssl.so
 otp-mfa: /usr/lib/x86_64-linux-gnu/libcrypto.so
 otp-mfa: /usr/lib/x86_64-linux-gnu/libopencv_stitching.so.4.6.0

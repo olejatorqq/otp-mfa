@@ -15,10 +15,10 @@ QString OtpGenerator::generateTOTP(const QString &secret,
     quint64 time = currentTime / timeStep;
 
     // Отладочный вывод текущего времени
-    qDebug() << "Current time:" << currentTime << "("
-             << QDateTime::fromSecsSinceEpoch(currentTime)
-                    .toString(Qt::ISODate) << ")"
-             << "Time counter:" << time;
+    // qDebug() << "Current time:" << currentTime << "("
+    //          << QDateTime::fromSecsSinceEpoch(currentTime)
+    //                 .toString(Qt::ISODate) << ")"
+    //          << "Time counter:" << time;
 
     return generateHOTP(secret, time, algorithm, digits);
 }
@@ -34,7 +34,7 @@ QString OtpGenerator::generateHOTP(const QString &secret,
         return QString("Ошибка");
     }
 
-    qDebug() << "Decoded secret key (hex):" << key.toHex();
+    // qDebug() << "Decoded secret key (hex):" << key.toHex();
 
     QByteArray message(8, 0);
     for (int i = 7; i >= 0; --i) {
@@ -42,8 +42,8 @@ QString OtpGenerator::generateHOTP(const QString &secret,
             (counter >> (i * 8)) & 0xFF);
     }
 
-    qDebug() << "Counter:" << counter;
-    qDebug() << "Message (hex):" << message.toHex();
+    // qDebug() << "Counter:" << counter;
+    // qDebug() << "Message (hex):" << message.toHex();
 
     QByteArray hash;
     if (algorithm == "SHA1") {
@@ -60,7 +60,7 @@ QString OtpGenerator::generateHOTP(const QString &secret,
         return QString();
     }
 
-    qDebug() << "HMAC hash (hex):" << hash.toHex();
+    // qDebug() << "HMAC hash (hex):" << hash.toHex();
 
     if (hash.size() < 20) { // Размер SHA1 хэша
         qWarning() << "HMAC hash is too short.";
@@ -68,7 +68,7 @@ QString OtpGenerator::generateHOTP(const QString &secret,
     }
 
     int offset = hash[hash.size() - 1] & 0x0F;
-    qDebug() << "Offset:" << offset;
+    // qDebug() << "Offset:" << offset;
 
     if (offset + 3 >= hash.size()) {
         qWarning() << "Offset + 3 exceeds hash size.";
@@ -80,10 +80,10 @@ QString OtpGenerator::generateHOTP(const QString &secret,
                      ((static_cast<quint8>(hash[offset + 2]) & 0xFF) << 8) |
                      (static_cast<quint8>(hash[offset + 3]) & 0xFF);
 
-    qDebug() << "Binary code:" << binary;
+    // qDebug() << "Binary code:" << binary;
 
     quint32 otp = binary % static_cast<quint32>(std::pow(10, digits));
-    qDebug() << "Generated OTP:" << otp;
+    // qDebug() << "Generated OTP:" << otp;
 
     return QString("%1").arg(otp, digits, 10, QLatin1Char('0'));
 }

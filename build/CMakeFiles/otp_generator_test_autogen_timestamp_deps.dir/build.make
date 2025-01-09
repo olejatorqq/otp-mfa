@@ -66,9 +66,9 @@ include CMakeFiles/otp_generator_test_autogen_timestamp_deps.dir/compiler_depend
 # Include the progress variables for this target.
 include CMakeFiles/otp_generator_test_autogen_timestamp_deps.dir/progress.make
 
-CMakeFiles/otp_generator_test_autogen_timestamp_deps: /usr/lib/qt5/bin/uic
 CMakeFiles/otp_generator_test_autogen_timestamp_deps: /usr/lib/qt5/bin/moc
 CMakeFiles/otp_generator_test_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.13
+CMakeFiles/otp_generator_test_autogen_timestamp_deps: /usr/lib/qt5/bin/uic
 CMakeFiles/otp_generator_test_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libcrypto.so
 
 otp_generator_test_autogen_timestamp_deps: CMakeFiles/otp_generator_test_autogen_timestamp_deps

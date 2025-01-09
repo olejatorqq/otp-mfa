@@ -36,10 +36,10 @@ public:
 
     bool verifyMasterPassword();
 
-    // Метод для записи в журнал
+    // Метод для записи логов
     void logEvent(const QString& eventDescription);
 
-    // Новая функция для выполнения HTTPS-запроса
+    // Функция для выполнения HTTPS-запроса
     void fetchDataFromServer(const QUrl &url);
 
 signals:
@@ -59,7 +59,7 @@ private:
 
     void initializeDatabase();  // Инициализация базы данных
 
-    // Приватный метод для получения обфусцированного хэша
+    // Метод для получения обфусцированного хэша
     QByteArray getExpectedCertHash() const;
 };
 

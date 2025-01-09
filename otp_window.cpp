@@ -39,7 +39,6 @@ OTPWindow::OTPWindow(QWidget *parent) :
     this->setMinimumSize(400, 600);
     this->resize(600, 800); // Начальный размер окна
 
-    // Устанавливаем размер шрифта для заголовка
     QFont titleFont = ui->titleLabel->font();
     titleFont.setPointSize(18);
     titleFont.setBold(true);
@@ -50,11 +49,10 @@ OTPWindow::OTPWindow(QWidget *parent) :
     defaultFont.setPointSize(12);
     QApplication::setFont(defaultFont);
 
-    // Применяем начальную тему
     applyTheme();
 
     // Загружаем интервал из настроек или устанавливаем значение по умолчанию
-    QSettings settings("YourCompany", "YourApp");
+    QSettings settings("olejatorqq", "app_olejatorqq");
     interval = settings.value("interval", 30).toInt();
 
     // Получаем аккаунты из базы данных
@@ -71,7 +69,7 @@ OTPWindow::OTPWindow(QWidget *parent) :
     connect(&AccountManager::instance(), &AccountManager::fetchError, this, &OTPWindow::onFetchError);
 
     // Пример вызова HTTPS-запроса (можете разместить это в нужном месте)
-    // QUrl url("https://localhost:4443/api/data"); // Замените на ваш URL
+    // QUrl url("https://localhost:4443/api/data");
     // AccountManager::instance().fetchDataFromServer(url);
 
     // Запускаем таймер для обновления OTP
@@ -186,7 +184,6 @@ void OTPWindow::displayAccounts() {
             progressBar->setMaximum(account.period);
             progressBar->setValue(timeLeft);
         } else {
-            // Для HOTP скрываем прогресс-бар
             progressBar->setVisible(false);
         }
 
@@ -195,26 +192,20 @@ void OTPWindow::displayAccounts() {
         layout->addWidget(otpLabel, 1);
         layout->addWidget(progressBar, 0);
 
-        // Добавляем виджет аккаунта в основной layout
         ui->accountsLayout->addWidget(accountWidget);
 
-        // Добавляем разделитель
         QFrame *separator = new QFrame();
         separator->setFrameShape(QFrame::HLine);
         separator->setFrameShadow(QFrame::Sunken);
         ui->accountsLayout->addWidget(separator);
 
-        // Сохраняем виджет для обновления
         accountWidgets.append(accountWidget);
 
-        // Устанавливаем фильтр событий для двойного щелчка и правого клика
         accountWidget->installEventFilter(this);
     }
 
-    // Добавляем растяжку в конец для выравнивания вверх
     ui->accountsLayout->addStretch();
 
-    // Применяем фильтр после добавления всех виджетов
     filterAccounts(ui->searchLineEdit->text());
 }
 
@@ -266,8 +257,6 @@ void OTPWindow::updateAccounts() {
         }
         // Для HOTP пропускаем обновление
         else if (account.type == "HOTP") {
-            // HOTP не обновляется по таймеру
-            // Оставляем текущий OTP без изменений
             continue;
         }
 
@@ -339,7 +328,6 @@ void OTPWindow::applyTheme() {
     QString backgroundColor = darkThemeEnabled ? "#2E2E2E" : "#f0f0f0";
     QString textInputColor = darkThemeEnabled ? "#ffffff" : "#000000";
 
-    // Устанавливаем палитру для основного окна
     QPalette palette;
     palette.setColor(QPalette::Window, QColor(backgroundColor));
     palette.setColor(QPalette::WindowText, QColor(textColor));

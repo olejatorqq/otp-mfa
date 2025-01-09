@@ -33,7 +33,7 @@ private slots:
     void toggleTheme();
     void openSettingsDialog();
 
-    // Добавленные слоты для контекстного меню
+    // Слоты для контекстного меню
     void showContextMenuForAccount(int index, const QPoint &globalPos);
     void editAccount(int index);
     void deleteAccount(int index);

@@ -2,7 +2,7 @@
 #define MASTER_PASSWORD_DIALOG_H
 
 #include <QDialog>
-#include <QObject> // Добавлено
+#include <QObject>
 
 namespace Ui {
 class MasterPasswordDialog;

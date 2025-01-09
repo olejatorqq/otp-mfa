@@ -1,12 +1,11 @@
 #include "qr_generator.h"
 #include <QImage>
 #include <QPixmap>
-#include "/home/oorlovsk/otp-mfa/include/qrcodegen.hpp"
+#include "/home/oorlovsk/otp-mfa/include/qrcodegen.hpp" // убери путь в cmakelist
 
 QPixmap QRGenerator::generate(const QString &data) {
     using qrcodegen::QrCode;
 
-    // Генерация QR-кода с низким уровнем исправления ошибок
     QrCode qr = QrCode::encodeText(data.toUtf8().constData(), QrCode::Ecc::LOW);
 
     const int size = qr.getSize();
@@ -19,5 +18,5 @@ QPixmap QRGenerator::generate(const QString &data) {
         }
     }
 
-    return QPixmap::fromImage(image);  // Возвращаем QPixmap для отображения в UI
+    return QPixmap::fromImage(image);
 }

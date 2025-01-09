@@ -17,7 +17,7 @@ public:
     ~AddAccountDialog();
 
     Account getAccount() const;
-    void setAccount(const Account &account); // Добавленный метод
+    void setAccount(const Account &account);
 
 private slots:
     void on_buttonBox_accepted();
@@ -27,7 +27,7 @@ private slots:
     void on_uriInputRadioButton_toggled(bool checked);
     void on_uriLineEdit_textChanged(const QString &text);
     void on_typeComboBox_currentIndexChanged(const QString &type);
-    void toggleAdvancedParams(); // Добавленный слот
+    void toggleAdvancedParams();
 
 private:
     Ui::AddAccountDialog *ui;

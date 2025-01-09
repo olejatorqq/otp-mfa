@@ -5,7 +5,6 @@
 #include <QMessageBox>
 
 int main(int argc, char *argv[]) {
-    // Устанавливаем атрибуты перед созданием QApplication
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 

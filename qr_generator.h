@@ -6,7 +6,7 @@
 
 class QRGenerator {
 public:
-    static QPixmap generate(const QString &data);  // Возвращаем QPixmap для отображения QR-кода
+    static QPixmap generate(const QString &data);
 };
 
 #endif // QR_GENERATOR_H
