@@ -261,9 +261,6 @@ OPENSSL_INCLUDE_DIR:PATH=/usr/include
 //Path to a library.
 OPENSSL_SSL_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libssl.so
 
-//The directory containing a CMake configuration file for OpenCV.
-OpenCV_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/opencv4
-
 //Arguments to supply to pkg-config
 PKG_CONFIG_ARGN:STRING=
 
@@ -294,9 +291,6 @@ Qt5Widgets_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets
 //The directory containing a CMake configuration file for Qt5.
 Qt5_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5
 
-//The directory containing a CMake configuration file for ZXing.
-ZXing_DIR:PATH=/usr/local/lib/cmake/ZXing
-
 //Value Computed by CMake
 otp-mfa_BINARY_DIR:STATIC=/home/oorlovsk/Downloads/otp-mfa-fisrt/build
 
@@ -305,9 +299,6 @@ otp-mfa_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 otp-mfa_SOURCE_DIR:STATIC=/home/oorlovsk/Downloads/otp-mfa-fisrt
-
-//Path to a library.
-pkgcfg_lib_QREncode_qrencode:FILEPATH=/usr/lib/x86_64-linux-gnu/libqrencode.so
 
 //Path to a library.
 pkgcfg_lib__OPENSSL_crypto:FILEPATH=/usr/lib/x86_64-linux-gnu/libcrypto.so
@@ -481,8 +472,6 @@ CMAKE_TAPI-ADVANCED:INTERNAL=1
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
-//Details about finding OpenCV
-FIND_PACKAGE_MESSAGE_DETAILS_OpenCV:INTERNAL=[/usr][v4.6.0()]
 //Details about finding OpenSSL
 FIND_PACKAGE_MESSAGE_DETAILS_OpenSSL:INTERNAL=[/usr/lib/x86_64-linux-gnu/libcrypto.so][/usr/include][c ][v3.0.13()]
 //Details about finding PkgConfig
@@ -497,41 +486,6 @@ OPENSSL_SSL_LIBRARY-ADVANCED:INTERNAL=1
 PKG_CONFIG_ARGN-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
 PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
-QREncode_CFLAGS:INTERNAL=-I/usr/include
-QREncode_CFLAGS_I:INTERNAL=
-QREncode_CFLAGS_OTHER:INTERNAL=
-QREncode_FOUND:INTERNAL=1
-QREncode_INCLUDEDIR:INTERNAL=/usr/include
-QREncode_INCLUDE_DIRS:INTERNAL=/usr/include
-QREncode_LDFLAGS:INTERNAL=-L/usr/lib/x86_64-linux-gnu;-lqrencode
-QREncode_LDFLAGS_OTHER:INTERNAL=
-QREncode_LIBDIR:INTERNAL=/usr/lib/x86_64-linux-gnu
-QREncode_LIBRARIES:INTERNAL=qrencode
-QREncode_LIBRARY_DIRS:INTERNAL=/usr/lib/x86_64-linux-gnu
-QREncode_LIBS:INTERNAL=
-QREncode_LIBS_L:INTERNAL=
-QREncode_LIBS_OTHER:INTERNAL=
-QREncode_LIBS_PATHS:INTERNAL=
-QREncode_MODULE_NAME:INTERNAL=libqrencode
-QREncode_PREFIX:INTERNAL=/usr
-QREncode_STATIC_CFLAGS:INTERNAL=-I/usr/include
-QREncode_STATIC_CFLAGS_I:INTERNAL=
-QREncode_STATIC_CFLAGS_OTHER:INTERNAL=
-QREncode_STATIC_INCLUDE_DIRS:INTERNAL=/usr/include
-QREncode_STATIC_LDFLAGS:INTERNAL=-L/usr/lib/x86_64-linux-gnu;-lqrencode;-lpthread
-QREncode_STATIC_LDFLAGS_OTHER:INTERNAL=
-QREncode_STATIC_LIBDIR:INTERNAL=
-QREncode_STATIC_LIBRARIES:INTERNAL=qrencode;pthread
-QREncode_STATIC_LIBRARY_DIRS:INTERNAL=/usr/lib/x86_64-linux-gnu
-QREncode_STATIC_LIBS:INTERNAL=
-QREncode_STATIC_LIBS_L:INTERNAL=
-QREncode_STATIC_LIBS_OTHER:INTERNAL=
-QREncode_STATIC_LIBS_PATHS:INTERNAL=
-QREncode_VERSION:INTERNAL=4.1.1
-QREncode_libqrencode_INCLUDEDIR:INTERNAL=
-QREncode_libqrencode_LIBDIR:INTERNAL=
-QREncode_libqrencode_PREFIX:INTERNAL=
-QREncode_libqrencode_VERSION:INTERNAL=
 //linker supports push/pop state
 _CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED:INTERNAL=TRUE
 //CMAKE_INSTALL_PREFIX during last run
@@ -571,12 +525,8 @@ _OPENSSL_openssl_INCLUDEDIR:INTERNAL=
 _OPENSSL_openssl_LIBDIR:INTERNAL=
 _OPENSSL_openssl_PREFIX:INTERNAL=
 _OPENSSL_openssl_VERSION:INTERNAL=
-__pkg_config_arguments_QREncode:INTERNAL=REQUIRED;libqrencode
 __pkg_config_arguments__OPENSSL:INTERNAL=QUIET;openssl
-__pkg_config_checked_QREncode:INTERNAL=1
 __pkg_config_checked__OPENSSL:INTERNAL=1
-//ADVANCED property for variable: pkgcfg_lib_QREncode_qrencode
-pkgcfg_lib_QREncode_qrencode-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: pkgcfg_lib__OPENSSL_crypto
 pkgcfg_lib__OPENSSL_crypto-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: pkgcfg_lib__OPENSSL_ssl

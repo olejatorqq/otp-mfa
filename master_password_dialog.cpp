@@ -30,7 +30,7 @@ QString MasterPasswordDialog::getPassword() const {
 
 void MasterPasswordDialog::onOkClicked() {
     if (ui->passwordLineEdit->text().trimmed().isEmpty()) {
-        QMessageBox::warning(this, "Ошибка", "Пожалуйста, введите мастер-пароль.");
+        QMessageBox::warning(this, "Ошибка", " Введите мастер-пароль.");
         return;
     }
     accept();

@@ -10,7 +10,6 @@
 #include <QSslCertificate>
 #include <QCryptographicHash>
 
-// Разбиение хэша на части - Поменяй логику!!!
 static const char* hashPart1 = "980afe02";
 static const char* hashPart2 = "39f05b57";
 static const char* hashPart3 = "d83b4c38";
@@ -20,16 +19,18 @@ static const char* hashPart6 = "e1c0ec44";
 static const char* hashPart7 = "4ad8f48d";
 static const char* hashPart8 = "7683a89d";
 
-// Приватный ключ для XOR
-static const char xorKey = 0x5A; // Пример ключа
+// Примерный ключ для XOR
+static const char xorKey = 0x5A;
 
 AccountManager& AccountManager::instance() {
     static AccountManager instance;
     return instance;
 }
 
-AccountManager::AccountManager() : QObject(nullptr), networkManager(new QNetworkAccessManager(this)) {
-    // Проверяем, существует ли подключение с именем "OTPConnection"
+AccountManager::AccountManager()
+    : QObject(nullptr),
+    networkManager(new QNetworkAccessManager(this))
+{
     if (QSqlDatabase::contains("OTPConnection")) {
         db = QSqlDatabase::database("OTPConnection");
     } else {
@@ -43,9 +44,10 @@ AccountManager::AccountManager() : QObject(nullptr), networkManager(new QNetwork
         initializeDatabase();
     }
 
-    // Подключаем сигналы для обработки ответов и SSL ошибок
-    connect(networkManager, &QNetworkAccessManager::finished, this, &AccountManager::onNetworkReplyFinished);
-    connect(networkManager, &QNetworkAccessManager::sslErrors, this, &AccountManager::onSslErrors);
+    connect(networkManager, &QNetworkAccessManager::finished,
+            this, &AccountManager::onNetworkReplyFinished);
+    connect(networkManager, &QNetworkAccessManager::sslErrors,
+            this, &AccountManager::onSslErrors);
 }
 
 AccountManager::~AccountManager() {
@@ -57,7 +59,6 @@ AccountManager::~AccountManager() {
 void AccountManager::initializeDatabase() {
     QSqlQuery query(db);
 
-    // Создание таблицы accounts
     QString createAccountsTable = R"(
         CREATE TABLE IF NOT EXISTS accounts (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -72,13 +73,14 @@ void AccountManager::initializeDatabase() {
     )";
 
     if (!query.exec(createAccountsTable)) {
-        qWarning() << "Не удалось создать таблицу accounts:" << query.lastError().text();
+        qWarning() << "Не удалось создать таблицу accounts:"
+                   << query.lastError().text();
     }
 }
 
 void AccountManager::logEvent(const QString& eventDescription) {
-    // Логирования событий
-    Q_UNUSED(eventDescription);
+    // Здесь можно реализовать логику логирования (в файл, БД и т.п.)
+    qDebug() << "[LOG]" << eventDescription;
 }
 
 QList<Account> AccountManager::getAccounts() const {
@@ -87,7 +89,8 @@ QList<Account> AccountManager::getAccounts() const {
     query.prepare("SELECT name, secret, algorithm, digits, period, type, counter FROM accounts");
 
     if (!query.exec()) {
-        qWarning() << "Не удалось выполнить запрос к таблице accounts:" << query.lastError().text();
+        qWarning() << "Не удалось выполнить запрос к таблице accounts:"
+                   << query.lastError().text();
         return accounts;
     }
 
@@ -95,20 +98,20 @@ QList<Account> AccountManager::getAccounts() const {
         Account account;
         account.name = query.value(0).toString();
 
-        // Расшифровываем секрет
         QByteArray encryptedSecret = query.value(1).toByteArray();
         QString decryptedSecret = EncryptionUtils::instance().decrypt(encryptedSecret);
         if (decryptedSecret.isEmpty()) {
-            qWarning() << "Не удалось расшифровать секрет для аккаунта:" << account.name;
+            qWarning() << "Не удалось расшифровать секрет для аккаунта:"
+                       << account.name;
             continue;
         }
-        account.secret = decryptedSecret;
-
+        account.secret    = decryptedSecret;
         account.algorithm = query.value(2).toString();
-        account.digits = query.value(3).toInt();
-        account.period = query.value(4).toInt();
-        account.type = query.value(5).toString();
-        account.counter = query.value(6).toULongLong();
+        account.digits    = query.value(3).toInt();
+        account.period    = query.value(4).toInt();
+        account.type      = query.value(5).toString();
+        account.counter   = query.value(6).toULongLong();
+
         accounts.append(account);
     }
 
@@ -116,30 +119,27 @@ QList<Account> AccountManager::getAccounts() const {
 }
 
 void AccountManager::addAccount(const Account& account) {
-    if (!EncryptionUtils::instance().isMasterPasswordSet()) {
-        qWarning() << "Мастер-пароль не установлен.";
-        return;
-    }
-
+    // Убираем проверку isMasterPasswordSet
     QSqlQuery query(db);
-    query.prepare("INSERT INTO accounts (name, secret, algorithm, digits, period, type, counter) "
-                  "VALUES (:name, :secret, :algorithm, :digits, :period, :type, :counter)");
+    query.prepare(
+        "INSERT INTO accounts (name, secret, algorithm, digits, period, type, counter) "
+        "VALUES (:name, :secret, :algorithm, :digits, :period, :type, :counter)"
+        );
     query.bindValue(":name", account.name);
 
-    // Шифруем секрет перед сохранением
     QByteArray encryptedSecret = EncryptionUtils::instance().encrypt(account.secret);
     query.bindValue(":secret", encryptedSecret);
 
     query.bindValue(":algorithm", account.algorithm);
-    query.bindValue(":digits", account.digits);
-    query.bindValue(":period", account.period);
-    query.bindValue(":type", account.type);
-    query.bindValue(":counter", account.counter);
+    query.bindValue(":digits",    account.digits);
+    query.bindValue(":period",    account.period);
+    query.bindValue(":type",      account.type);
+    query.bindValue(":counter",   account.counter);
 
     if (!query.exec()) {
-        qWarning() << "Не удалось добавить аккаунт:" << query.lastError().text();
+        qWarning() << "Не удалось добавить аккаунт:"
+                   << query.lastError().text();
     } else {
-        // Логируем событие добавления аккаунта
         logEvent("Добавлен аккаунт: " + account.name);
     }
 }
@@ -150,46 +150,45 @@ void AccountManager::deleteAccount(const QString& accountName) {
     query.bindValue(":name", accountName);
 
     if (!query.exec()) {
-        qWarning() << "Не удалось удалить аккаунт:" << query.lastError().text();
+        qWarning() << "Не удалось удалить аккаунт:"
+                   << query.lastError().text();
     } else {
-        // Логируем событие удаления аккаунта
         logEvent("Удален аккаунт: " + accountName);
     }
 }
 
-void AccountManager::updateAccount(const QString& accountName, const Account& updatedAccount) {
-    if (!EncryptionUtils::instance().isMasterPasswordSet()) {
-        qWarning() << "Мастер-пароль не установлен.";
-        return;
-    }
-
+void AccountManager::updateAccount(const QString& accountName,
+                                   const Account& updatedAccount)
+{
+    // Убираем проверку isMasterPasswordSet
     QSqlQuery query(db);
-    query.prepare("UPDATE accounts SET name = :newName, secret = :secret, algorithm = :algorithm, "
-                  "digits = :digits, period = :period, type = :type, counter = :counter "
-                  "WHERE name = :oldName");
+    query.prepare(
+        "UPDATE accounts SET name = :newName, secret = :secret, algorithm = :algorithm, "
+        "digits = :digits, period = :period, type = :type, counter = :counter "
+        "WHERE name = :oldName"
+        );
     query.bindValue(":newName", updatedAccount.name);
 
-    // Шифруем секрет перед сохранением
     QByteArray encryptedSecret = EncryptionUtils::instance().encrypt(updatedAccount.secret);
     query.bindValue(":secret", encryptedSecret);
 
     query.bindValue(":algorithm", updatedAccount.algorithm);
-    query.bindValue(":digits", updatedAccount.digits);
-    query.bindValue(":period", updatedAccount.period);
-    query.bindValue(":type", updatedAccount.type);
-    query.bindValue(":counter", updatedAccount.counter);
-    query.bindValue(":oldName", accountName);
+    query.bindValue(":digits",    updatedAccount.digits);
+    query.bindValue(":period",    updatedAccount.period);
+    query.bindValue(":type",      updatedAccount.type);
+    query.bindValue(":counter",   updatedAccount.counter);
+    query.bindValue(":oldName",   accountName);
 
     if (!query.exec()) {
-        qWarning() << "Не удалось обновить аккаунт:" << query.lastError().text();
+        qWarning() << "Не удалось обновить аккаунт:"
+                   << query.lastError().text();
     } else {
-        // Логируем событие обновления аккаунта
         logEvent("Обновлен аккаунт: " + accountName + " на " + updatedAccount.name);
     }
 }
 
 bool AccountManager::verifyMasterPassword() {
-    // Реализация проверки мастер-пароля (чекни)
+    // Удаляем или возвращаем всегда true
     return true;
 }
 
@@ -201,13 +200,11 @@ void AccountManager::fetchDataFromServer(const QUrl &url) {
 
     QNetworkRequest request(url);
 
-    // Настройка SSL конфигурации
     QSslConfiguration sslConfig = request.sslConfiguration();
-    sslConfig.setPeerVerifyMode(QSslSocket::VerifyPeer); // Верификация сертификата сервера
-    sslConfig.setProtocol(QSsl::TlsV1_2); // Установка версии протокола TLS
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyPeer);
+    sslConfig.setProtocol(QSsl::TlsV1_2);
     request.setSslConfiguration(sslConfig);
 
-    // Выполнение GET-запроса
     networkManager->get(request);
 }
 
@@ -224,18 +221,18 @@ void AccountManager::onNetworkReplyFinished(QNetworkReply* reply) {
     reply->deleteLater();
 }
 
-void AccountManager::onSslErrors(QNetworkReply* reply, const QList<QSslError> &errors) {
+void AccountManager::onSslErrors(QNetworkReply* reply,
+                                 const QList<QSslError> &errors)
+{
     for (const QSslError &error : errors) {
         qWarning() << "SSL ошибка:" << error.errorString();
     }
 
-    // Реализация сертификатного пиннинга
     QList<QSslCertificate> certs = reply->sslConfiguration().peerCertificateChain();
     if (!certs.isEmpty()) {
         QSslCertificate serverCert = certs.first();
-        QByteArray certHash = QCryptographicHash::hash(serverCert.toDer(), QCryptographicHash::Sha256).toHex();
-
-        // Восстанавливаем ожидаемый хэш
+        QByteArray certHash = QCryptographicHash::hash(serverCert.toDer(),
+                                                       QCryptographicHash::Sha256).toHex();
         QByteArray expectedHash = getExpectedCertHash();
 
         if (certHash != expectedHash) {
@@ -250,34 +247,33 @@ void AccountManager::onSslErrors(QNetworkReply* reply, const QList<QSslError> &e
         reply->abort();
         return;
     }
+    // Сертификат прошёл проверку
 }
 
-QByteArray AccountManager::getExpectedCertHash() const {
-    // Обфусцированный хэш сертификата
-    QByteArray obfuscatedHash;
+QByteArray AccountManager::getExpectedCertHash() const
+{
+    // Допустим, меняем логику, чтобы она была проще
+    // — Собираем одну большую hex-строку, декодируем и XOR'им.
 
-    // Восстанавливаем хэш из частей и применяем XOR
-    // Шляпа, поправь
-    QByteArray fullHash;
-    fullHash.append(hashPart1);
-    fullHash.append(hashPart2);
-    fullHash.append(hashPart3);
-    fullHash.append(hashPart4);
-    fullHash.append(hashPart5);
-    fullHash.append(hashPart6);
-    fullHash.append(hashPart7);
-    fullHash.append(hashPart8);
+    // Склеиваем 8 частей
+    QByteArray hexString;
+    hexString.append(hashPart1);
+    hexString.append(hashPart2);
+    hexString.append(hashPart3);
+    hexString.append(hashPart4);
+    hexString.append(hashPart5);
+    hexString.append(hashPart6);
+    hexString.append(hashPart7);
+    hexString.append(hashPart8);
 
-    // Применяем XOR к каждому байту
-    for (char byte : fullHash) {
-        obfuscatedHash.append(byte ^ xorKey);
+    // Декодируем hex -> бинарные данные
+    QByteArray binaryData = QByteArray::fromHex(hexString);
+
+    // Применяем XOR
+    for (int i = 0; i < binaryData.size(); ++i) {
+        binaryData[i] = binaryData[i] ^ xorKey;
     }
 
-    // Расшифровка хэша
-    QByteArray decryptedHash;
-    for (char byte : obfuscatedHash) {
-        decryptedHash.append(byte ^ xorKey);
-    }
-
-    return decryptedHash.toLower();
+    // Возвращаем результат в виде hex
+    return binaryData.toHex().toLower();
 }

@@ -16,12 +16,8 @@ otp-mfa_autogen/timestamp: \
 	/home/oorlovsk/Downloads/otp-mfa-fisrt/otp_generator.h \
 	/home/oorlovsk/Downloads/otp-mfa-fisrt/otp_window.cpp \
 	/home/oorlovsk/Downloads/otp-mfa-fisrt/otp_window.h \
-	/home/oorlovsk/Downloads/otp-mfa-fisrt/qr_generator.cpp \
-	/home/oorlovsk/Downloads/otp-mfa-fisrt/qr_generator.h \
 	/home/oorlovsk/Downloads/otp-mfa-fisrt/settings_dialog.cpp \
 	/home/oorlovsk/Downloads/otp-mfa-fisrt/settings_dialog.h \
-	/home/oorlovsk/otp-mfa/include/qrcodegen.cpp \
-	/home/oorlovsk/otp-mfa/include/qrcodegen.hpp \
 	/usr/include/alloca.h \
 	/usr/include/asm-generic/errno-base.h \
 	/usr/include/asm-generic/errno.h \
@@ -481,14 +477,6 @@ otp-mfa_autogen/timestamp: \
 	/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake \
 	/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake \
 	/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake \
-	/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVConfig-version.cmake \
-	/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVConfig.cmake \
-	/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVModules-release.cmake \
-	/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVModules.cmake \
-	/usr/local/lib/cmake/ZXing/ZXingConfig.cmake \
-	/usr/local/lib/cmake/ZXing/ZXingConfigVersion.cmake \
-	/usr/local/lib/cmake/ZXing/ZXingTargets-release.cmake \
-	/usr/local/lib/cmake/ZXing/ZXingTargets.cmake \
 	/usr/share/cmake-3.28/Modules/CMakeCXXCompiler.cmake.in \
 	/usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp \
 	/usr/share/cmake-3.28/Modules/CMakeCXXInformation.cmake \

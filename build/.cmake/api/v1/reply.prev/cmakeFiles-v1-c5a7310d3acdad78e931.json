@@ -638,22 +638,6 @@
 			"path" : "/usr/lib/x86_64-linux-gnu/cmake/Qt5Network/Qt5NetworkConfig.cmake"
 		},
 		{
-			"isExternal" : true,
-			"path" : "/usr/local/lib/cmake/ZXing/ZXingConfigVersion.cmake"
-		},
-		{
-			"isExternal" : true,
-			"path" : "/usr/local/lib/cmake/ZXing/ZXingConfig.cmake"
-		},
-		{
-			"isExternal" : true,
-			"path" : "/usr/local/lib/cmake/ZXing/ZXingTargets.cmake"
-		},
-		{
-			"isExternal" : true,
-			"path" : "/usr/local/lib/cmake/ZXing/ZXingTargets-release.cmake"
-		},
-		{
 			"isCMake" : true,
 			"isExternal" : true,
 			"path" : "/usr/share/cmake-3.28/Modules/FindOpenSSL.cmake"
@@ -697,32 +681,6 @@
 			"isCMake" : true,
 			"isExternal" : true,
 			"path" : "/usr/share/cmake-3.28/Modules/FindPackageMessage.cmake"
-		},
-		{
-			"isExternal" : true,
-			"path" : "/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVConfig-version.cmake"
-		},
-		{
-			"isExternal" : true,
-			"path" : "/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVConfig.cmake"
-		},
-		{
-			"isCMake" : true,
-			"isExternal" : true,
-			"path" : "/usr/share/cmake-3.28/Modules/FindPackageHandleStandardArgs.cmake"
-		},
-		{
-			"isCMake" : true,
-			"isExternal" : true,
-			"path" : "/usr/share/cmake-3.28/Modules/FindPackageMessage.cmake"
-		},
-		{
-			"isExternal" : true,
-			"path" : "/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVModules.cmake"
-		},
-		{
-			"isExternal" : true,
-			"path" : "/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVModules-release.cmake"
 		},
 		{
 			"isCMake" : true,

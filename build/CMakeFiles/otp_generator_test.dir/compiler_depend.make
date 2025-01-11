@@ -60,14 +60,6 @@ otp_generator_test_autogen/timestamp: /home/oorlovsk/Downloads/otp-mfa-fisrt/CMa
   /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake \
   /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake \
   /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake \
-  /usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVConfig-version.cmake \
-  /usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVConfig.cmake \
-  /usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVModules-release.cmake \
-  /usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVModules.cmake \
-  /usr/local/lib/cmake/ZXing/ZXingConfig.cmake \
-  /usr/local/lib/cmake/ZXing/ZXingConfigVersion.cmake \
-  /usr/local/lib/cmake/ZXing/ZXingTargets-release.cmake \
-  /usr/local/lib/cmake/ZXing/ZXingTargets.cmake \
   /usr/share/cmake-3.28/Modules/CMakeCXXCompiler.cmake.in \
   /usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp \
   /usr/share/cmake-3.28/Modules/CMakeCXXInformation.cmake \
@@ -166,20 +158,6 @@ otp_generator_test_autogen/timestamp: /home/oorlovsk/Downloads/otp-mfa-fisrt/CMa
 
 /usr/share/cmake-3.28/Modules/FindOpenSSL.cmake:
 
-/usr/share/cmake-3.28/Modules/FindPkgConfig.cmake:
-
-/usr/share/cmake-3.28/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake:
-
-/usr/share/cmake-3.28/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake:
-
-/usr/share/cmake-3.28/Modules/Compiler/XL-CXX-DetermineCompiler.cmake:
-
-/usr/share/cmake-3.28/Modules/Compiler/Watcom-DetermineCompiler.cmake:
-
-/usr/share/cmake-3.28/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake:
-
-/usr/share/cmake-3.28/Modules/Compiler/Tasking-DetermineCompiler.cmake:
-
 /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake:
 
 /home/oorlovsk/Downloads/otp-mfa-fisrt/CMakeLists.txt:
@@ -226,8 +204,6 @@ otp_generator_test_autogen/timestamp: /home/oorlovsk/Downloads/otp-mfa-fisrt/CMa
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QJpegPlugin.cmake:
 
-/usr/local/lib/cmake/ZXing/ZXingConfig.cmake:
-
 /usr/lib/x86_64-linux-gnu/cmake/Qt5Network/Qt5Network_QNetworkManagerEnginePlugin.cmake:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QMinimalEglIntegrationPlugin.cmake:
@@ -241,6 +217,8 @@ otp_generator_test_autogen/timestamp: /home/oorlovsk/Downloads/otp-mfa-fisrt/CMa
 /usr/share/cmake-3.28/Modules/Compiler/OrangeC-DetermineCompiler.cmake:
 
 /usr/share/cmake-3.28/Modules/Compiler/SCO-DetermineCompiler.cmake:
+
+/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake:
 
@@ -256,11 +234,11 @@ otp_generator_test_autogen/timestamp: /home/oorlovsk/Downloads/otp-mfa-fisrt/CMa
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevKeyboardPlugin.cmake:
 
-/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVConfig.cmake:
-
 /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake:
 
 /usr/share/cmake-3.28/Modules/CMakeParseImplicitIncludeInfo.cmake:
+
+/usr/share/cmake-3.28/Modules/Compiler/Watcom-DetermineCompiler.cmake:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt5/Qt5ConfigVersion.cmake:
 
@@ -304,13 +282,9 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 
 /usr/share/cmake-3.28/Modules/Compiler/MSVC-DetermineCompiler.cmake:
 
+/usr/share/cmake-3.28/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake:
+
 /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake:
-
-/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake:
-
-/usr/local/lib/cmake/ZXing/ZXingTargets-release.cmake:
-
-/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVConfig-version.cmake:
 
 /usr/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake:
 
@@ -338,6 +312,8 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 
 /usr/share/cmake-3.28/Modules/Compiler/ARMClang-DetermineCompiler.cmake:
 
+/usr/share/cmake-3.28/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake:
+
 /home/oorlovsk/Downloads/otp-mfa-fisrt/otp_generator.cpp:
 
 /home/oorlovsk/Downloads/otp-mfa-fisrt/otp_generator_test.cpp:
@@ -354,18 +330,6 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevTouchScreenPlugin.cmake:
 
-/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVModules.cmake:
-
-/usr/local/lib/cmake/ZXing/ZXingConfigVersion.cmake:
-
-/usr/share/cmake-3.28/Modules/CMakeFindBinUtils.cmake:
-
-/usr/share/cmake-3.28/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake:
-
-/usr/local/lib/cmake/ZXing/ZXingTargets.cmake:
-
-/usr/share/cmake-3.28/Modules/Compiler/Clang-DetermineCompilerInternal.cmake:
-
 /usr/share/cmake-3.28/Modules/Compiler/TI-DetermineCompiler.cmake:
 
 /usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp:
@@ -375,8 +339,6 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 /usr/share/cmake-3.28/Modules/CMakeUnixFindMake.cmake:
 
 /usr/share/cmake-3.28/Modules/CMakeDetermineCXXCompiler.cmake:
-
-/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVModules-release.cmake:
 
 /usr/share/cmake-3.28/Modules/CMakeDetermineCompiler.cmake:
 
@@ -389,6 +351,8 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 /usr/share/cmake-3.28/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake:
 
 /usr/share/cmake-3.28/Modules/CMakeDetermineSystem.cmake:
+
+/usr/share/cmake-3.28/Modules/CMakeFindBinUtils.cmake:
 
 /usr/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake:
 
@@ -409,6 +373,10 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 /usr/share/cmake-3.28/Modules/Compiler/GNU.cmake:
 
 /usr/share/cmake-3.28/Modules/Compiler/Clang-DetermineCompiler.cmake:
+
+/usr/share/cmake-3.28/Modules/Compiler/Clang-DetermineCompilerInternal.cmake:
+
+/usr/share/cmake-3.28/Modules/Compiler/XL-CXX-DetermineCompiler.cmake:
 
 /usr/share/cmake-3.28/Modules/Compiler/Comeau-CXX-DetermineCompiler.cmake:
 
@@ -443,3 +411,11 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 /usr/share/cmake-3.28/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake:
 
 /usr/share/cmake-3.28/Modules/Compiler/PGI-DetermineCompiler.cmake:
+
+/usr/share/cmake-3.28/Modules/Compiler/Tasking-DetermineCompiler.cmake:
+
+/usr/share/cmake-3.28/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake:
+
+/usr/share/cmake-3.28/Modules/FindPkgConfig.cmake:
+
+/usr/share/cmake-3.28/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake:

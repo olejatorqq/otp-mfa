@@ -21,13 +21,9 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/Downloads/otp-mfa-fisrt/CMakeLists.txt
   /home/oorlovsk/Downloads/otp-mfa-fisrt/otp_window.cpp \
   /home/oorlovsk/Downloads/otp-mfa-fisrt/otp_window.h \
   /home/oorlovsk/Downloads/otp-mfa-fisrt/otp_window.ui \
-  /home/oorlovsk/Downloads/otp-mfa-fisrt/qr_generator.cpp \
-  /home/oorlovsk/Downloads/otp-mfa-fisrt/qr_generator.h \
   /home/oorlovsk/Downloads/otp-mfa-fisrt/settings_dialog.cpp \
   /home/oorlovsk/Downloads/otp-mfa-fisrt/settings_dialog.h \
   /home/oorlovsk/Downloads/otp-mfa-fisrt/settings_dialog.ui \
-  /home/oorlovsk/otp-mfa/include/qrcodegen.cpp \
-  /home/oorlovsk/otp-mfa/include/qrcodegen.hpp \
   /usr/bin/cmake \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
@@ -488,14 +484,6 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/Downloads/otp-mfa-fisrt/CMakeLists.txt
   /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake \
   /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake \
   /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake \
-  /usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVConfig-version.cmake \
-  /usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVConfig.cmake \
-  /usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVModules-release.cmake \
-  /usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVModules.cmake \
-  /usr/local/lib/cmake/ZXing/ZXingConfig.cmake \
-  /usr/local/lib/cmake/ZXing/ZXingConfigVersion.cmake \
-  /usr/local/lib/cmake/ZXing/ZXingTargets-release.cmake \
-  /usr/local/lib/cmake/ZXing/ZXingTargets.cmake \
   /usr/share/cmake-3.28/Modules/CMakeCXXCompiler.cmake.in \
   /usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp \
   /usr/share/cmake-3.28/Modules/CMakeCXXInformation.cmake \
@@ -602,24 +590,6 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/Downloads/otp-mfa-fisrt/CMakeLists.txt
 
 /usr/share/cmake-3.28/Modules/Compiler/SCO-DetermineCompiler.cmake:
 
-/usr/share/cmake-3.28/Modules/Compiler/PGI-DetermineCompiler.cmake:
-
-/usr/share/cmake-3.28/Modules/Compiler/OrangeC-DetermineCompiler.cmake:
-
-/usr/share/cmake-3.28/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake:
-
-/usr/share/cmake-3.28/Modules/Compiler/MSVC-DetermineCompiler.cmake:
-
-/usr/share/cmake-3.28/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake:
-
-/usr/share/cmake-3.28/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake:
-
-/usr/share/cmake-3.28/Modules/Compiler/Intel-DetermineCompiler.cmake:
-
-/usr/share/cmake-3.28/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake:
-
-/usr/share/cmake-3.28/Modules/Compiler/IAR-DetermineCompiler.cmake:
-
 /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
@@ -652,9 +622,9 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/Downloads/otp-mfa-fisrt/CMakeLists.txt
 
 /usr/include/x86_64-linux-gnu/bits/byteswap.h:
 
-/usr/local/lib/cmake/ZXing/ZXingConfigVersion.cmake:
-
 /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtCore/qdatastream.h:
 
 /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QWidget:
 
@@ -716,9 +686,23 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/Downloads/otp-mfa-fisrt/CMakeLists.txt
 
 /usr/include/c++/13/unordered_map:
 
+/usr/include/c++/13/bits/allocator.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h:
 
 /usr/include/c++/13/bits/nested_exception.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
+
+/usr/include/c++/13/type_traits:
+
+/usr/include/c++/13/bits/list.tcc:
+
+/usr/include/features-time64.h:
+
+/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake:
+
+/usr/share/cmake-3.28/Modules/CMakeDetermineCompiler.cmake:
 
 /usr/include/features.h:
 
@@ -764,6 +748,8 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/Downloads/otp-mfa-fisrt/CMakeLists.txt
 
 /usr/share/cmake-3.28/Modules/CMakeTestCompilerCommon.cmake:
 
+/usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
+
 /usr/include/c++/13/bits/stl_iterator.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
@@ -794,6 +780,8 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/Downloads/otp-mfa-fisrt/CMakeLists.txt
 
 /usr/include/c++/13/compare:
 
+/usr/include/c++/13/bits/unique_ptr.h:
+
 /usr/include/x86_64-linux-gnu/bits/stdint-least.h:
 
 /usr/include/c++/13/ext/atomicity.h:
@@ -806,13 +794,13 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/Downloads/otp-mfa-fisrt/CMakeLists.txt
 
 /usr/include/c++/13/optional:
 
-/usr/include/c++/13/bits/locale_classes.tcc:
+/usr/include/c++/13/pstl/glue_memory_defs.h:
 
-/usr/include/c++/13/cerrno:
+/usr/include/c++/13/bits/memory_resource.h:
 
-/usr/include/c++/13/bits/stringfwd.h:
+/usr/include/x86_64-linux-gnu/qt5/QtGui/qicon.h:
 
-/usr/include/c++/13/bits/iterator_concepts.h:
+/usr/include/c++/13/bits/exception.h:
 
 /usr/include/c++/13/typeinfo:
 
@@ -825,14 +813,6 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/Downloads/otp-mfa-fisrt/CMakeLists.txt
 /usr/share/cmake-3.28/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreMacros.cmake:
-
-/usr/include/c++/13/pstl/glue_memory_defs.h:
-
-/usr/include/c++/13/bits/memory_resource.h:
-
-/usr/include/x86_64-linux-gnu/qt5/QtGui/qicon.h:
-
-/usr/include/c++/13/bits/exception.h:
 
 /usr/include/c++/13/bits/cpp_type_traits.h:
 
@@ -870,6 +850,12 @@ otp-mfa_autogen/timestamp: /home/oorlovsk/Downloads/otp-mfa-fisrt/CMakeLists.txt
 
 /usr/include/x86_64-linux-gnu/bits/time64.h:
 
+/usr/include/c++/13/bits/shared_ptr_base.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
+
+/usr/include/wchar.h:
+
 otp-mfa_autogen/moc_predefs.h:
 
 /usr/include/c++/13/bits/concept_check.h:
@@ -879,6 +865,8 @@ otp-mfa_autogen/moc_predefs.h:
 /usr/include/c++/13/bits/algorithmfwd.h:
 
 /usr/include/x86_64-linux-gnu/bits/long-double.h:
+
+/usr/include/c++/13/bits/locale_classes.tcc:
 
 /usr/include/c++/13/backward/binders.h:
 
@@ -892,13 +880,13 @@ otp-mfa_autogen/moc_predefs.h:
 
 /usr/include/c++/13/bit:
 
-/home/oorlovsk/otp-mfa/include/qrcodegen.hpp:
-
 /usr/include/c++/13/bits/allocated_ptr.h:
 
 /usr/include/x86_64-linux-gnu/asm/errno.h:
 
 /usr/share/cmake-3.28/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake:
+
+/usr/share/cmake-3.28/Modules/Compiler/IAR-DetermineCompiler.cmake:
 
 /usr/include/c++/13/array:
 
@@ -916,39 +904,11 @@ otp-mfa_autogen/moc_predefs.h:
 
 /usr/include/c++/13/bits/hash_bytes.h:
 
-/usr/include/c++/13/algorithm:
-
-/usr/share/cmake-3.28/Modules/CMakeFindBinUtils.cmake:
-
-/usr/include/c++/13/bits/stl_raw_storage_iter.h:
-
-/usr/share/cmake-3.28/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake:
-
-/usr/share/cmake-3.28/Modules/Compiler/Watcom-DetermineCompiler.cmake:
-
-/usr/include/c++/13/bits/stream_iterator.h:
-
-/usr/include/x86_64-linux-gnu/bits/uio_lim.h:
-
-/usr/include/c++/13/bits/shared_ptr_base.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
-
-/usr/include/wchar.h:
-
-/home/oorlovsk/otp-mfa/include/qrcodegen.cpp:
-
 CMakeFiles/3.28.3/CMakeSystem.cmake:
 
 /usr/include/c++/13/bits/locale_classes.h:
 
 /usr/include/c++/13/bits/basic_ios.tcc:
-
-/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVModules.cmake:
-
-/home/oorlovsk/Downloads/otp-mfa-fisrt/qr_generator.cpp:
-
-/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QVncIntegrationPlugin.cmake:
 
 /usr/include/c++/13/bits/ranges_uninitialized.h:
 
@@ -958,17 +918,13 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 
 /usr/include/x86_64-linux-gnu/qt5/QtGui/qtgui-config.h:
 
-/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake:
-
-/usr/share/cmake-3.28/Modules/Compiler/NVHPC-DetermineCompiler.cmake:
-
-/usr/include/c++/13/string_view:
-
-/usr/share/cmake-3.28/Modules/CMakeDetermineCompiler.cmake:
-
 /usr/include/c++/13/memory:
 
 /home/oorlovsk/Downloads/otp-mfa-fisrt/add_account.ui:
+
+/usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
+
+/usr/bin/cmake:
 
 /usr/include/c++/13/bits/basic_string.tcc:
 
@@ -980,21 +936,27 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 
 /usr/include/c++/13/bits/stl_numeric.h:
 
+/usr/share/cmake-3.28/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake:
+
 /home/oorlovsk/Downloads/otp-mfa-fisrt/account_manager.h:
 
 /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt5Network/Qt5NetworkConfig.cmake:
 
+/usr/include/c++/13/bits/node_handle.h:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtGui/qrgba64.h:
+
+/usr/include/x86_64-linux-gnu/bits/timesize.h:
+
+/home/oorlovsk/Downloads/otp-mfa-fisrt/master_password_dialog.h:
+
 /usr/include/c++/13/bits/c++0x_warning.h:
 
 /usr/include/x86_64-linux-gnu/sys/cdefs.h:
-
-/usr/include/c++/13/bits/unique_ptr.h:
-
-/usr/bin/cmake:
-
-/usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
 
 /usr/include/c++/13/bits/align.h:
 
@@ -1036,6 +998,14 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qbytearray.h:
 
+/usr/include/c++/13/bits/exception_defines.h:
+
+/usr/include/c++/13/bits/exception_ptr.h:
+
+/usr/include/x86_64-linux-gnu/bits/waitstatus.h:
+
+/home/oorlovsk/Downloads/otp-mfa-fisrt/otp_window.ui:
+
 /usr/include/c++/13/bits/predefined_ops.h:
 
 /usr/include/c++/13/bits/ranges_cmp.h:
@@ -1054,23 +1024,23 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 
 /usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
 
-/home/oorlovsk/Downloads/otp-mfa-fisrt/otp_window.ui:
+/usr/include/c++/13/algorithm:
 
-/usr/include/c++/13/bits/exception_defines.h:
+/usr/share/cmake-3.28/Modules/CMakeFindBinUtils.cmake:
 
-/usr/include/x86_64-linux-gnu/bits/waitstatus.h:
+/usr/include/x86_64-linux-gnu/bits/types/error_t.h:
 
-/usr/include/c++/13/bits/exception_ptr.h:
+/usr/share/cmake-3.28/Modules/Compiler/Borland-DetermineCompiler.cmake:
 
-/usr/include/x86_64-linux-gnu/bits/timesize.h:
+/usr/include/c++/13/bits/stl_raw_storage_iter.h:
 
-/home/oorlovsk/Downloads/otp-mfa-fisrt/master_password_dialog.h:
+/usr/share/cmake-3.28/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake:
 
-/usr/include/c++/13/bits/node_handle.h:
+/usr/share/cmake-3.28/Modules/Compiler/Watcom-DetermineCompiler.cmake:
 
-/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
+/usr/include/c++/13/bits/stream_iterator.h:
 
-/usr/include/x86_64-linux-gnu/qt5/QtGui/qrgba64.h:
+/usr/include/x86_64-linux-gnu/bits/uio_lim.h:
 
 /usr/include/errno.h:
 
@@ -1083,6 +1053,12 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 /usr/include/c++/13/bits/ranges_algo.h:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevTouchScreenPlugin.cmake:
+
+/usr/include/c++/13/bits/iterator_concepts.h:
+
+/usr/include/c++/13/cerrno:
+
+/usr/include/c++/13/bits/stringfwd.h:
 
 /home/oorlovsk/Downloads/otp-mfa-fisrt/account_manager.cpp:
 
@@ -1124,6 +1100,8 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 
 /usr/include/c++/13/bits/atomic_base.h:
 
+/usr/include/c++/13/bits/new_allocator.h:
+
 /usr/include/c++/13/bits/stl_uninitialized.h:
 
 /usr/include/c++/13/numbers:
@@ -1162,14 +1140,6 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 
 /usr/include/c++/13/bits/shared_ptr_atomic.h:
 
-/usr/include/c++/13/bits/uses_allocator.h:
-
-/usr/include/c++/13/bits/postypes.h:
-
-/usr/include/linux/errno.h:
-
-/usr/include/c++/13/bits/std_abs.h:
-
 /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-CXX.cmake:
 
 /usr/include/limits.h:
@@ -1177,6 +1147,14 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 /usr/include/c++/13/cstdlib:
 
 /usr/include/c++/13/cstdint:
+
+/usr/include/c++/13/bits/postypes.h:
+
+/usr/include/linux/errno.h:
+
+/usr/include/c++/13/bits/std_abs.h:
+
+/usr/include/c++/13/bits/uses_allocator.h:
 
 /usr/include/c++/13/cstddef:
 
@@ -1189,6 +1167,8 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qline.h:
 
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qscopedpointer.h:
+
+/usr/share/cmake-3.28/Modules/Compiler/Intel-DetermineCompiler.cmake:
 
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
 
@@ -1245,20 +1225,6 @@ CMakeFiles/3.28.3/CMakeSystem.cmake:
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qobject_impl.h:
 
 /usr/share/cmake-3.28/Modules/Compiler/AppleClang-DetermineCompiler.cmake:
-
-/usr/include/x86_64-linux-gnu/bits/types/error_t.h:
-
-/usr/share/cmake-3.28/Modules/Compiler/Borland-DetermineCompiler.cmake:
-
-/usr/include/c++/13/type_traits:
-
-/usr/include/c++/13/bits/list.tcc:
-
-/usr/include/features-time64.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
 
 /usr/include/c++/13/tuple:
 
@@ -1372,10 +1338,6 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 
 /usr/include/x86_64-linux-gnu/qt5/QtCore/QUrl:
 
-/usr/include/c++/13/bits/allocator.h:
-
-/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVConfig.cmake:
-
 /usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
 
 /usr/include/x86_64-linux-gnu/qt5/QtCore/QVariant:
@@ -1415,8 +1377,6 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qbytearraylist.h:
 
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qchar.h:
-
-/home/oorlovsk/Downloads/otp-mfa-fisrt/qr_generator.h:
 
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qsysinfo.h:
 
@@ -1520,8 +1480,6 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qtypeinfo.h:
 
-/usr/local/lib/cmake/ZXing/ZXingTargets-release.cmake:
-
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qurl.h:
 
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qvariant.h:
@@ -1536,15 +1494,13 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 
 /usr/include/x86_64-linux-gnu/qt5/QtGui/qcolor.h:
 
+/usr/share/cmake-3.28/Modules/Compiler/PGI-DetermineCompiler.cmake:
+
 /usr/include/x86_64-linux-gnu/qt5/QtGui/qcursor.h:
 
 /usr/share/cmake-3.28/Modules/Compiler/Comeau-CXX-DetermineCompiler.cmake:
 
 /usr/include/x86_64-linux-gnu/qt5/QtGui/qkeysequence.h:
-
-/usr/share/cmake-3.28/Modules/CMakeParseImplicitLinkInfo.cmake:
-
-/usr/include/x86_64-linux-gnu/qt5/QtGui/qpolygon.h:
 
 /usr/include/c++/13/streambuf:
 
@@ -1652,11 +1608,19 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QSvgPlugin.cmake:
 
+/usr/share/cmake-3.28/Modules/Compiler/MSVC-DetermineCompiler.cmake:
+
 /usr/include/c++/13/bits/stl_pair.h:
 
 /usr/include/x86_64-linux-gnu/qt5/QtGui/qimage.h:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QTuioTouchPlugin.cmake:
+
+/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QVncIntegrationPlugin.cmake:
+
+/usr/include/x86_64-linux-gnu/qt5/QtGui/qpolygon.h:
+
+/usr/share/cmake-3.28/Modules/CMakeParseImplicitLinkInfo.cmake:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbIntegrationPlugin.cmake:
 
@@ -1676,16 +1640,6 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 
 /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake:
 
-/usr/include/c++/13/bits/new_allocator.h:
-
-/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVConfig-version.cmake:
-
-/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVModules-release.cmake:
-
-/usr/include/x86_64-linux-gnu/qt5/QtCore/qdatastream.h:
-
-/usr/local/lib/cmake/ZXing/ZXingTargets.cmake:
-
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qgenericatomic.h:
 
 /usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp:
@@ -1701,6 +1655,8 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 /usr/share/cmake-3.28/Modules/CMakeGenericSystem.cmake:
 
 /usr/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake:
+
+/usr/share/cmake-3.28/Modules/Compiler/OrangeC-DetermineCompiler.cmake:
 
 /usr/include/x86_64-linux-gnu/qt5/QtGui/qfontinfo.h:
 
@@ -1722,8 +1678,16 @@ CMakeFiles/3.28.3/CMakeCXXCompiler.cmake:
 
 /usr/include/c++/13/bits/refwrap.h:
 
-/usr/local/lib/cmake/ZXing/ZXingConfig.cmake:
-
 /usr/share/cmake-3.28/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake:
 
 /usr/share/cmake-3.28/Modules/Compiler/HP-CXX-DetermineCompiler.cmake:
+
+/usr/share/cmake-3.28/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake:
+
+/usr/share/cmake-3.28/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake:
+
+/usr/include/c++/13/string_view:
+
+/usr/share/cmake-3.28/Modules/Compiler/NVHPC-DetermineCompiler.cmake:
+
+/usr/share/cmake-3.28/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake:

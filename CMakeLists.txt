@@ -11,17 +11,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Находим необходимые пакеты
 find_package(Qt5 REQUIRED COMPONENTS Widgets Multimedia Sql Svg Network REQUIRED)
-find_package(ZXing REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(PkgConfig REQUIRED)
-find_package(OpenCV REQUIRED)
-
-pkg_check_modules(QREncode REQUIRED libqrencode)
 
 # Добавляем директории включаемых файлов
 include_directories(${QREncode_INCLUDE_DIRS})
 include_directories("/home/oorlovsk/otp-mfa/include")
-include_directories(${OpenCV_INCLUDE_DIRS})
 
 # Источники для основного приложения
 set(PROJECT_SOURCES
@@ -36,8 +31,6 @@ set(PROJECT_SOURCES
     add_account.ui
     add_account_dialog.h
     add_account_dialog.cpp
-    qr_generator.h
-    qr_generator.cpp
     encryption_utils.h
     encryption_utils.cpp
     master_password_dialog.h
@@ -46,8 +39,6 @@ set(PROJECT_SOURCES
     settings_dialog.h
     settings_dialog.cpp
     settings_dialog.ui
-    /home/oorlovsk/otp-mfa/include/qrcodegen.cpp
-    /home/oorlovsk/otp-mfa/include/qrcodegen.hpp
 )
 
 # Создаём основной исполняемый файл
@@ -57,9 +48,7 @@ add_executable(otp-mfa
 
 # Линкуем библиотеки для основного приложения
 target_link_libraries(otp-mfa PRIVATE Qt5::Widgets Qt5::Multimedia Qt5::Sql Qt5::Svg Qt5::Network)
-target_link_libraries(otp-mfa PRIVATE ZXing::ZXing)
 target_link_libraries(otp-mfa PRIVATE OpenSSL::SSL OpenSSL::Crypto)
-target_link_libraries(otp-mfa PRIVATE ${OpenCV_LIBS})
 
 # Создаём отдельный исполняемый файл для тестирования
 add_executable(otp_generator_test

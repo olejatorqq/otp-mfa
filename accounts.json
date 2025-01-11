@@ -1,8 +1,0 @@
-[
-    {
-        "algorithm": "TOTP",
-        "counter": 0,
-        "name": "asd",
-        "secret": "rigDflkOK1cRQKGg5e+zgGLa5o9v1/prexYYwtj4jZE="
-    }
-]

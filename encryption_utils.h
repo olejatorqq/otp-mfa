@@ -8,17 +8,18 @@ class EncryptionUtils {
 public:
     static EncryptionUtils& instance();
 
-    void setMasterPassword(const QString& password);
-    bool isMasterPasswordSet() const;
+    // Убирал setMasterPassword и isMasterPasswordSet для мастер-пароля
+    // void setMasterPassword(const QString& password);
+    // bool isMasterPasswordSet() const;
 
     QByteArray encrypt(const QString& plaintext);
     QString decrypt(const QByteArray& ciphertext);
 
 private:
     EncryptionUtils();
-    QByteArray key;
 
-    QByteArray deriveKey(const QString& password);
+    // Можно хранить просто константный ключ
+    QByteArray key;
 };
 
 #endif // ENCRYPTION_UTILS_H

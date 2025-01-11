@@ -352,12 +352,6 @@ CMakeFiles/otp-mfa.dir/main.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt5/QtNetwork/QNetworkAccessManager \
  /usr/include/x86_64-linux-gnu/qt5/QtNetwork/QSslError \
  /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qsslerror.h \
- /home/oorlovsk/Downloads/otp-mfa-fisrt/master_password_dialog.h \
- /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QDialog \
- /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qdialog.h \
- /home/oorlovsk/Downloads/otp-mfa-fisrt/encryption_utils.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QByteArray \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qbytearray.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QApplication \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qapplication.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qcoreapplication.h \

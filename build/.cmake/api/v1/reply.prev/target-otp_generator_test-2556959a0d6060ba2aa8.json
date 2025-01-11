@@ -26,31 +26,25 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 65,
+				"line" : 56,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 72,
+				"line" : 63,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 73,
+				"line" : 64,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 23,
-				"parent" : 0
-			},
-			{
-				"command" : 2,
-				"file" : 0,
-				"line" : 24,
+				"line" : 19,
 				"parent" : 0
 			}
 		]
@@ -88,10 +82,6 @@
 				{
 					"backtrace" : 4,
 					"path" : "/home/oorlovsk/otp-mfa/include"
-				},
-				{
-					"backtrace" : 5,
-					"path" : "/usr/include/opencv4"
 				},
 				{
 					"backtrace" : 2,

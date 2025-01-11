@@ -1,8 +1,8 @@
 #include "otp_window.h"
-#include "master_password_dialog.h"
-#include "encryption_utils.h"
+// #include "encryption_utils.h"
 #include <QApplication>
 #include <QMessageBox>
+#include <QSettings> // Добавьте, если используются настройки
 
 int main(int argc, char *argv[]) {
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -10,27 +10,18 @@ int main(int argc, char *argv[]) {
 
     QApplication a(argc, argv);
 
-    while (true) {
-        MasterPasswordDialog passwordDialog;
-        if (passwordDialog.exec() == QDialog::Accepted) {
-            QString masterPassword = passwordDialog.getPassword();
-            EncryptionUtils::instance().setMasterPassword(masterPassword);
+    // Если вы используете EncryptionUtils и AccountManager без мастер-пароля,
+    // убедитесь, что они инициализируются корректно.
+    // Например:
+    // EncryptionUtils::instance().initialize(); // Ваш метод инициализации
 
-            if (AccountManager::instance().verifyMasterPassword()) {
-                OTPWindow window;
-                window.show();
+    OTPWindow window;
+    window.show();
 
-                // Подключаемся к сигналу aboutToQuit для логирования выхода
-                QObject::connect(&a, &QApplication::aboutToQuit, []() {
-                    AccountManager::instance().logEvent("Пользователь вышел из приложения");
-                });
+    // Подключаемся к сигналу aboutToQuit для логирования выхода
+    QObject::connect(&a, &QApplication::aboutToQuit, []() {
+        AccountManager::instance().logEvent("Пользователь вышел из приложения");
+    });
 
-                return a.exec();
-            } else {
-                QMessageBox::warning(nullptr, "Ошибка", "Неверный мастер-пароль. Попробуйте снова.");
-            }
-        } else {
-            return 0; // Выход из приложения, если пользователь отменил ввод пароля
-        }
-    }
+    return a.exec();
 }
