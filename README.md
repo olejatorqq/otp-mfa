@@ -7,27 +7,71 @@
 
 Для сборки и запуска **OTP-MFA** необходимы следующие зависимости:
 
-### Основные зависимости
+### Компилятор и инструменты сборки:
 
-- **Qt 5.15.13**
-- 
-- **C++17**  
+- **Qt: версия 5.15.13**
+- **CMake: версия 3.28.3**  
+- **GCC/G++: версия 13.3.0**  
 
-### Внешние библиотеки
+### Qt библиотеки:
+- **libQt5Core.so.5** — базовый модуль Qt (версия 5.15.13)
+- **libQt5Gui.so.5** — модуль для графического интерфейса (версия 5.15.13)
+- **libQt5Widgets.so.5** — модуль для виджетов GUI (версия 5.15.13)
+- **libQt5Network.so.5** — модуль для сетевых операций (версия 5.15.13)
+- **libQt5Sql.so.5** — модуль для работы с базами данных (версия 5.15.13)
 
-- **ZXing**  
-  Библиотека для генерации и чтения QR-кодов.
+### Криптографические библиотеки:
+- **libcrypto.so.3** — библиотека OpenSSL для криптографических операций (версия 3.0.13)
 
-- **OpenSSL**  
-  Используется для обеспечения безопасности и шифрования данных.
+### Системные библиотеки:
+- **libstdc++.so.6** — стандартная библиотека C++ (версия 14.2.0)
+- **libgcc_s.so.1** — поддержка исключений и базовые операции для GCC (версия 14.2.0)
+- **libm.so.6** — математическая библиотека для операций с плавающей точкой
+- **libc.so.6** — стандартная библиотека C для системных вызовов
 
-- **OpenCV**  
-  Библиотека для обработки изображений и видео.
+## Установка (Через установщик)
 
-- **libqrencode**  
-  Библиотека для генерации QR-кодов.
+### 1. Клонирование установщика
+```bash
+wget https://github.com/olejatorqq/otp-mfa/releases/download/v0.2.0/OTPMFA_Installer.run
+```
 
-## Установка
+### 2. Запуск установщика
+```bash
+chmod +x ./OTPMFA_Installer.run
+./OTPMFA_Installer.run
+```
+
+### 3. Запуск приложения
+Перейдите в директорию, которую указали при установке, затем
+```bash
+cd bin
+./otp-mfa
+```
+
+### (Опционально) создание установщика
+
+### 1. Установка QT Installer Framework:
+[Ссылка на скачивание](https://download.qt.io/official_releases/qt-installer-framework/4.8.1/)
+
+После сборки проекта (см. п.4 Установка (Ручной вариант))
+
+### 2. Создание установщик (после сборки проекта)
+
+```bash
+cd build/deploy/
+rm -rf ../../installer_files/packages/com.olejatorqq.otp-mfa/data/bin
+cp -r  * ../../installer_files/packages/com.olejatorqq.otp-mfa/data/
+cd ../../installer_files/
+binarycreator   --offline-only   --config config/config.xml   --packages packages   OTPMFA_Installer.run
+```
+### 3. Запуск установщика
+
+```bash
+./OTPMFA_Installer.run
+```
+
+## Установка (Ручной вариант)
 
 ### 1. Клонирование репозитория
 
@@ -39,19 +83,19 @@ cd otp-mfa
 ### 2. Установка зависимостей
 Выполните следующие команды:
 
+*Установку необходимых пакетов можно выполнить путем запуска install_dependencies.sh*
 ```bash
 sudo apt update
-sudo apt install -y build-essential cmake qt5-default libzxing-dev libssl-dev libopencv-dev libqrencode-dev pkg-config
+chmod +x ./install_dependencies.sh
+./install_dependencies.sh
 ```
 
 ### 3. Сборка проекта
 Выполните следующие команды:
 
 ```bash
-mkdir build
-cd build
-cmake ..
-make
+chmod +x ./start.sh
+./start.sh
 ```
 
 ### 4. Установка приложения
@@ -65,6 +109,5 @@ sudo make install
 Запустить приложение можно из терминала или окна приложений. (Пример запуска через терминал)
 
 ```bash
-otp-mfa
+./deploy/bin/otp-mfa
 ```
-

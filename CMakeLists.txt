@@ -7,7 +7,6 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
 endif()
 
-# Включение автоматической обработки MOC, UIC и RCC
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -115,26 +114,13 @@ install(DIRECTORY "${Qt5_plugins_dir}/platforms"
     FILES_MATCHING PATTERN "libqxcb.so*"
 )
 
-# Если ваше приложение использует другие плагины (например, imageformats), установите их аналогично
-# Пример установки плагина для форматов изображений (если необходимо):
-# install(DIRECTORY "${Qt5_plugins_dir}/imageformats"
-#     DESTINATION plugins/imageformats
-#     FILES_MATCHING PATTERN "libqjpeg.so*"
-# )
-
 # Установка файлов данных (например, база данных)
 # install(FILES "${CMAKE_SOURCE_DIR}/accounts.db"
 #     DESTINATION data
 # )
 
-# Если у вас есть дополнительные директории (например, translations), установите их аналогично
-# Пример установки переводов:
+# Директории (например, translations), установите их аналогично
 # install(DIRECTORY "${CMAKE_SOURCE_DIR}/translations/"
 #     DESTINATION translations
 #     FILES_MATCHING PATTERN "*.qm"
-# )
-
-# (Опционально) Установка дополнительных конфигурационных файлов или ресурсов
-# install(FILES "${CMAKE_SOURCE_DIR}/some_config.conf"
-#     DESTINATION config
 # )
