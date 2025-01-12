@@ -54,6 +54,8 @@ set(PROJECT_SOURCES
 # Создаём основной исполняемый файл
 add_executable(otp-mfa
     ${PROJECT_SOURCES}
+    recovery_manager.h recovery_manager.cpp
+
 )
 
 # Линкуем необходимые библиотеки для основного приложения

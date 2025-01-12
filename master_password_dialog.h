@@ -16,18 +16,20 @@ public:
     ~MasterPasswordDialog();
 
     QString getPassword() const;
+    QString getRecoveryKey() const;
 
-    void setSettingMode(bool setting);
+    void setSettingMode(bool setting); // true = установка, false = ввод
     bool isSettingMode() const;
 
 private slots:
     void onOkClicked();
     void onCancelClicked();
     void onShowPasswordToggled(bool checked);
+    void onResetPasswordButtonClicked();
 
 private:
     Ui::MasterPasswordDialog *ui;
-    bool settingMode = false; // false = вводим, true = задаём первый раз
+    bool settingMode = false; // false = ввод, true = установка
 };
 
 #endif // MASTER_PASSWORD_DIALOG_H

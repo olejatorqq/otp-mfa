@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Installer>
-    <Name>OTP MFA Installer</Name>
-    <Version>0.2.0</Version>
-    <Title>Установка OTP MFA</Title>
+    <Name>OTP MFA</Name>
+    <Version>0.3.0</Version>
+    <Title>Установщик OTP MFA</Title>
     <Publisher>olejatorqq</Publisher>
     <StartMenuDir>OTP MFA</StartMenuDir>
-    <TargetDir>@HomeDir@/OTP-MFA</TargetDir>
-    <RemoteRepositories>
-        <!-- Пусто, так как оффлайн-инсталлятор -->
-    </RemoteRepositories>
+    <TargetDir>@HomeDir@/OTP MFA</TargetDir>
+    <Translations>
+        <Translation>../translations/installer_ru.qm</Translation>
+    </Translations>
 </Installer>
+

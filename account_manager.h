@@ -41,11 +41,18 @@ public:
     bool storeMasterPasswordHash(const QString &newPass);  // Сохранение хэша в базе данных
     bool verifyMasterPassword(const QString &inputPass);    // Проверка введённого пароля
 
+    // Методы для Recovery Key
+    bool setRecoveryKey(const QString &recoveryKey);
+    bool resetMasterPasswordUsingRecoveryKey(const QString &recoveryKey, const QString &newMasterPassword);
+
     // Логирование событий
     void logEvent(const QString& eventDescription);
 
     // Сетевой функционал
     void fetchDataFromServer(const QUrl &url);
+
+    // Получение значения из settings
+    QByteArray getSettingValue(const QString &key) const; // Перемещено в public
 
 signals:
     void dataFetched(const QByteArray &data);
@@ -58,25 +65,17 @@ private slots:
 private:
     // Приватный конструктор для Singleton
     AccountManager();
-
-    // Деструктор
     ~AccountManager();
 
     // Инициализация базы данных
     void initializeDatabase();
 
-    // Метод для получения ожидаемого хэша сертификата
-    QByteArray getExpectedCertHash() const;
-
-    // Методы для работы с таблицей settings
-    QByteArray getSettingValue(const QString &key) const;
+    // Работа с таблицей settings
+    QByteArray getSettingValueInternal(const QString &key) const;
     bool setSettingValue(const QString &key, const QByteArray &value);
 
-    // База данных
-    QSqlDatabase db;
-
-    // Менеджер сетевых запросов
-    QNetworkAccessManager* networkManager;
+    // Сертификатный пиннинг (пример)
+    QByteArray getExpectedCertHash() const;
 
     // Хэш мастер-пароля
     QByteArray storedHash;
@@ -84,7 +83,13 @@ private:
     // Флаг, указывающий установлен ли мастер-пароль
     bool isMasterPasswordSet = false;
 
-    // Части хэша сертификата для "обфускации"
+    // База данных
+    QSqlDatabase db;
+
+    // Менеджер сетевых запросов
+    QNetworkAccessManager* networkManager;
+
+    // Статические поля для "обфускации" хэша сертификата
     static const char* hashPart1;
     static const char* hashPart2;
     static const char* hashPart3;
@@ -93,8 +98,6 @@ private:
     static const char* hashPart6;
     static const char* hashPart7;
     static const char* hashPart8;
-
-    // XOR-ключ для обработки хэша сертификата
     static const char xorKey;
 };
 

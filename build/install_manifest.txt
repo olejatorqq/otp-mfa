@@ -1,2 +1,0 @@
-/home/oorlovsk/Downloads/otp-mfa-fisrt/build/deploy/bin/otp-mfa
-/home/oorlovsk/Downloads/otp-mfa-fisrt/build/deploy/bin/tests/otp_generator_test
