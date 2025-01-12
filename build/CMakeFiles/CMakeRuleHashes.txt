@@ -1,0 +1,7 @@
+# Hashes of file build rules.
+dace265ffe77f3c06072cab979cf9a2c CMakeFiles/otp-mfa_autogen
+dace265ffe77f3c06072cab979cf9a2c CMakeFiles/otp-mfa_autogen_timestamp_deps
+dace265ffe77f3c06072cab979cf9a2c CMakeFiles/otp_generator_test_autogen
+dace265ffe77f3c06072cab979cf9a2c CMakeFiles/otp_generator_test_autogen_timestamp_deps
+4fe0d316afb306d5d29db0d98dea010b otp-mfa_autogen/timestamp
+25c436ea7c768a90e61ad6026b1806b4 otp_generator_test_autogen/timestamp

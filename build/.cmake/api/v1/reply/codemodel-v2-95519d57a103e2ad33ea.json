@@ -1,0 +1,106 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Release-3a6afb0141b49c5b670a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "otp-mfa",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "otp-mfa::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-otp-mfa-Release-1555916e900025accc6e.json",
+					"name" : "otp-mfa",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "otp-mfa_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-otp-mfa_autogen-Release-90a596a358af99a97805.json",
+					"name" : "otp-mfa_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "otp-mfa_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-otp-mfa_autogen_timestamp_deps-Release-a52682d00115d0e72d1f.json",
+					"name" : "otp-mfa_autogen_timestamp_deps",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "otp_generator_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-otp_generator_test-Release-56a79d93303dc25621c1.json",
+					"name" : "otp_generator_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "otp_generator_test_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-otp_generator_test_autogen-Release-505f36370002ef192b3b.json",
+					"name" : "otp_generator_test_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "otp_generator_test_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-otp_generator_test_autogen_timestamp_deps-Release-83d6c3182f7da9969a1a.json",
+					"name" : "otp_generator_test_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/oorlovsk/Downloads/otp-mfa-fisrt/build",
+		"source" : "/home/oorlovsk/Downloads/otp-mfa-fisrt"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}
