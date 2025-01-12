@@ -2,7 +2,6 @@
 #define MASTER_PASSWORD_DIALOG_H
 
 #include <QDialog>
-#include <QObject>
 
 namespace Ui {
 class MasterPasswordDialog;
@@ -18,6 +17,9 @@ public:
 
     QString getPassword() const;
 
+    void setSettingMode(bool setting);
+    bool isSettingMode() const;
+
 private slots:
     void onOkClicked();
     void onCancelClicked();
@@ -25,6 +27,7 @@ private slots:
 
 private:
     Ui::MasterPasswordDialog *ui;
+    bool settingMode = false; // false = вводим, true = задаём первый раз
 };
 
 #endif // MASTER_PASSWORD_DIALOG_H

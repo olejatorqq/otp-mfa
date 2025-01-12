@@ -9,14 +9,16 @@ MasterPasswordDialog::MasterPasswordDialog(QWidget *parent) :
     ui(new Ui::MasterPasswordDialog)
 {
     ui->setupUi(this);
+
     ui->passwordLineEdit->setEchoMode(QLineEdit::Password);
 
-    // Подключение кнопок к слотам
-    connect(ui->okButton, &QPushButton::clicked, this, &MasterPasswordDialog::onOkClicked);
-    connect(ui->cancelButton, &QPushButton::clicked, this, &MasterPasswordDialog::onCancelClicked);
+    connect(ui->okButton, &QPushButton::clicked,
+            this, &MasterPasswordDialog::onOkClicked);
+    connect(ui->cancelButton, &QPushButton::clicked,
+            this, &MasterPasswordDialog::onCancelClicked);
 
-    // Подключение чекбокса к слоту для показа/скрытия пароля
-    connect(ui->showPasswordCheckBox, &QCheckBox::toggled, this, &MasterPasswordDialog::onShowPasswordToggled);
+    connect(ui->showPasswordCheckBox, &QCheckBox::toggled,
+            this, &MasterPasswordDialog::onShowPasswordToggled);
 }
 
 MasterPasswordDialog::~MasterPasswordDialog()
@@ -24,22 +26,47 @@ MasterPasswordDialog::~MasterPasswordDialog()
     delete ui;
 }
 
-QString MasterPasswordDialog::getPassword() const {
+QString MasterPasswordDialog::getPassword() const
+{
     return ui->passwordLineEdit->text();
 }
 
-void MasterPasswordDialog::onOkClicked() {
-    if (ui->passwordLineEdit->text().trimmed().isEmpty()) {
-        QMessageBox::warning(this, "Ошибка", " Введите мастер-пароль.");
+void MasterPasswordDialog::setSettingMode(bool setting)
+{
+    settingMode = setting;
+    if (settingMode) {
+        ui->label->setText("Создайте новый мастер-пароль:");
+        setWindowTitle("Установка мастер-пароля");
+    } else {
+        ui->label->setText("Введите мастер-пароль:");
+        setWindowTitle("Ввод мастер-пароля");
+    }
+}
+
+bool MasterPasswordDialog::isSettingMode() const
+{
+    return settingMode;
+}
+
+void MasterPasswordDialog::onOkClicked()
+{
+    QString pass = ui->passwordLineEdit->text().trimmed();
+    if (pass.isEmpty()) {
+        QMessageBox::warning(this, "Ошибка",
+                             settingMode ? "Введите новый мастер-пароль."
+                                         : "Введите мастер-пароль.");
         return;
     }
     accept();
 }
 
-void MasterPasswordDialog::onCancelClicked() {
+void MasterPasswordDialog::onCancelClicked()
+{
     reject();
 }
 
-void MasterPasswordDialog::onShowPasswordToggled(bool checked) {
-    ui->passwordLineEdit->setEchoMode(checked ? QLineEdit::Normal : QLineEdit::Password);
+void MasterPasswordDialog::onShowPasswordToggled(bool checked)
+{
+    ui->passwordLineEdit->setEchoMode(checked ? QLineEdit::Normal
+                                              : QLineEdit::Password);
 }

@@ -1,36 +1,45 @@
 #include "account_manager.h"
 #include "encryption_utils.h"
+
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QVariant>
 #include <QDebug>
 #include <QDateTime>
+#include <QSettings>
+#include <QCryptographicHash>
 #include <QNetworkRequest>
 #include <QSslConfiguration>
 #include <QSslCertificate>
-#include <QCryptographicHash>
+#include <QNetworkReply>
+#include <QSslError>
 
-static const char* hashPart1 = "980afe02";
-static const char* hashPart2 = "39f05b57";
-static const char* hashPart3 = "d83b4c38";
-static const char* hashPart4 = "06de0ea7";
-static const char* hashPart5 = "4ec4718f";
-static const char* hashPart6 = "e1c0ec44";
-static const char* hashPart7 = "4ad8f48d";
-static const char* hashPart8 = "7683a89d";
+// Инициализация статических членов класса
+const char* AccountManager::hashPart1 = "980afe02";
+const char* AccountManager::hashPart2 = "39f05b57";
+const char* AccountManager::hashPart3 = "d83b4c38";
+const char* AccountManager::hashPart4 = "06de0ea7";
+const char* AccountManager::hashPart5 = "4ec4718f";
+const char* AccountManager::hashPart6 = "e1c0ec44";
+const char* AccountManager::hashPart7 = "4ad8f48d";
+const char* AccountManager::hashPart8 = "7683a89d";
 
-// Примерный ключ для XOR
-static const char xorKey = 0x5A;
+// XOR ключ
+const char AccountManager::xorKey = 0x5A;
 
-AccountManager& AccountManager::instance() {
+// Получение единственного экземпляра AccountManager
+AccountManager& AccountManager::instance()
+{
     static AccountManager instance;
     return instance;
 }
 
+// Приватный конструктор
 AccountManager::AccountManager()
     : QObject(nullptr),
     networkManager(new QNetworkAccessManager(this))
 {
+    // Инициализируем или открываем базу данных SQLite
     if (QSqlDatabase::contains("OTPConnection")) {
         db = QSqlDatabase::database("OTPConnection");
     } else {
@@ -44,21 +53,30 @@ AccountManager::AccountManager()
         initializeDatabase();
     }
 
+    // Подключаем сигналы для сетевых операций
     connect(networkManager, &QNetworkAccessManager::finished,
             this, &AccountManager::onNetworkReplyFinished);
     connect(networkManager, &QNetworkAccessManager::sslErrors,
             this, &AccountManager::onSslErrors);
+
+    // Пытаемся считать хэш мастер-пароля (если он есть)
+    isMasterPasswordSet = loadStoredMasterPasswordHash();
 }
 
-AccountManager::~AccountManager() {
+// Деструктор
+AccountManager::~AccountManager()
+{
     if (db.isOpen()) {
         db.close();
     }
 }
 
-void AccountManager::initializeDatabase() {
+// Инициализация базы данных
+void AccountManager::initializeDatabase()
+{
     QSqlQuery query(db);
 
+    // Создание таблицы accounts, если она не существует
     QString createAccountsTable = R"(
         CREATE TABLE IF NOT EXISTS accounts (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -76,14 +94,140 @@ void AccountManager::initializeDatabase() {
         qWarning() << "Не удалось создать таблицу accounts:"
                    << query.lastError().text();
     }
+
+    // Создание таблицы settings, если она не существует
+    QString createSettingsTable = R"(
+        CREATE TABLE IF NOT EXISTS settings (
+            key TEXT PRIMARY KEY,
+            value BLOB NOT NULL
+        )
+    )";
+
+    if (!query.exec(createSettingsTable)) {
+        qWarning() << "Не удалось создать таблицу settings:"
+                   << query.lastError().text();
+    }
 }
 
-void AccountManager::logEvent(const QString& eventDescription) {
-    // Здесь можно реализовать логику логирования (в файл, БД и т.п.)
+// Получение значения из таблицы settings по ключу
+QByteArray AccountManager::getSettingValue(const QString &key) const
+{
+    QSqlQuery query(db);
+    query.prepare("SELECT value FROM settings WHERE key = :key");
+    query.bindValue(":key", key);
+
+    if (!query.exec()) {
+        qWarning() << "Не удалось выполнить запрос к таблице settings:"
+                   << query.lastError().text();
+        return QByteArray();
+    }
+
+    if (query.next()) {
+        return query.value(0).toByteArray();
+    }
+
+    return QByteArray();
+}
+
+// Установка значения в таблице settings по ключу
+bool AccountManager::setSettingValue(const QString &key, const QByteArray &value)
+{
+    QSqlQuery query(db);
+    // Проверяем, существует ли уже ключ
+    query.prepare("SELECT COUNT(*) FROM settings WHERE key = :key");
+    query.bindValue(":key", key);
+
+    if (!query.exec()) {
+        qWarning() << "Не удалось проверить существование ключа в settings:"
+                   << query.lastError().text();
+        return false;
+    }
+
+    if (query.next()) {
+        int count = query.value(0).toInt();
+        if (count > 0) {
+            // Обновляем существующий ключ
+            query.prepare("UPDATE settings SET value = :value WHERE key = :key");
+            query.bindValue(":value", value);
+            query.bindValue(":key", key);
+
+            if (!query.exec()) {
+                qWarning() << "Не удалось обновить значение в settings:"
+                           << query.lastError().text();
+                return false;
+            }
+        } else {
+            // Вставляем новый ключ
+            query.prepare("INSERT INTO settings (key, value) VALUES (:key, :value)");
+            query.bindValue(":key", key);
+            query.bindValue(":value", value);
+
+            if (!query.exec()) {
+                qWarning() << "Не удалось вставить новое значение в settings:"
+                           << query.lastError().text();
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+// Загрузка хэша мастер-пароля из базы данных
+bool AccountManager::loadStoredMasterPasswordHash()
+{
+    QByteArray hash = getSettingValue("masterPasswordHash");
+
+    if (!hash.isEmpty()) {
+        storedHash = hash;
+        isMasterPasswordSet = true;
+        return true;
+    }
+    isMasterPasswordSet = false;
+    return false;
+}
+
+// Сохранение хэша мастер-пароля в базе данных
+bool AccountManager::storeMasterPasswordHash(const QString &newPass)
+{
+    // Хэшируем новый пароль с помощью SHA-256
+    QByteArray hash = QCryptographicHash::hash(newPass.toUtf8(), QCryptographicHash::Sha256);
+    storedHash = hash;
+
+    // Сохраняем хэш в таблице settings
+    if (!setSettingValue("masterPasswordHash", storedHash)) {
+        qWarning() << "Не удалось сохранить хэш мастер-пароля в settings.";
+        return false;
+    }
+
+    isMasterPasswordSet = true;
+    return true;
+}
+
+// Проверка введённого мастер-пароля
+bool AccountManager::verifyMasterPassword(const QString &inputPass)
+{
+    if (!isMasterPasswordSet) {
+        // Пароль ещё не задан => проверка провалилась
+        return false;
+    }
+
+    // Хэшируем введённый пользователем пароль
+    QByteArray inputHash = QCryptographicHash::hash(inputPass.toUtf8(), QCryptographicHash::Sha256);
+
+    // Сравниваем с сохранённым хэшем
+    return (inputHash == storedHash);
+}
+
+// Логирование событий (пример: вывод в консоль)
+void AccountManager::logEvent(const QString& eventDescription)
+{
     qDebug() << "[LOG]" << eventDescription;
 }
 
-QList<Account> AccountManager::getAccounts() const {
+// Получение списка аккаунтов
+QList<Account> AccountManager::getAccounts() const
+{
     QList<Account> accounts;
     QSqlQuery query(db);
     query.prepare("SELECT name, secret, algorithm, digits, period, type, counter FROM accounts");
@@ -95,124 +239,122 @@ QList<Account> AccountManager::getAccounts() const {
     }
 
     while (query.next()) {
-        Account account;
-        account.name = query.value(0).toString();
+        Account acc;
+        acc.name = query.value(0).toString();
+        QByteArray encSecret = query.value(1).toByteArray();
 
-        QByteArray encryptedSecret = query.value(1).toByteArray();
-        QString decryptedSecret = EncryptionUtils::instance().decrypt(encryptedSecret);
-        if (decryptedSecret.isEmpty()) {
-            qWarning() << "Не удалось расшифровать секрет для аккаунта:"
-                       << account.name;
+        // Расшифровка секрета
+        QString decSecret = EncryptionUtils::instance().decrypt(encSecret);
+        if (decSecret.isEmpty()) {
+            qWarning() << "Не удалось расшифровать секрет аккаунта:" << acc.name;
             continue;
         }
-        account.secret    = decryptedSecret;
-        account.algorithm = query.value(2).toString();
-        account.digits    = query.value(3).toInt();
-        account.period    = query.value(4).toInt();
-        account.type      = query.value(5).toString();
-        account.counter   = query.value(6).toULongLong();
+        acc.secret    = decSecret;
+        acc.algorithm = query.value(2).toString();
+        acc.digits    = query.value(3).toInt();
+        acc.period    = query.value(4).toInt();
+        acc.type      = query.value(5).toString();
+        acc.counter   = query.value(6).toULongLong();
 
-        accounts.append(account);
+        accounts.append(acc);
     }
 
     return accounts;
 }
 
-void AccountManager::addAccount(const Account& account) {
-    // Убираем проверку isMasterPasswordSet
+// Добавление нового аккаунта
+void AccountManager::addAccount(const Account& account)
+{
     QSqlQuery query(db);
     query.prepare(
-        "INSERT INTO accounts (name, secret, algorithm, digits, period, type, counter) "
-        "VALUES (:name, :secret, :algorithm, :digits, :period, :type, :counter)"
+        "INSERT INTO accounts (name, secret, algorithm, digits, period, type, counter)"
+        "VALUES (:name, :secret, :algo, :digits, :period, :type, :cnt)"
         );
-    query.bindValue(":name", account.name);
+    query.bindValue(":name",   account.name);
 
-    QByteArray encryptedSecret = EncryptionUtils::instance().encrypt(account.secret);
-    query.bindValue(":secret", encryptedSecret);
+    QByteArray encSecret = EncryptionUtils::instance().encrypt(account.secret);
+    query.bindValue(":secret", encSecret);
 
-    query.bindValue(":algorithm", account.algorithm);
-    query.bindValue(":digits",    account.digits);
-    query.bindValue(":period",    account.period);
-    query.bindValue(":type",      account.type);
-    query.bindValue(":counter",   account.counter);
+    query.bindValue(":algo",   account.algorithm);
+    query.bindValue(":digits", account.digits);
+    query.bindValue(":period", account.period);
+    query.bindValue(":type",   account.type);
+    query.bindValue(":cnt",    account.counter);
 
     if (!query.exec()) {
-        qWarning() << "Не удалось добавить аккаунт:"
-                   << query.lastError().text();
+        qWarning() << "Не удалось добавить аккаунт:" << query.lastError().text();
     } else {
         logEvent("Добавлен аккаунт: " + account.name);
     }
 }
 
-void AccountManager::deleteAccount(const QString& accountName) {
+// Удаление аккаунта
+void AccountManager::deleteAccount(const QString& accountName)
+{
     QSqlQuery query(db);
-    query.prepare("DELETE FROM accounts WHERE name = :name");
-    query.bindValue(":name", accountName);
+    query.prepare("DELETE FROM accounts WHERE name = :nm");
+    query.bindValue(":nm", accountName);
 
     if (!query.exec()) {
-        qWarning() << "Не удалось удалить аккаунт:"
-                   << query.lastError().text();
+        qWarning() << "Не удалось удалить аккаунт:" << query.lastError().text();
     } else {
-        logEvent("Удален аккаунт: " + accountName);
+        logEvent("Удалён аккаунт: " + accountName);
     }
 }
 
+// Обновление аккаунта
 void AccountManager::updateAccount(const QString& accountName,
                                    const Account& updatedAccount)
 {
-    // Убираем проверку isMasterPasswordSet
     QSqlQuery query(db);
     query.prepare(
-        "UPDATE accounts SET name = :newName, secret = :secret, algorithm = :algorithm, "
-        "digits = :digits, period = :period, type = :type, counter = :counter "
+        "UPDATE accounts SET name = :newName, secret = :secret, algorithm = :algo, "
+        "digits = :digits, period = :period, type = :type, counter = :cnt "
         "WHERE name = :oldName"
         );
     query.bindValue(":newName", updatedAccount.name);
 
-    QByteArray encryptedSecret = EncryptionUtils::instance().encrypt(updatedAccount.secret);
-    query.bindValue(":secret", encryptedSecret);
+    QByteArray encSecret = EncryptionUtils::instance().encrypt(updatedAccount.secret);
+    query.bindValue(":secret", encSecret);
 
-    query.bindValue(":algorithm", updatedAccount.algorithm);
-    query.bindValue(":digits",    updatedAccount.digits);
-    query.bindValue(":period",    updatedAccount.period);
-    query.bindValue(":type",      updatedAccount.type);
-    query.bindValue(":counter",   updatedAccount.counter);
-    query.bindValue(":oldName",   accountName);
+    query.bindValue(":algo",   updatedAccount.algorithm);
+    query.bindValue(":digits", updatedAccount.digits);
+    query.bindValue(":period", updatedAccount.period);
+    query.bindValue(":type",   updatedAccount.type);
+    query.bindValue(":cnt",    updatedAccount.counter);
+    query.bindValue(":oldName", accountName);
 
     if (!query.exec()) {
-        qWarning() << "Не удалось обновить аккаунт:"
-                   << query.lastError().text();
+        qWarning() << "Не удалось обновить аккаунт:" << query.lastError().text();
     } else {
-        logEvent("Обновлен аккаунт: " + accountName + " на " + updatedAccount.name);
+        logEvent(QString("Обновлён аккаунт: %1 на %2").arg(accountName, updatedAccount.name));
     }
 }
 
-bool AccountManager::verifyMasterPassword() {
-    // Удаляем или возвращаем всегда true
-    return true;
-}
-
-void AccountManager::fetchDataFromServer(const QUrl &url) {
+// Выполнение сетевого запроса
+void AccountManager::fetchDataFromServer(const QUrl &url)
+{
     if (!url.isValid() || url.scheme() != "https") {
         emit fetchError("Неверный URL или не используется HTTPS.");
         return;
     }
 
-    QNetworkRequest request(url);
-
-    QSslConfiguration sslConfig = request.sslConfiguration();
+    QNetworkRequest req(url);
+    QSslConfiguration sslConfig = req.sslConfiguration();
     sslConfig.setPeerVerifyMode(QSslSocket::VerifyPeer);
     sslConfig.setProtocol(QSsl::TlsV1_2);
-    request.setSslConfiguration(sslConfig);
+    req.setSslConfiguration(sslConfig);
 
-    networkManager->get(request);
+    networkManager->get(req);
 }
 
-void AccountManager::onNetworkReplyFinished(QNetworkReply* reply) {
+// Обработка завершения сетевого запроса
+void AccountManager::onNetworkReplyFinished(QNetworkReply* reply)
+{
     if (reply->error() == QNetworkReply::NoError) {
-        QByteArray responseData = reply->readAll();
-        qDebug() << "Ответ сервера:" << responseData;
-        emit dataFetched(responseData);
+        QByteArray data = reply->readAll();
+        qDebug() << "Ответ сервера:" << data;
+        emit dataFetched(data);
     } else {
         qWarning() << "Ошибка сетевого запроса:" << reply->errorString();
         emit fetchError(reply->errorString());
@@ -221,21 +363,20 @@ void AccountManager::onNetworkReplyFinished(QNetworkReply* reply) {
     reply->deleteLater();
 }
 
-void AccountManager::onSslErrors(QNetworkReply* reply,
-                                 const QList<QSslError> &errors)
+// Обработка SSL ошибок
+void AccountManager::onSslErrors(QNetworkReply* reply, const QList<QSslError> &errors)
 {
-    for (const QSslError &error : errors) {
-        qWarning() << "SSL ошибка:" << error.errorString();
+    for (const QSslError &err : errors) {
+        qWarning() << "SSL ошибка:" << err.errorString();
     }
 
+    // Пример сертификатного пиннинга
     QList<QSslCertificate> certs = reply->sslConfiguration().peerCertificateChain();
     if (!certs.isEmpty()) {
-        QSslCertificate serverCert = certs.first();
-        QByteArray certHash = QCryptographicHash::hash(serverCert.toDer(),
-                                                       QCryptographicHash::Sha256).toHex();
-        QByteArray expectedHash = getExpectedCertHash();
-
-        if (certHash != expectedHash) {
+        QSslCertificate cert = certs.first();
+        QByteArray certHash = QCryptographicHash::hash(cert.toDer(), QCryptographicHash::Sha256).toHex();
+        QByteArray expected = getExpectedCertHash();
+        if (certHash != expected) {
             qWarning() << "Неверный сертификат сервера!";
             emit fetchError("Неверный сертификат сервера.");
             reply->abort();
@@ -250,30 +391,22 @@ void AccountManager::onSslErrors(QNetworkReply* reply,
     // Сертификат прошёл проверку
 }
 
+// Получение ожидаемого хэша сертификата (пример)
 QByteArray AccountManager::getExpectedCertHash() const
 {
-    // Допустим, меняем логику, чтобы она была проще
-    // — Собираем одну большую hex-строку, декодируем и XOR'им.
+    QByteArray hx;
+    hx.append(hashPart1);
+    hx.append(hashPart2);
+    hx.append(hashPart3);
+    hx.append(hashPart4);
+    hx.append(hashPart5);
+    hx.append(hashPart6);
+    hx.append(hashPart7);
+    hx.append(hashPart8);
 
-    // Склеиваем 8 частей
-    QByteArray hexString;
-    hexString.append(hashPart1);
-    hexString.append(hashPart2);
-    hexString.append(hashPart3);
-    hexString.append(hashPart4);
-    hexString.append(hashPart5);
-    hexString.append(hashPart6);
-    hexString.append(hashPart7);
-    hexString.append(hashPart8);
-
-    // Декодируем hex -> бинарные данные
-    QByteArray binaryData = QByteArray::fromHex(hexString);
-
-    // Применяем XOR
-    for (int i = 0; i < binaryData.size(); ++i) {
-        binaryData[i] = binaryData[i] ^ xorKey;
+    QByteArray bin = QByteArray::fromHex(hx);
+    for (int i = 0; i < bin.size(); ++i) {
+        bin[i] = bin[i] ^ xorKey;
     }
-
-    // Возвращаем результат в виде hex
-    return binaryData.toHex().toLower();
+    return bin.toHex().toLower();
 }

@@ -68,9 +68,9 @@ include CMakeFiles/otp-mfa_autogen_timestamp_deps.dir/progress.make
 
 CMakeFiles/otp-mfa_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt5Multimedia.so.5.15.13
 CMakeFiles/otp-mfa_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.13
-CMakeFiles/otp-mfa_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt5Sql.so.5.15.13
 CMakeFiles/otp-mfa_autogen_timestamp_deps: /usr/lib/qt5/bin/moc
 CMakeFiles/otp-mfa_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt5Network.so.5.15.13
+CMakeFiles/otp-mfa_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt5Sql.so.5.15.13
 CMakeFiles/otp-mfa_autogen_timestamp_deps: /usr/lib/qt5/bin/uic
 CMakeFiles/otp-mfa_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt5Svg.so.5.15.13
 CMakeFiles/otp-mfa_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libcrypto.so

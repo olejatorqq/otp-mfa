@@ -267,7 +267,6 @@
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/QFlags \
-  /usr/include/x86_64-linux-gnu/qt5/QtCore/QIODevice \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/QList \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/QMetaType \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/QObject \
@@ -370,14 +369,10 @@
   /usr/include/x86_64-linux-gnu/qt5/QtGui/qtransform.h \
   /usr/include/x86_64-linux-gnu/qt5/QtGui/qwindowdefs.h \
   /usr/include/x86_64-linux-gnu/qt5/QtNetwork/QNetworkAccessManager \
-  /usr/include/x86_64-linux-gnu/qt5/QtNetwork/QNetworkReply \
-  /usr/include/x86_64-linux-gnu/qt5/QtNetwork/QNetworkRequest \
   /usr/include/x86_64-linux-gnu/qt5/QtNetwork/QSslConfiguration \
-  /usr/include/x86_64-linux-gnu/qt5/QtNetwork/QSslError \
   /usr/include/x86_64-linux-gnu/qt5/QtNetwork/QSslPreSharedKeyAuthenticator \
   /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qabstractsocket.h \
   /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qnetworkaccessmanager.h \
-  /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qnetworkreply.h \
   /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qnetworkrequest.h \
   /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qssl.h \
   /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qsslcertificate.h \

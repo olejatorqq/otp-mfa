@@ -311,12 +311,6 @@ CMakeFiles/otp-mfa.dir/otp_window.cpp.o: \
  /home/oorlovsk/Downloads/otp-mfa-fisrt/account_manager.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QObject \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qobject.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QString \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qstring.h \
- /usr/include/x86_64-linux-gnu/qt5/QtSql/QSqlDatabase \
- /usr/include/x86_64-linux-gnu/qt5/QtSql/qsqldatabase.h \
- /usr/include/x86_64-linux-gnu/qt5/QtSql/qtsqlglobal.h \
- /usr/include/x86_64-linux-gnu/qt5/QtSql/qtsql-config.h \
  /usr/include/x86_64-linux-gnu/qt5/QtNetwork/QNetworkAccessManager \
  /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qnetworkaccessmanager.h \
  /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qtnetworkglobal.h \
@@ -325,6 +319,7 @@ CMakeFiles/otp-mfa.dir/otp_window.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QSharedDataPointer \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qshareddata.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QString \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qstring.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QUrl \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qurl.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QVariant \
@@ -353,15 +348,11 @@ CMakeFiles/otp-mfa.dir/otp_window.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qsslpresharedkeyauthenticator.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QMetaType \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qmetatype.h \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/QNetworkReply \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qnetworkreply.h \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QIODevice \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/qiodevice.h \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/QNetworkRequest \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qnetworkrequest.h \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/QNetworkAccessManager \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/QSslError \
- /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qsslerror.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtSql/QSqlDatabase \
+ /usr/include/x86_64-linux-gnu/qt5/QtSql/qsqldatabase.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtSql/qtsqlglobal.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtSql/qtsql-config.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/QUrl \
  /home/oorlovsk/Downloads/otp-mfa-fisrt/build/otp-mfa_autogen/include/ui_otp_window.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QApplication \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qapplication.h \
@@ -400,6 +391,7 @@ CMakeFiles/otp-mfa.dir/otp_window.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QDialog \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qdialog.h \
  /home/oorlovsk/Downloads/otp-mfa-fisrt/otp_generator.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/QString \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QByteArray \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qbytearray.h \
  /home/oorlovsk/Downloads/otp-mfa-fisrt/settings_dialog.h \
@@ -449,5 +441,4 @@ CMakeFiles/otp-mfa.dir/otp_window.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QMessageBox \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qmessagebox.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qdialog.h \
- /usr/include/x86_64-linux-gnu/qt5/QtGui/QContextMenuEvent \
- /usr/include/x86_64-linux-gnu/qt5/QtCore/QUrl
+ /usr/include/x86_64-linux-gnu/qt5/QtGui/QContextMenuEvent
