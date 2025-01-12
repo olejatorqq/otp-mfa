@@ -31,12 +31,6 @@
 				"file" : 0,
 				"line" : 111,
 				"parent" : 0
-			},
-			{
-				"command" : 0,
-				"file" : 0,
-				"line" : 124,
-				"parent" : 0
 			}
 		]
 	},
@@ -75,16 +69,6 @@
 				"/usr/lib/x86_64-linux-gnu/../plugins/platforms"
 			],
 			"type" : "directory"
-		},
-		{
-			"backtrace" : 4,
-			"component" : "Unspecified",
-			"destination" : "data",
-			"paths" : 
-			[
-				"accounts.db"
-			],
-			"type" : "file"
 		}
 	],
 	"paths" : 

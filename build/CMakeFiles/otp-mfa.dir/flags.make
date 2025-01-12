@@ -6,5 +6,5 @@ CXX_DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_NETWORK_LIB -D
 
 CXX_INCLUDES = -I/home/oorlovsk/Downloads/otp-mfa-fisrt/build/otp-mfa_autogen/include -I/home/oorlovsk/Downloads/otp-mfa-fisrt/include -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt5/QtMultimedia -isystem /usr/include/x86_64-linux-gnu/qt5/QtNetwork -isystem /usr/include/x86_64-linux-gnu/qt5/QtSql -isystem /usr/include/x86_64-linux-gnu/qt5/QtSvg
 
-CXX_FLAGS = -O3 -DNDEBUG -std=gnu++17 -fPIC
+CXX_FLAGS = -O3 -DNDEBUG -std=gnu++17 -fdiagnostics-color=always -fPIC
 
