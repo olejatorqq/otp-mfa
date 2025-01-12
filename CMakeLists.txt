@@ -2,23 +2,33 @@ cmake_minimum_required(VERSION 3.5)
 
 project(otp-mfa VERSION 0.1 LANGUAGES CXX)
 
+# Установка типа сборки по умолчанию на Release, если не задано
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
+endif()
+
+# Включение автоматической обработки MOC, UIC и RCC
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+# Установка стандарта C++
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Находим необходимые пакеты
-find_package(Qt5 REQUIRED COMPONENTS Widgets Multimedia Sql Svg Network REQUIRED)
+# Находим необходимые пакеты Qt5
+find_package(Qt5 REQUIRED COMPONENTS Widgets Multimedia Sql Svg Network)
+
+# Находим OpenSSL
 find_package(OpenSSL REQUIRED)
+
+# Находим PkgConfig (если используется, например, для дополнительных зависимостей)
 find_package(PkgConfig REQUIRED)
 
 # Добавляем директории включаемых файлов
-include_directories(${QREncode_INCLUDE_DIRS})
-include_directories("/home/oorlovsk/otp-mfa/include")
+include_directories(${CMAKE_SOURCE_DIR}/include)
 
-# Источники для основного приложения
+# Список исходных файлов проекта
 set(PROJECT_SOURCES
     main.cpp
     otp_window.cpp
@@ -46,31 +56,83 @@ add_executable(otp-mfa
     ${PROJECT_SOURCES}
 )
 
-# Линкуем библиотеки для основного приложения
-target_link_libraries(otp-mfa PRIVATE Qt5::Widgets Qt5::Multimedia Qt5::Sql Qt5::Svg Qt5::Network)
-target_link_libraries(otp-mfa PRIVATE OpenSSL::SSL OpenSSL::Crypto)
+# Линкуем необходимые библиотеки для основного приложения
+target_link_libraries(otp-mfa PRIVATE
+    Qt5::Widgets
+    Qt5::Multimedia
+    Qt5::Sql
+    Qt5::Svg
+    Qt5::Network
+    OpenSSL::SSL
+    OpenSSL::Crypto
+)
 
-# Создаём отдельный исполняемый файл для тестирования
+# Создаём отдельный исполняемый файл для тестирования генератора OTP
 add_executable(otp_generator_test
     otp_generator_test.cpp
     otp_generator.cpp
     otp_generator.h
 )
 
-# Линкуем библиотеки для тестового приложения
-target_link_libraries(otp_generator_test PRIVATE Qt5::Core)
-target_link_libraries(otp_generator_test PRIVATE OpenSSL::Crypto)
+# Линкуем необходимые библиотеки для тестового приложения
+target_link_libraries(otp_generator_test PRIVATE
+    Qt5::Core
+    OpenSSL::Crypto
+)
 
-# Свойства для macOS и Windows
+# Устанавливаем свойства для macOS и Windows
 set_target_properties(otp-mfa PROPERTIES
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
 
-# Инсталляция
+# Подключаем GNUInstallDirs для стандартных директорий установки
 include(GNUInstallDirs)
+
+# Правила установки для основного исполняемого файла
 install(TARGETS otp-mfa
-    BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}       # Для Linux: bin/
+    BUNDLE DESTINATION ${CMAKE_INSTALL_BINDIR}        # Для macOS: bin/
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}       # Для Linux: lib/
 )
+
+# (Опционально) Правила установки для тестового исполняемого файла
+install(TARGETS otp_generator_test
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}/tests
+)
+
+# Установка Qt платформенных плагинов
+# Получаем путь к Qt плагинам относительно местоположения Qt5::Widgets
+get_target_property(Qt5Widgets_location Qt5::Widgets LOCATION)
+get_filename_component(Qt5Widgets_dir ${Qt5Widgets_location} DIRECTORY)
+set(Qt5_plugins_dir "${Qt5Widgets_dir}/../plugins")
+
+# Устанавливаем папку platforms
+install(DIRECTORY "${Qt5_plugins_dir}/platforms"
+    DESTINATION plugins/platforms
+    FILES_MATCHING PATTERN "libqxcb.so*"
+)
+
+# Если ваше приложение использует другие плагины (например, imageformats), установите их аналогично
+# Пример установки плагина для форматов изображений (если необходимо):
+# install(DIRECTORY "${Qt5_plugins_dir}/imageformats"
+#     DESTINATION plugins/imageformats
+#     FILES_MATCHING PATTERN "libqjpeg.so*"
+# )
+
+# Установка файлов данных (например, база данных)
+# install(FILES "${CMAKE_SOURCE_DIR}/accounts.db"
+#     DESTINATION data
+# )
+
+# Если у вас есть дополнительные директории (например, translations), установите их аналогично
+# Пример установки переводов:
+# install(DIRECTORY "${CMAKE_SOURCE_DIR}/translations/"
+#     DESTINATION translations
+#     FILES_MATCHING PATTERN "*.qm"
+# )
+
+# (Опционально) Установка дополнительных конфигурационных файлов или ресурсов
+# install(FILES "${CMAKE_SOURCE_DIR}/some_config.conf"
+#     DESTINATION config
+# )
